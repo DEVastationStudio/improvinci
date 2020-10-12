@@ -4,18 +4,18 @@
 var sc_Options = new Phaser.Scene('sc_Options');
 
 //Preload
-sc_juegoLocal.preload = function() 
+sc_Options.preload = function() 
 {
     
 }
 
 //Create
-sc_juegoLocal.create = function() 
+sc_Options.create = function() 
 {
 
 }
 
 //Update
-sc_juegoLocal.update = function(time, delta) {
+sc_Options.update = function(time, delta) {
 
 }

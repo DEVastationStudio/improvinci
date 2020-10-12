@@ -4,18 +4,18 @@
 var sc_Menu = new Phaser.Scene('sc_Menu');
 
 //Preload
-sc_juegoLocal.preload = function() 
+sc_Menu.preload = function() 
 {
     
 }
 
 //Create
-sc_juegoLocal.create = function() 
+sc_Menu.create = function() 
 {
 
 }
 
 //Update
-sc_juegoLocal.update = function(time, delta) {
+sc_Menu.update = function(time, delta) {
 
 }

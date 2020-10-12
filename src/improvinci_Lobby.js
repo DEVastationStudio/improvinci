@@ -4,18 +4,18 @@
 var sc_Lobby = new Phaser.Scene('sc_Lobby');
 
 //Preload
-sc_juegoLocal.preload = function() 
+sc_Lobby.preload = function() 
 {
     
 }
 
 //Create
-sc_juegoLocal.create = function() 
+sc_Lobby.create = function() 
 {
 
 }
 
 //Update
-sc_juegoLocal.update = function(time, delta) {
+sc_Lobby.update = function(time, delta) {
 
 }

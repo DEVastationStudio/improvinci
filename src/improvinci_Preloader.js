@@ -12,7 +12,7 @@ sc_Preloader.preload = function()
 sc_Preloader.create = function()
 {      
     sc_Preloader.input.on('pointerdown', function(pointer){
-        sc_Preloader.scene.start("sc_Menu");
+        sc_Preloader.scene.start("sc_InGame");
      });
 }
 

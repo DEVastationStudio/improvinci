@@ -4,18 +4,18 @@
 var sc_DrawAvatar = new Phaser.Scene('sc_DrawAvatar');
 
 //Preload
-sc_juegoLocal.preload = function() 
+sc_DrawAvatar.preload = function() 
 {
     
 }
 
 //Create
-sc_juegoLocal.create = function() 
+sc_DrawAvatar.create = function() 
 {
 
 }
 
 //Update
-sc_juegoLocal.update = function(time, delta) {
+sc_DrawAvatar.update = function(time, delta) {
 
 }
