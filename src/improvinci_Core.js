@@ -6,7 +6,7 @@ var config = {
     //width: window.innerWidth * window.devicePixelRatio,
     //height: window.innerHeight * window.devicePixelRatio,    
     scale: {
-        mode: Phaser.Scale.FIT,
+        mode: Phaser.Scale.RESIZE,
         parent: 'phaser-example',
         width: 800,
         height: 600
