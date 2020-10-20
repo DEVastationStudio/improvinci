@@ -3,8 +3,6 @@
 //Phaser configuration
 var config = {
     type: Phaser.AUTO,
-    //width: window.innerWidth * window.devicePixelRatio,
-    //height: window.innerHeight * window.devicePixelRatio,    
     scale: {
         mode: Phaser.Scale.RESIZE,
         parent: 'phaser-example',
@@ -21,7 +19,7 @@ var config = {
             debug: false
         }
     },
-    scene: [sc_Preloader, sc_Menu, sc_Credits, sc_Options, sc_DrawAvatar, sc_Lobby, sc_InGame, sc_GameOver]
+    scene: [Preloader, Menu, Credits, Options, DrawAvatar, Lobby, InGame, GameOver]
 };
 
 
