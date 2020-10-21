@@ -12,7 +12,11 @@ class InGame extends Phaser.Scene {
         this.drawing = Array(250).fill(0).map(x => Array(250).fill(0));
         this.graphics = this.add.graphics();
         this.graphics2 = this.add.graphics();
-    	key = this.input.keyboard.addKey("M");
+        keyBoard = this.input.keyboard.addKeys({ 
+        	'M': Phaser.Input.Keyboard.KeyCodes.M, 
+        	'J': Phaser.Input.Keyboard.KeyCodes.J, 
+        	'N': Phaser.Input.Keyboard.KeyCodes.N, 
+        	'L': Phaser.Input.Keyboard.KeyCodes.L});
     }
     
     update() { 
@@ -37,13 +41,30 @@ class InGame extends Phaser.Scene {
         }
         this.graphics2.fillStyle(0xF55F00, 1.0);
         this.graphics2.fillPoint(this.input.activePointer.worldX, this.input.activePointer.worldY, 5);
-        if(key.isDown)
+        if(keyBoard.M.isDown)
         {
             let msg = new Object();
         	msg.event = 'PRUEBA';
         	game.global.socketDir.send(JSON.stringify(msg));
-        	console.log("Mensaje mandado");
+        }
+        if(keyBoard.J.isDown)
+        {
+        	let msg = new Object();
+        	msg.event = 'TRY_JOIN';
+        	game.global.socketDir.send(JSON.stringify(msg));
+        }
+        if(keyBoard.N.isDown)
+        {
+        	let msg = new Object();
+        	msg.event = 'PEOPLE_IN_ROOM';
+        	game.global.socketDir.send(JSON.stringify(msg));
+        }
+        if(keyBoard.L.isDown)
+        {
+        	let msg = new Object();
+        	msg.event = 'TRY_LEAVE';
+        	game.global.socketDir.send(JSON.stringify(msg));
         }
     }
 }
-var key;
+var keyBoard;

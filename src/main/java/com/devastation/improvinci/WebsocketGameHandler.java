@@ -15,11 +15,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 	private ObjectMapper mapper = new ObjectMapper();
 	private AtomicInteger playerId = new AtomicInteger(0);
 	
-	private static LinkedList<Player> room= new LinkedList<Player>();
-	
-	public static LinkedList<Player> getRooms(){
-		return room;
-	}
+	private static Room room = new Room(3);
 
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
@@ -27,7 +23,6 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 		synchronized(this) {
 			player = new Player(playerId.incrementAndGet(), session);
 			session.getAttributes().put(PLAYER_ATTRIBUTE, player);
-			room.add(player);
 		}
 	}
 	
@@ -40,17 +35,101 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 
 			switch (node.get("event").asText()) {
 			case "PRUEBA":
-				for(int i = 0; i<room.size(); i++) 
+				msg.put("event", "PRUEBA_RETURN");
+				if(player.isInRoom()) 
 				{
-					if(room.get(i).getPlayerId() != player.getPlayerId()) 
+					msg.put("sent", true);
+					for(int i = 0; i<room.getPlayers().size(); i++) 
 					{
-						msg.put("event", "PRUEBA_RETURN");
-						msg.put("idSender", player.getPlayerId());
-						msg.put("idReciever", room.get(i).getPlayerId());
-						msg.put("message", "Hola");
-						room.get(i).WSSession().sendMessage(new TextMessage(msg.toString()));
+						if(room.getPlayers().get(i).getPlayerId() != player.getPlayerId()) 
+						{
+							msg.put("idSender", player.getPlayerId());
+							msg.put("idReciever", room.getPlayers().get(i).getPlayerId());
+							msg.put("message", "Hola");
+							room.getPlayers().get(i).WSSession().sendMessage(new TextMessage(msg.toString()));
+						}
 					}
 				}
+				else
+				{
+					msg.put("sent", false);
+					player.WSSession().sendMessage(new TextMessage(msg.toString()));
+				}
+				
+				break;
+			case "TRY_JOIN":
+				msg.put("event", "TRY_JOIN_RETURN");
+				if(!player.isInRoom()) 
+				{
+					if(room.tryJoin(player)) 
+					{
+						for(int i = 0; i<room.getPlayers().size(); i++) 
+						{
+							if(room.getPlayers().get(i).getPlayerId() != player.getPlayerId()) 
+							{
+								msg.put("message", "Player " + player.getPlayerId() + " joined the room");
+								room.getPlayers().get(i).WSSession().sendMessage(new TextMessage(msg.toString()));
+							}
+							else 
+							{
+								msg.put("message", "Joined succesfully");
+								player.WSSession().sendMessage(new TextMessage(msg.toString()));
+							}
+						}
+					}
+					else 
+					{
+						msg.put("message", "The room is full, try joining later");
+						player.WSSession().sendMessage(new TextMessage(msg.toString()));
+					}
+				}
+				else
+				{
+					msg.put("message", "You are already in a room");
+					player.WSSession().sendMessage(new TextMessage(msg.toString()));
+				}
+				break;
+			case "TRY_LEAVE":
+				msg.put("event", "TRY_LEAVE_RETURN");
+				if(player.isInRoom()) 
+				{
+					room.tryleaveRoom(player);
+					for(int i = 0; i<room.getPlayers().size(); i++) 
+					{
+						if(room.getPlayers().get(i).getPlayerId() != player.getPlayerId()) 
+						{
+							msg.put("message", "Player " + player.getPlayerId() + " left the room");
+							room.getPlayers().get(i).WSSession().sendMessage(new TextMessage(msg.toString()));
+						}
+						else 
+						{
+							msg.put("message", "Leaved room succesfully");
+							player.WSSession().sendMessage(new TextMessage(msg.toString()));
+						}
+					}
+				}
+				else
+				{
+					msg.put("message", "You are not in a room");
+					player.WSSession().sendMessage(new TextMessage(msg.toString()));
+				}
+				break;
+			case "PEOPLE_IN_ROOM":
+				msg.put("event", "PEOPLE_IN_ROOM_RETURN");
+				if(player.isInRoom()) 
+				{
+					String jugadores = "Id's of players in room: ";
+					for(int i = 0; i<room.getPlayers().size(); i++) 
+					{
+						jugadores+=room.getPlayers().get(i).getPlayerId()+", ";
+					}
+					msg.put("message", jugadores);
+				}
+				else 
+				{
+					msg.put("message", "You are not in a room");
+				}
+				player.WSSession().sendMessage(new TextMessage(msg.toString()));
 				break;
 			default:
 				break;

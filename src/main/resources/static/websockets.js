@@ -16,7 +16,19 @@
 		var msg = JSON.parse(message.data);
 		switch (msg.event) {
 			case 'PRUEBA_RETURN':
-				console.log("["+msg.event+"] "+"("+msg.idSender+" => "+msg.idReciever+") - "+msg.message);
+				if(msg.sent)
+					console.log("["+msg.event+"] "+"("+msg.idSender+" => "+msg.idReciever+") - "+msg.message);
+				else
+					console.log("["+msg.event+"] "+"Message can't be sent");
+			break
+			case 'TRY_JOIN_RETURN':
+				console.log("["+msg.event+"] "+msg.message);
+			break
+			case 'PEOPLE_IN_ROOM_RETURN':
+				console.log("["+msg.event+"] "+msg.message);
+			break
+			case 'TRY_LEAVE_RETURN':
+				console.log("["+msg.event+"] "+msg.message);
 			break
 			default :
 			break

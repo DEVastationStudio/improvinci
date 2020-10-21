@@ -7,16 +7,26 @@ import org.springframework.web.socket.WebSocketSession;
 public class Player {
 	private final WebSocketSession session;
 	private final int playerId;
+	private boolean inRoom;
 	
 	public Player(int playerId, WebSocketSession session) {
 		this.playerId= playerId;
 		this.session= session;
+		this.inRoom = false;
 	}
 
 	public int getPlayerId() {
-		return this.playerId;
+		return playerId;
 	}
 
+	public boolean isInRoom() {
+		return inRoom;
+	}
+	
+	public void setInRoom(boolean b) 
+	{
+		inRoom = b;
+	}
 	public WebSocketSession WSSession() {
 		return this.session;
 	}
