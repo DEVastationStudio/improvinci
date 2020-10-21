@@ -16,12 +16,7 @@
 		var msg = JSON.parse(message.data);
 		switch (msg.event) {
 			case 'PRUEBA_RETURN':
-				game.global.receivedMsg=msg.event;
-				game.global.message=msg.txt;
-				console.log("¡FUNCIONA!");
-				if (game.global.DEBUG_MODE) {
-					console.log('[DEBUG] PRUEBA_RETURN.');
-				}
+				console.log("["+msg.event+"] "+"("+msg.idSender+" => "+msg.idReciever+") - "+msg.message);
 			break
 			default :
 			break

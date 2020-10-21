@@ -13,7 +13,7 @@ class Preloader extends Phaser.Scene {
     create() {
         this.input.on('pointerdown', function(pointer){
             console.log(this.scene);
-            this.scene.scene.start("Menu");
+            this.scene.scene.start("InGame");
         });
     }
     

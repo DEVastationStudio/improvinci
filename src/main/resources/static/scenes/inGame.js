@@ -12,9 +12,7 @@ class InGame extends Phaser.Scene {
         this.drawing = Array(250).fill(0).map(x => Array(250).fill(0));
         this.graphics = this.add.graphics();
         this.graphics2 = this.add.graphics();
-        let msg = new Object();
-    	msg.event = 'PRUEBA';
-    	game.global.socketDir.send(JSON.stringify(msg));
+    	key = this.input.keyboard.addKey("M");
     }
     
     update() { 
@@ -39,5 +37,13 @@ class InGame extends Phaser.Scene {
         }
         this.graphics2.fillStyle(0xF55F00, 1.0);
         this.graphics2.fillPoint(this.input.activePointer.worldX, this.input.activePointer.worldY, 5);
+        if(key.isDown)
+        {
+            let msg = new Object();
+        	msg.event = 'PRUEBA';
+        	game.global.socketDir.send(JSON.stringify(msg));
+        	console.log("Mensaje mandado");
+        }
     }
 }
+var key;
