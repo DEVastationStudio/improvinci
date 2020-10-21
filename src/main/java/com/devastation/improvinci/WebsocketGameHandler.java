@@ -1,5 +1,6 @@
 package com.devastation.improvinci;
 
+import org.springframework.util.SocketUtils;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
@@ -41,6 +42,11 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 					msg.put("sent", true);
 					for(int i = 0; i<room.getPlayers().size(); i++) 
 					{
+						if (!room.getPlayers().get(i).WSSession().isOpen())
+						{
+							System.out.println("player " + room.getPlayers().get(i).getPlayerId() + " is not connected.");
+							continue;
+						}
 						if(room.getPlayers().get(i).getPlayerId() != player.getPlayerId()) 
 						{
 							msg.put("idSender", player.getPlayerId());
@@ -65,6 +71,12 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 					{
 						for(int i = 0; i<room.getPlayers().size(); i++) 
 						{
+							if (!room.getPlayers().get(i).WSSession().isOpen())
+							{
+								System.out.println("player " + room.getPlayers().get(i).getPlayerId() + " is not connected.");
+								continue;
+							}
+							
 							if(room.getPlayers().get(i).getPlayerId() != player.getPlayerId()) 
 							{
 								msg.put("message", "Player " + player.getPlayerId() + " joined the room");
@@ -96,17 +108,19 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 					room.tryleaveRoom(player);
 					for(int i = 0; i<room.getPlayers().size(); i++) 
 					{
+						if (!room.getPlayers().get(i).WSSession().isOpen())
+						{
+							System.out.println("player " + room.getPlayers().get(i).getPlayerId() + " is not connected.");
+							continue;
+						}
 						if(room.getPlayers().get(i).getPlayerId() != player.getPlayerId()) 
 						{
 							msg.put("message", "Player " + player.getPlayerId() + " left the room");
 							room.getPlayers().get(i).WSSession().sendMessage(new TextMessage(msg.toString()));
 						}
-						else 
-						{
-							msg.put("message", "Leaved room succesfully");
-							player.WSSession().sendMessage(new TextMessage(msg.toString()));
-						}
 					}
+					msg.put("message", "Left room succesfully");
+					player.WSSession().sendMessage(new TextMessage(msg.toString()));
 				}
 				else
 				{
@@ -121,6 +135,11 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 					String jugadores = "Id's of players in room: ";
 					for(int i = 0; i<room.getPlayers().size(); i++) 
 					{
+						if (!room.getPlayers().get(i).WSSession().isOpen())
+						{
+							System.out.println("player " + room.getPlayers().get(i).getPlayerId() + " is not connected.");
+							continue;
+						}
 						jugadores+=room.getPlayers().get(i).getPlayerId()+", ";
 					}
 					msg.put("message", jugadores);
