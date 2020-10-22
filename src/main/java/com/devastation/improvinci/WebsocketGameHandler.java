@@ -150,6 +150,35 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 				}
 				player.WSSession().sendMessage(new TextMessage(msg.toString()));
 				break;
+			case "SEND_IMAGE":
+				msg.put("event", "SEND_IMAGE_RETURN");
+				if(player.isInRoom()) 
+				{
+					for(int i = 0; i<room.getPlayers().size(); i++) 
+					{
+						if (room.getPlayers().get(i).WSSession().isOpen())
+						{
+							if(room.getPlayers().get(i).getPlayerId() != player.getPlayerId()) 
+							{
+								msg.put("isImage", true);
+								msg.put("image", node.get("image").asText());
+								room.getPlayers().get(i).WSSession().sendMessage(new TextMessage(msg.toString()));
+							}
+							else
+							{
+								msg.put("isImage", false);
+								msg.put("message", "Image sent");
+								player.WSSession().sendMessage(new TextMessage(msg.toString()));
+							}
+						}
+					}
+				}
+				else
+				{
+					msg.put("message", "You are not in a room");
+					player.WSSession().sendMessage(new TextMessage(msg.toString()));
+				}
+				break;
 			default:
 				break;
 			}

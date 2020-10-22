@@ -20,17 +20,23 @@
 					console.log("["+msg.event+"] "+"("+msg.idSender+" => "+msg.idReciever+") - "+msg.message);
 				else
 					console.log("["+msg.event+"] "+"Message can't be sent");
-			break
+				break;
 			case 'TRY_JOIN_RETURN':
 				console.log("["+msg.event+"] "+msg.message);
-			break
+				break;
 			case 'PEOPLE_IN_ROOM_RETURN':
 				console.log("["+msg.event+"] "+msg.message);
-			break
+				break;
 			case 'TRY_LEAVE_RETURN':
 				console.log("["+msg.event+"] "+msg.message);
-			break
+				break;
+			case 'SEND_IMAGE_RETURN':
+				if(msg.isImage)
+					console.log("["+msg.event+"] "+msg.image);
+				else
+					console.log("["+msg.event+"] "+msg.message);
+				break;
 			default :
-			break
+				break;
 		}
 	}
