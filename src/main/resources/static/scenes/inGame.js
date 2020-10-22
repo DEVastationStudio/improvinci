@@ -9,7 +9,9 @@ class InGame extends Phaser.Scene {
     }
 
     create() {
-        this.drawing = Array(256).fill(0).map(x => Array(256).fill(0));
+        this.randomize = true;
+        this.imageSize = 256;
+        this.drawing = Array(this.imageSize).fill(0).map(x => Array(this.imageSize).fill(0));
         this.graphics = this.add.graphics();
         this.graphics2 = this.add.graphics();
         keyBoard = this.input.keyboard.addKeys({ 
@@ -21,23 +23,26 @@ class InGame extends Phaser.Scene {
     }
     
     update() { 
-        this.graphics.clear();
-        for (var i = 0; i < 256; i++)
+        if (this.randomize)
         {
-            for (var j = 0; j < 256; j++)
+            this.graphics.clear();
+            for (let i = 0; i < this.imageSize; i++)
             {
-                this.drawing[i][j] = Math.floor(Math.random()*2);
-                if (this.drawing[i][j] == 0)
+                for (let j = 0; j < this.imageSize; j++)
                 {
-                    this.graphics.fillStyle(0xFFFFFF, 1.0);
-                    this.graphics.fillPoint(i, j);
+                    this.drawing[i][j] = Math.floor(Math.random()*2);
+                    if (this.drawing[i][j] == 0)
+                    {
+                        this.graphics.fillStyle(0xFFFFFF, 1.0);
+                        this.graphics.fillPoint(i, j);
+                    }
+                    else
+                    {
+                        this.graphics.fillStyle(0x000000, 1.0);
+                        this.graphics.fillPoint(i, j);
+                    }
+        
                 }
-                else
-                {
-                    this.graphics.fillStyle(0x000000, 1.0);
-                    this.graphics.fillPoint(i, j);
-                }
-    
             }
         }
         this.graphics2.fillStyle(0xF55F00, 1.0);
@@ -73,88 +78,75 @@ class InGame extends Phaser.Scene {
             sent = true;
         	let msg = new Object();
             msg.event = 'SEND_IMAGE';
+            this.randomize = false;
             //Add image to message
-            for(i = 0; i<256; i++)
+            
+            let image_to_send = ""; 
+            let partial_image = "";
+            for (let i = 0; i < this.drawing.length; i++)
             {
-                for(j = 0; j<256; j+=4)
+                for (let j = 0; j < this.drawing.length/4; j++)
                 {
-                    partial_image = this.drawing[i][j].toString() + this.drawing[i][j+1].toString() + this.drawing[i][j+2].toString() + this.drawing[i][j+3].toString();
-                    //console.log(partial_image);
-                    switch(partial_image)
+                    for (let k = 0; k < 4; k++)
                     {
-                        case "0000":
-                            image_to_send+="0";
-                            partial_image = "";
-                            break;
-                        case "0001":
-                            image_to_send+="1";
-                            partial_image = "";
-                            break;
-                        case "0010":
-                            image_to_send+="2";
-                            partial_image = "";
-                            break;
-                        case "0011":
-                            image_to_send+="3";
-                            partial_image = "";
-                            break;
-                        case "0100":
-                            image_to_send+="4";
-                            partial_image = "";
-                            break;
-                        case "0101":
-                            image_to_send+="5";
-                            partial_image = "";
-                            break;
-                        case "0110":
-                            image_to_send+="6";
-                            partial_image = "";
-                            break;
-                        case "0111":
-                            image_to_send+="7";
-                            partial_image = "";
-                            break;
-                        case "1000":
-                            image_to_send+="8";
-                            partial_image = "";
-                            break;
-                        case "1001":
-                            image_to_send+="9";
-                            partial_image = "";
-                            break;
-                        case "1010":
-                            image_to_send+="A";
-                            partial_image = "";
-                            break;
-                        case "1011":
-                            image_to_send+="B";
-                            partial_image = "";
-                            break;
-                        case "1100":
-                            image_to_send+="C";
-                            partial_image = "";
-                            break;
-                        case "1101":
-                            image_to_send+="D";
-                            partial_image = "";
-                            break;
-                        case "1110":
-                            image_to_send+="E";
-                            partial_image = "";
-                            break;
-                        case "1111":
-                            image_to_send+="F";
-                            partial_image = "";
-                            break;
+                        partial_image += this.drawing[j*4+k][i];
                     }
+                    image_to_send += parseInt(partial_image , 2).toString(16).toUpperCase();
+                    partial_image = "";
                 }
+
             }
+
             msg.image = image_to_send;
+            console.log("Sending " + image_to_send);
         	game.global.socketDir.send(JSON.stringify(msg));
         }
     }
+    decodeImage(img) {
+        
+
+        var arr;
+
+        /*for (let i = 0; i < img.length; i++)
+        {
+            arr = parseInt(img[i] , 16).toString(2);
+            for (let j = 0; j < 4; j++)
+            {
+                //this.drawing[?*4+j][?/this.drawing.length?] = arr[j]; //i + j * this.drawing.length inverted?
+            }
+        }*/
+
+        for (let i = 0; i < this.drawing.length; i++)
+        {
+            for (let j = 0; j < this.drawing.length/4; j++)
+            {
+                arr = parseInt(img[j+i*this.drawing.length/4] , 16).toString(2);
+                for (let k = 0; k < 4; k++)
+                {
+                    this.drawing[j*4+k][i] = arr[k];
+                }
+            }
+        }
+
+        this.graphics.clear();
+        for (let i = 0; i < this.imageSize; i++)
+        {
+            for (let j = 0; j < this.imageSize; j++)
+            {
+                if (this.drawing[i][j] == 0)
+                {
+                    this.graphics.fillStyle(0xFFFFFF, 1.0);
+                    this.graphics.fillPoint(i, j);
+                }
+                else
+                {
+                    this.graphics.fillStyle(0x000000, 1.0);
+                    this.graphics.fillPoint(i, j);
+                }
+    
+            }
+        }
+    }
 }
-var image_to_send = ""; 
-var partial_image = "";
 var keyBoard;
 var sent = false;

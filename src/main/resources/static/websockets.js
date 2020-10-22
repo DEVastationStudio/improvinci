@@ -31,8 +31,12 @@
 				console.log("["+msg.event+"] "+msg.message);
 				break;
 			case 'SEND_IMAGE_RETURN':
+				game.scene.keys.InGame.randomize = false;
 				if(msg.isImage)
+				{
 					console.log("["+msg.event+"] "+msg.image);
+					game.scene.keys.InGame.decodeImage(msg.image);
+				}
 				else
 					console.log("["+msg.event+"] "+msg.message);
 				break;

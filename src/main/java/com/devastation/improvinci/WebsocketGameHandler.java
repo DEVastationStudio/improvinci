@@ -1,6 +1,7 @@
 package com.devastation.improvinci;
 
 import org.springframework.util.SocketUtils;
+import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
@@ -26,7 +27,11 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 			session.getAttributes().put(PLAYER_ATTRIBUTE, player);
 		}
 	}
-	
+	@Override
+	public void afterConnectionClosed(WebSocketSession session, CloseStatus closeStatus){
+		System.out.println("Player " + session.getId() + " disconnected. Reason: " + closeStatus.getReason());
+	}
+
 	protected synchronized void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		try {
 			JsonNode node = mapper.readTree(message.getPayload());

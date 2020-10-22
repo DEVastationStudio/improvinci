@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
 import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
+import org.springframework.web.socket.server.standard.ServletServerContainerFactoryBean;
 
 @SpringBootApplication
 @EnableWebSocket
@@ -22,6 +23,14 @@ public class ImprovinciApplication implements WebSocketConfigurer {
 	@Bean
 	public WebsocketGameHandler gameHandler() {
 		return new WebsocketGameHandler();
+	}
+	
+	@Bean
+	public ServletServerContainerFactoryBean createWebSocketContainer() {
+		ServletServerContainerFactoryBean container = new ServletServerContainerFactoryBean();
+		container.setMaxTextMessageBufferSize(24576);
+		container.setMaxBinaryMessageBufferSize(24576);
+		return container;
 	}
 }
 
