@@ -120,7 +120,7 @@ class InGame extends Phaser.Scene {
         {
             for (let j = 0; j < this.drawing.length/4; j++)
             {
-                arr = parseInt(img[j+i*this.drawing.length/4] , 16).toString(2);
+                arr = parseInt(img[j+i*this.drawing.length/4] , 16).toString(2).padStart(4,"0");
                 for (let k = 0; k < 4; k++)
                 {
                     this.drawing[j*4+k][i] = arr[k];
