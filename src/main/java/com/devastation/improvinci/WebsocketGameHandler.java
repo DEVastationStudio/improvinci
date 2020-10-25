@@ -184,6 +184,11 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 					player.WSSession().sendMessage(new TextMessage(msg.toString()));
 				}
 				break;
+			case "HEARTBEAT":
+				msg.put("event", "HEARTBEAT_RETURN");
+				msg.put("message", "Connection is alive");
+				player.WSSession().sendMessage(new TextMessage(msg.toString()));
+				break;
 			default:
 				break;
 			}

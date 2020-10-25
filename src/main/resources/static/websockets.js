@@ -40,7 +40,54 @@
 				else
 					console.log("["+msg.event+"] "+msg.message);
 				break;
+			case 'HEARTBEAT_RETURN':
+				if(!conectionUp){actualHeartBeat = Date.now(); conectionUp = true;}
+				lastHeartBeat = actualHeartBeat;
+				actualHeartBeat = Date.now();
+				console.log("["+msg.event+"] "+msg.message);
+				break;
 			default :
 				break;
 		}
 	}
+
+	//Heartbeat manager
+	var heartbeat;
+	var isAlive;
+	var lastHeartBeat;
+	var actualHeartBeat;
+	var conectionUp = false;
+	var heartRate = 250;
+	var deathTime = 2500;
+
+	function heartMonitor(turnOn)
+	{
+		if(turnOn)
+		{
+			heartbeat = window.setInterval(function(){
+				let msg = new Object();
+				msg.event = 'HEARTBEAT';
+				game.global.socketDir.send(JSON.stringify(msg));
+			}, heartRate);
+			console.log("[heartMonitor] Heart is beating");
+		}else
+		{
+			clearInterval(heartbeat);
+			console.log("[heartMonitor] Heart died");
+		}
+	}
+
+	function liveMonitor()
+	{
+		heartMonitor(true);
+		isAlive = window.setInterval(function(){
+			actualHeartBeat = Date.now();
+			if((actualHeartBeat-lastHeartBeat)>deathTime)
+			{
+				heartMonitor(false);
+				clearInterval(isAlive);
+			}
+		}, deathTime);
+	}
+
+	liveMonitor();
