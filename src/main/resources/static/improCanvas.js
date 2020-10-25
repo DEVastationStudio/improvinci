@@ -1,14 +1,16 @@
 "use strict";
 class improCanvas {
-    imageSize = 256;
-    imageHalf = this.imageSize / 2;
+    /*imageSize;
+    imageHalf;
     drawing;
     curScene;
     graphics;
     x;
-    y;
+    y;*/
 
     constructor(scene) {
+        this.imageSize = 256;
+        this.imageHalf = this.imageSize / 2;
         this.drawing = Array(this.imageSize).fill(0).map(x => Array(this.imageSize).fill(0));
         this.curScene = scene;
         this.graphics = scene.add.graphics();
