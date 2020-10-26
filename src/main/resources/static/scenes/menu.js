@@ -9,9 +9,23 @@ class Menu extends Phaser.Scene {
     }
 
     create() {
-    	play_btn = game.add.text(w - 100, 20, 'Play', { font: '24px Arial', fill: '#fff' });
-    	this.graphics.fillStyle(0x000000, 1.0);
-        this.graphics.fillPoint(i, j);
+    	// Play button
+    	this.ready_bt = this.add.image(750,200,'Ready_es').setInteractive();
+    	this.options_bt = this.add.image(750,400,'Ready_host_es').setInteractive();
+    	this.credits_bt = this.add.image(750,600,'Ronda_es').setInteractive();
+    	
+    	//Boton de jugar
+		this.ready_bt.on('pointerdown', function (pointer){
+			this.scene.start("InGame");
+		}, this);
+		
+		this.options_bt.on('pointerdown', function (pointer){
+			this.scene.start("Options");
+		}, this);
+		
+		this.credits_bt.on('pointerdown', function (pointer){
+			this.scene.start("Credits");
+		}, this);
     }
     
     update() { 
