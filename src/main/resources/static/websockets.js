@@ -23,6 +23,14 @@
 				break;
 			case 'TRY_JOIN_RETURN':
 				console.log("["+msg.event+"] "+msg.message);
+				game.scene.keys.InGame.writeRoomCode("Room code: "+msg.roomCode);
+				break;
+			case 'CREATE_ROOM_RETURN':
+				console.log("["+msg.event+"] "+msg.roomCode);
+				game.scene.keys.InGame.joinRoom(msg.roomCode);
+				break;
+			case 'GET_ROOM_CODE_RETURN':
+				console.log("["+msg.event+"] "+msg.roomCode);
 				break;
 			case 'PEOPLE_IN_ROOM_RETURN':
 				console.log("["+msg.event+"] "+msg.message);
@@ -58,7 +66,7 @@
 	var actualHeartBeat;
 	var conectionUp = false;
 	var heartRate = 250;
-	var deathTime = 2500;
+	var deathTime = 25000;
 
 	function heartMonitor(turnOn)
 	{
