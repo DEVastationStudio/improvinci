@@ -1,14 +1,13 @@
 package com.devastation.improvinci;
 
+import java.time.LocalDateTime;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.Random;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
-import org.springframework.util.SocketUtils;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -19,20 +18,40 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 
 	private static final String PLAYER_ATTRIBUTE = "PLAYER";
 	private ObjectMapper mapper = new ObjectMapper();
-	private AtomicInteger playerId = new AtomicInteger(0);
+	//private AtomicInteger playerId = new AtomicInteger(0);
 	private ConcurrentHashMap<String, Room> rooms = new ConcurrentHashMap(100);
+	private ConcurrentHashMap<String, Player> players = new ConcurrentHashMap(900);
 
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		Player player;
 		synchronized(this) {
-			player = new Player(playerId.incrementAndGet(), session);
+			player = new Player(session.getId().hashCode(), session);
 			session.getAttributes().put(PLAYER_ATTRIBUTE, player);
+			players.put(Integer.toHexString(session.getId().hashCode()).toUpperCase(), player);
 		}
 	}
 	@Override
-	public void afterConnectionClosed(WebSocketSession session, CloseStatus closeStatus){
+	public void afterConnectionClosed(WebSocketSession session, CloseStatus closeStatus) throws Exception {
 		System.out.println("Player " + session.getId() + " disconnected. Reason: " + closeStatus.getReason());
+		Player player;
+		player = players.get(Integer.toHexString(session.getId().hashCode()).toUpperCase());
+		if(player.isInRoom())
+		{
+			System.out.println(player.getRoomCode());
+			ObjectNode msg = mapper.createObjectNode();
+			msg.put("event", "PLAYER_DISCONNECTION_RETURN");
+			msg.put("message",  player.getPlayerId()+" disconnected");
+			for(int i = 0; i<rooms.get(player.getRoomCode()).getPlayers().size(); i++)
+			{
+				if(rooms.get(player.getRoomCode()).getPlayers().get(i).getPlayerId() != player.getPlayerId())
+				{
+					rooms.get(player.getRoomCode()).getPlayers().get(i).WSSession().sendMessage(new TextMessage(msg.toString()));
+				}
+			}
+		}
+		rooms.get(player.getRoomCode()).tryleaveRoom(player);
+		players.remove(Integer.toHexString(session.getId().hashCode()).toUpperCase());
 	}
 
 	protected synchronized void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
@@ -201,6 +220,11 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 				msg.put("message", "Connection is alive");
 				player.WSSession().sendMessage(new TextMessage(msg.toString()));
 				break;
+			case "PLAYER_DISCONNECTION":
+				msg.put("event", "PLAYER_DISCONNECTION_RETURN");
+				msg.put("message", "Player disconnected");
+				rooms.get(node.get("roomCode").asText()).getPlayers().get(0);
+				break;
 			default:
 				break;
 			}
@@ -213,7 +237,8 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 
 	private String createRoom(Integer numberPeople, WebSocketSession session)
 	{
-		String roomCode = Integer.toHexString(session.getId().hashCode()).toUpperCase();
+		String date = LocalDateTime.now().toString();
+		String roomCode = Integer.toHexString(session.getId().hashCode() * date.hashCode()).toUpperCase();
 		rooms.put(roomCode,new Room(numberPeople, roomCode));
 		return roomCode;
 	}

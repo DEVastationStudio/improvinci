@@ -1,5 +1,5 @@
 // WEBSOCKET CONFIGURATOR
-	game.global.socketDir = new WebSocket("ws://localhost:8080/improvinci");
+	game.global.socketDir = new WebSocket("wss://90.162.171.98:8080/improvinci");
 	
 	game.global.socketDir.onopen = () => {
 		if (game.global.DEBUG_MODE) {
@@ -45,13 +45,16 @@
 					console.log("["+msg.event+"] "+msg.image);
 					game.scene.keys.InGame.decodeImage(msg.image);
 				}
-				else
+				els
 					console.log("["+msg.event+"] "+msg.message);
 				break;
 			case 'HEARTBEAT_RETURN':
 				if(!conectionUp){actualHeartBeat = Date.now(); conectionUp = true;}
 				lastHeartBeat = actualHeartBeat;
 				actualHeartBeat = Date.now();
+				console.log("["+msg.event+"] "+msg.message);
+				break;
+			case 'PLAYER_DISCONNECTION_RETURN':
 				console.log("["+msg.event+"] "+msg.message);
 				break;
 			default :
