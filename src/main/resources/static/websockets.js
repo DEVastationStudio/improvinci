@@ -1,5 +1,5 @@
 // WEBSOCKET CONFIGURATOR
-	game.global.socketDir = new WebSocket("wss://90.162.171.98:8080/improvinci");
+	game.global.socketDir = new WebSocket("wss://improvinci.herokuapp.com/improvinci");
 	
 	game.global.socketDir.onopen = () => {
 		if (game.global.DEBUG_MODE) {
