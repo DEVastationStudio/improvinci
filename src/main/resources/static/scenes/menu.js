@@ -9,12 +9,38 @@ class Menu extends Phaser.Scene {
     }
 
     create() {
-    	play_btn = game.add.text(w - 100, 20, 'Play', { font: '24px Arial', fill: '#fff' });
-    	this.graphics.fillStyle(0x000000, 1.0);
-        this.graphics.fillPoint(i, j);
+    	// Play button
+    	this.menu = this.add.image(game.canvas.width/2,  game.canvas.height/2,'Menu');
+    	this.menu.scaleX = game.canvas.width/1920;
+    	this.menu.scaleY = game.canvas.width/2200;
+    	this.ready_bt = this.add.image(game.canvas.width*26 / 50 , game.canvas.height*2 / 5,'Ready_es').setInteractive();
+    	this.ready_bt.setScale(game.canvas.height/1080);
+    	this.options_bt = this.add.image(game.canvas.width / 2,game.canvas.height*30 / 50,'Ready_host_es').setInteractive();
+    	this.options_bt.setScale(game.canvas.height/1080);
+    	this.credits_bt = this.add.image(game.canvas.width / 2,game.canvas.height*40 / 50,'Ronda_es').setInteractive();
+    	this.credits_bt.setScale(game.canvas.height/1080);
+    	
+    	//Boton de jugar
+		this.ready_bt.on('pointerdown', function (pointer){
+			this.scene.start("InGame");
+		}, this);
+		
+		this.options_bt.on('pointerdown', function (pointer){
+			this.scene.start("Options");
+		}, this);
+		
+		this.credits_bt.on('pointerdown', function (pointer){
+			this.scene.start("Credits");
+		}, this);
     }
     
     update() { 
-
+    	
+    	this.ready_bt.x = game.canvas.width * 26 / 50;
+    	this.ready_bt.y = game.canvas.height*2 / 5;
+    	this.options_bt.x = game.canvas.width / 2;
+    	this.options_bt.y = game.canvas.height*30 / 50
+    	this.credits_bt.x = game.canvas.width / 2;
+    	this.credits_bt.y = game.canvas.height*40 / 50;
     }
 }

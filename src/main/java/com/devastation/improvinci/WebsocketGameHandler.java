@@ -1,35 +1,57 @@
 package com.devastation.improvinci;
 
-import org.springframework.util.SocketUtils;
+import java.time.LocalDateTime;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.LinkedList;
+
 
 public class WebsocketGameHandler extends TextWebSocketHandler {
 
 	private static final String PLAYER_ATTRIBUTE = "PLAYER";
 	private ObjectMapper mapper = new ObjectMapper();
-	private AtomicInteger playerId = new AtomicInteger(0);
-	
-	private static Room room = new Room(3);
+	//private AtomicInteger playerId = new AtomicInteger(0);
+	private ConcurrentHashMap<String, Room> rooms = new ConcurrentHashMap(100);
+	private ConcurrentHashMap<String, Player> players = new ConcurrentHashMap(900);
 
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		Player player;
 		synchronized(this) {
-			player = new Player(playerId.incrementAndGet(), session);
+			player = new Player(session.getId().hashCode(), session);
 			session.getAttributes().put(PLAYER_ATTRIBUTE, player);
+			players.put(Integer.toHexString(session.getId().hashCode()).toUpperCase(), player);
 		}
 	}
 	@Override
-	public void afterConnectionClosed(WebSocketSession session, CloseStatus closeStatus){
+	public void afterConnectionClosed(WebSocketSession session, CloseStatus closeStatus) throws Exception {
 		System.out.println("Player " + session.getId() + " disconnected. Reason: " + closeStatus.getReason());
+		Player player;
+		player = players.get(Integer.toHexString(session.getId().hashCode()).toUpperCase());
+		if(player.isInRoom())
+		{
+			System.out.println(player.getRoomCode());
+			ObjectNode msg = mapper.createObjectNode();
+			msg.put("event", "PLAYER_DISCONNECTION_RETURN");
+			msg.put("message",  player.getPlayerId()+" disconnected");
+			for(int i = 0; i<rooms.get(player.getRoomCode()).getPlayers().size(); i++)
+			{
+				if(rooms.get(player.getRoomCode()).getPlayers().get(i).getPlayerId() != player.getPlayerId())
+				{
+					rooms.get(player.getRoomCode()).getPlayers().get(i).WSSession().sendMessage(new TextMessage(msg.toString()));
+				}
+			}
+		}
+		rooms.get(player.getRoomCode()).tryleaveRoom(player);
+		players.remove(Integer.toHexString(session.getId().hashCode()).toUpperCase());
 	}
 
 	protected synchronized void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
@@ -45,19 +67,19 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 				if(player.isInRoom()) 
 				{
 					msg.put("sent", true);
-					for(int i = 0; i<room.getPlayers().size(); i++) 
+					for(int i = 0; i<rooms.get(player.getRoomCode()).getPlayers().size(); i++) 
 					{
-						if (!room.getPlayers().get(i).WSSession().isOpen())
+						if (!rooms.get(player.getRoomCode()).getPlayers().get(i).WSSession().isOpen())
 						{
-							System.out.println("player " + room.getPlayers().get(i).getPlayerId() + " is not connected.");
+							System.out.println("player " + rooms.get(player.getRoomCode()).getPlayers().get(i).getPlayerId() + " is not connected.");
 							continue;
 						}
-						if(room.getPlayers().get(i).getPlayerId() != player.getPlayerId()) 
+						if(rooms.get(player.getRoomCode()).getPlayers().get(i).getPlayerId() != player.getPlayerId()) 
 						{
 							msg.put("idSender", player.getPlayerId());
-							msg.put("idReciever", room.getPlayers().get(i).getPlayerId());
+							msg.put("idReciever", rooms.get(player.getRoomCode()).getPlayers().get(i).getPlayerId());
 							msg.put("message", "Hola");
-							room.getPlayers().get(i).WSSession().sendMessage(new TextMessage(msg.toString()));
+							rooms.get(player.getRoomCode()).getPlayers().get(i).WSSession().sendMessage(new TextMessage(msg.toString()));
 						}
 					}
 				}
@@ -66,26 +88,34 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 					msg.put("sent", false);
 					player.WSSession().sendMessage(new TextMessage(msg.toString()));
 				}
-				
+				break;
+			case "CREATE_ROOM":
+				if(!player.isInRoom())
+				{
+					msg.put("event", "CREATE_ROOM_RETURN");
+					msg.put("roomCode", createRoom(3, session));
+					player.WSSession().sendMessage(new TextMessage(msg.toString()));
+				}
 				break;
 			case "TRY_JOIN":
 				msg.put("event", "TRY_JOIN_RETURN");
-				if(!player.isInRoom()) 
+				msg.put("roomCode",node.get("roomCode").asText());
+				if(!player.isInRoom())
 				{
-					if(room.tryJoin(player)) 
+					if(getRoom(node.get("roomCode").asText()).tryJoin(player, node.get("roomCode").asText()))
 					{
-						for(int i = 0; i<room.getPlayers().size(); i++) 
+						for(int i = 0; i<getRoom(node.get("roomCode").asText()).getPlayers().size(); i++) 
 						{
-							if (!room.getPlayers().get(i).WSSession().isOpen())
+							if (!getRoom(node.get("roomCode").asText()).getPlayers().get(i).WSSession().isOpen())
 							{
-								System.out.println("player " + room.getPlayers().get(i).getPlayerId() + " is not connected.");
+								System.out.println("player " + getRoom(node.get("roomCode").asText()).getPlayers().get(i).getPlayerId() + " is not connected.");
 								continue;
 							}
 							
-							if(room.getPlayers().get(i).getPlayerId() != player.getPlayerId()) 
+							if(getRoom(node.get("roomCode").asText()).getPlayers().get(i).getPlayerId() != player.getPlayerId()) 
 							{
 								msg.put("message", "Player " + player.getPlayerId() + " joined the room");
-								room.getPlayers().get(i).WSSession().sendMessage(new TextMessage(msg.toString()));
+								getRoom(node.get("roomCode").asText()).getPlayers().get(i).WSSession().sendMessage(new TextMessage(msg.toString()));
 							}
 							else 
 							{
@@ -94,7 +124,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 							}
 						}
 					}
-					else 
+					else
 					{
 						msg.put("message", "The room is full, try joining later");
 						player.WSSession().sendMessage(new TextMessage(msg.toString()));
@@ -110,18 +140,19 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 				msg.put("event", "TRY_LEAVE_RETURN");
 				if(player.isInRoom()) 
 				{
-					room.tryleaveRoom(player);
-					for(int i = 0; i<room.getPlayers().size(); i++) 
+					String rC = player.getRoomCode();
+					rooms.get(player.getRoomCode()).tryleaveRoom(player);
+					for(int i = 0; i<rooms.get(rC).getPlayers().size(); i++) 
 					{
-						if (!room.getPlayers().get(i).WSSession().isOpen())
+						if (!rooms.get(rC).getPlayers().get(i).WSSession().isOpen())
 						{
-							System.out.println("player " + room.getPlayers().get(i).getPlayerId() + " is not connected.");
+							System.out.println("player " + rooms.get(rC).getPlayers().get(i).getPlayerId() + " is not connected.");
 							continue;
 						}
-						if(room.getPlayers().get(i).getPlayerId() != player.getPlayerId()) 
+						if(rooms.get(rC).getPlayers().get(i).getPlayerId() != player.getPlayerId()) 
 						{
 							msg.put("message", "Player " + player.getPlayerId() + " left the room");
-							room.getPlayers().get(i).WSSession().sendMessage(new TextMessage(msg.toString()));
+							rooms.get(rC).getPlayers().get(i).WSSession().sendMessage(new TextMessage(msg.toString()));
 						}
 					}
 					msg.put("message", "Left room succesfully");
@@ -137,15 +168,15 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 				msg.put("event", "PEOPLE_IN_ROOM_RETURN");
 				if(player.isInRoom()) 
 				{
-					String jugadores = "Id's of players in room: ";
-					for(int i = 0; i<room.getPlayers().size(); i++) 
+					String jugadores = "Room "+player.getRoomCode()+": ";
+					for(int i = 0; i<rooms.get(player.getRoomCode()).getPlayers().size(); i++) 
 					{
-						if (!room.getPlayers().get(i).WSSession().isOpen())
+						if (!rooms.get(player.getRoomCode()).getPlayers().get(i).WSSession().isOpen())
 						{
-							System.out.println("player " + room.getPlayers().get(i).getPlayerId() + " is not connected.");
+							System.out.println("player " + rooms.get(player.getRoomCode()).getPlayers().get(i).getPlayerId() + " is not connected.");
 							continue;
 						}
-						jugadores+=room.getPlayers().get(i).getPlayerId()+", ";
+						jugadores+=rooms.get(player.getRoomCode()).getPlayers().get(i).getPlayerId()+", ";
 					}
 					msg.put("message", jugadores);
 				}
@@ -159,15 +190,15 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 				msg.put("event", "SEND_IMAGE_RETURN");
 				if(player.isInRoom()) 
 				{
-					for(int i = 0; i<room.getPlayers().size(); i++) 
+					for(int i = 0; i<rooms.get(player.getRoomCode()).getPlayers().size(); i++) 
 					{
-						if (room.getPlayers().get(i).WSSession().isOpen())
+						if (rooms.get(player.getRoomCode()).getPlayers().get(i).WSSession().isOpen())
 						{
-							if(room.getPlayers().get(i).getPlayerId() != player.getPlayerId()) 
+							if(rooms.get(player.getRoomCode()).getPlayers().get(i).getPlayerId() != player.getPlayerId()) 
 							{
 								msg.put("isImage", true);
 								msg.put("image", node.get("image").asText());
-								room.getPlayers().get(i).WSSession().sendMessage(new TextMessage(msg.toString()));
+								rooms.get(player.getRoomCode()).getPlayers().get(i).WSSession().sendMessage(new TextMessage(msg.toString()));
 							}
 							else
 							{
@@ -189,6 +220,11 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 				msg.put("message", "Connection is alive");
 				player.WSSession().sendMessage(new TextMessage(msg.toString()));
 				break;
+			case "PLAYER_DISCONNECTION":
+				msg.put("event", "PLAYER_DISCONNECTION_RETURN");
+				msg.put("message", "Player disconnected");
+				rooms.get(node.get("roomCode").asText()).getPlayers().get(0);
+				break;
 			default:
 				break;
 			}
@@ -198,4 +234,19 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 			e.printStackTrace(System.err);
 		}
 	}
+
+	private String createRoom(Integer numberPeople, WebSocketSession session)
+	{
+		String date = LocalDateTime.now().toString();
+		String roomCode = Integer.toHexString(session.getId().hashCode() * date.hashCode()).toUpperCase();
+		rooms.put(roomCode,new Room(numberPeople, roomCode));
+		return roomCode;
+	}
+
+	private Room getRoom(String number)
+	{
+		return rooms.get(number);
+	}
 }
+
+

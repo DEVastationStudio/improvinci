@@ -1,5 +1,5 @@
 // WEBSOCKET CONFIGURATOR
-	game.global.socketDir = new WebSocket("ws://localhost:8080/improvinci");
+	game.global.socketDir = new WebSocket("wss://improvinci.herokuapp.com/improvinci");
 	
 	game.global.socketDir.onopen = () => {
 		if (game.global.DEBUG_MODE) {
@@ -23,6 +23,14 @@
 				break;
 			case 'TRY_JOIN_RETURN':
 				console.log("["+msg.event+"] "+msg.message);
+				game.scene.keys.InGame.writeRoomCode("Room code: "+msg.roomCode);
+				break;
+			case 'CREATE_ROOM_RETURN':
+				console.log("["+msg.event+"] "+msg.roomCode);
+				game.scene.keys.InGame.joinRoom(msg.roomCode);
+				break;
+			case 'GET_ROOM_CODE_RETURN':
+				console.log("["+msg.event+"] "+msg.roomCode);
 				break;
 			case 'PEOPLE_IN_ROOM_RETURN':
 				console.log("["+msg.event+"] "+msg.message);
@@ -37,13 +45,16 @@
 					console.log("["+msg.event+"] "+msg.image);
 					game.scene.keys.InGame.decodeImage(msg.image);
 				}
-				else
+				els
 					console.log("["+msg.event+"] "+msg.message);
 				break;
 			case 'HEARTBEAT_RETURN':
 				if(!conectionUp){actualHeartBeat = Date.now(); conectionUp = true;}
 				lastHeartBeat = actualHeartBeat;
 				actualHeartBeat = Date.now();
+				console.log("["+msg.event+"] "+msg.message);
+				break;
+			case 'PLAYER_DISCONNECTION_RETURN':
 				console.log("["+msg.event+"] "+msg.message);
 				break;
 			default :
@@ -58,7 +69,7 @@
 	var actualHeartBeat;
 	var conectionUp = false;
 	var heartRate = 250;
-	var deathTime = 2500;
+	var deathTime = 25000;
 
 	function heartMonitor(turnOn)
 	{
