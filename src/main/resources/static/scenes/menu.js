@@ -22,7 +22,7 @@ class Menu extends Phaser.Scene {
     	
     	//Boton de jugar
 		this.ready_bt.on('pointerdown', function (pointer){
-			this.scene.start("InGame");
+			this.scene.start("DrawAvatar");
 		}, this);
 		
 		this.options_bt.on('pointerdown', function (pointer){

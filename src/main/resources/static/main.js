@@ -6,8 +6,8 @@ var config = {
     scale: {
         mode: Phaser.Scale.RESIZE,
         parent: 'phaser-example',
-        width: 800,
-        height: 600
+        width: 1280,
+        height: 720
     },
     parent: "game",
     dom: {
@@ -19,7 +19,7 @@ var config = {
             debug: false
         }
     },
-    scene: [Preloader, Menu, Credits, Options, DrawAvatar, Lobby, InGame, GameOver, DisconnectOverlay]
+    scene: [Preloader, Menu, Credits, Options, DrawAvatar, PreLobby, Lobby, InGame, GameOver, DisconnectOverlay]
 };
 
 

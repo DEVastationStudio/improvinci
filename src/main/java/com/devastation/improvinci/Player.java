@@ -6,18 +6,19 @@ import org.springframework.web.socket.WebSocketSession;
 
 public class Player {
 	private final WebSocketSession session;
-	private final int playerId;
+	private final String playerId;
 	private boolean inRoom;
 	private String roomCode;
+	private String picture;
 	
-	public Player(int playerId, WebSocketSession session) {
+	public Player(String playerId, WebSocketSession session) {
 		this.playerId= playerId;
 		this.session= session;
 		this.inRoom = false;
 		this.roomCode = "X";
 	}
 
-	public int getPlayerId() {
+	public String getPlayerId() {
 		return playerId;
 	}
 
@@ -48,6 +49,11 @@ public class Player {
 		this.session.sendMessage(new TextMessage(msg));
 	}
 
-	
+	public void setPicture(String picture) {
+		this.picture = picture;
+	}
+	public String getPicture() {
+		return picture;
+	}
 }
 

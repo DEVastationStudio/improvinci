@@ -1,21 +1,26 @@
 "use strict";
 class improCanvas {
-    /*imageSize;
-    imageHalf;
-    drawing;
-    curScene;
-    graphics;
-    x;
-    y;*/
 
-    constructor(scene) {
-        this.imageSize = 256;
+    constructor(scene, imageSize) {
+        this.imageSize = imageSize;
         this.imageHalf = this.imageSize / 2;
         this.drawing = Array(this.imageSize).fill(0).map(x => Array(this.imageSize).fill(0));
         this.curScene = scene;
         this.graphics = scene.add.graphics();
         this.x = game.canvas.width / 2;
         this.y = game.canvas.height / 2;
+        this.creationTime = Date.now();
+
+        this.modes = {
+            DEFAULT: "default",
+            LIMIT: "limit",
+            ONE: "one",
+            BLIND: "blind",
+            FIGURES: "figures",
+            GROWING: "growing"
+        }
+
+        this.pointer_mode = this.modes.DEFAULT;
     }
 
     onPointer()
@@ -25,44 +30,63 @@ class improCanvas {
         {
             if (((pointer.worldX > (this.x - this.imageHalf)) && (pointer.worldX < (this.x + this.imageHalf))) && ((pointer.worldY > (this.y - this.imageHalf)) && (pointer.worldY < (this.y + this.imageHalf)))) { 
                 //maybe check this later when implementing device pixel ratio
-
-                let positions = pointer.getInterpolatedPosition();
+                               
+                let positions = pointer.getInterpolatedPosition(64);
 
                 for (let k = 0; k < positions.length; k++)
                 {
                     let drawX = Math.floor(positions[k].x - this.x + this.imageHalf);
                     let drawY = Math.floor(positions[k].y - this.y + this.imageHalf);
     
-                    let size = 3;
-    
-                    for (let i = drawX-size; i < drawX+size; i++)
-                    {
-                        for (let j = drawY-size; j < drawY+size; j++)
-                        {
-                            if (i >= 0 && i < this.drawing.length && j >= 0 && j < this.drawing.length)
-                            {
-                                if (this.drawing[i][j] !== 1) this.drawing[i][j] = 1;
-                            }
-                        }
-                    }
+                    this.drawAt(drawX, drawY);
                 }
-
-                
-                /*if (this.drawing[drawX][drawY] !== 1) this.drawing[drawX][drawY] = 1;
-                if (this.drawing[drawX+1][drawY] !== 1) this.drawing[drawX+1][drawY] = 1;
-                if (this.drawing[drawX][drawY+1] !== 1) this.drawing[drawX][drawY+1] = 1;
-                if (this.drawing[drawX-1][drawY] !== 1) this.drawing[drawX-1][drawY] = 1;
-                if (this.drawing[drawX][drawY-1] !== 1) this.drawing[drawX][drawY-1] = 1;*/
             }
         }
                 
     }
+
+    linearInterpolation(x0,y0,x1,y1,x) {
+        return (((x-x0)*(y1-y0))/(x1-x0))+y0;
+    }
+
+    drawAt(x,y) {
+
+        switch (this.pointer_mode) {
+            case this.modes.LIMIT:
+            break;
+            case this.modes.ONE:
+            break;
+            case this.modes.BLIND:
+            break;
+            case this.modes.FIGURES:
+            break;
+            case this.modes.GROWING:
+            break;
+            case this.modes.DEFAULT:
+            default:
+                let size = 2;
+                for (let i = x-size; i < x+size; i++)
+                {
+                    for (let j = y-size; j < y+size; j++)
+                    {
+                        if (i >= 0 && i < this.drawing.length && j >= 0 && j < this.drawing.length)
+                        {
+                            if (this.drawing[i][j] !== 1) this.drawing[i][j] = 1;
+                        }
+                    }
+                }
+            break;
+        }
+        
+    }
+
     onUpdate() {
+
         //if middle position is different, update it
         if (this.x !== game.canvas.width / 2) this.x = game.canvas.width / 2;
         if (this.y !== game.canvas.height / 2) this.y = game.canvas.height / 2;
 
-        this.onPointer();
+        if (Date.now()-this.creationTime >= 1000) this.onPointer();
 
         this.graphics.clear();
         let sX = Math.floor(this.x - this.imageHalf);
@@ -70,8 +94,6 @@ class improCanvas {
 
         for (let i = 0; i < this.imageSize; i++) {
             for (let j = 0; j < this.imageSize; j++) {
-                //this.drawing[i][j] = Math.floor(Math.random() * 2);
-
                 this.graphics.fillStyle(((this.drawing[i][j] == 0) ? 0xFFFFFF : 0x000000), 1.0);
                 this.graphics.fillPoint(sX + i, sY + j);
             }
@@ -91,5 +113,49 @@ class improCanvas {
             }
         }
         return image_to_send;
+    }
+
+    loadDrawing(img) {
+        let arr;
+
+        for (let i = 0; i < this.drawing.length; i++) {
+            for (let j = 0; j < this.drawing.length / 4; j++) {
+                arr = parseInt(img[j + i * this.drawing.length / 4], 16).toString(2).padStart(4, "0");
+                for (let k = 0; k < 4; k++) {
+                    this.drawing[j * 4 + k][i] = arr[k];
+                }
+            }
+        }
+        this.graphics.clear();
+        for (let i = 0; i < this.imageSize; i++) {
+            for (let j = 0; j < this.imageSize; j++) {
+                if (this.drawing[i][j] == 0) {
+                    this.graphics.fillStyle(0xFFFFFF, 1.0);
+                    this.graphics.fillPoint(i, j);
+                }
+                else {
+                    this.graphics.fillStyle(0x000000, 1.0);
+                    this.graphics.fillPoint(i, j);
+                }
+
+            }
+        }
+    }
+    clear() {
+        this.drawing = Array(this.imageSize).fill(0).map(x => Array(this.imageSize).fill(0));
+    }
+    static makeTexture(name, img, scene, size) {
+        let texture = [];
+        for (let i = 0; i < size; i++) {
+            texture[i] = "";
+            for (let j = 0; j < size / 4; j++) {
+                let arr = parseInt(img[j + i * size / 4], 16).toString(2).padStart(4, "0");
+                for (let k = 0; k < 4; k++) {
+                    texture[i] += arr[k];
+                }
+            }
+        }
+        
+        scene.textures.generate(name, { data: texture, pixelWidth: 1, palette: {0:'#ffffff', 1:'#000000'}}); 
     }
 }

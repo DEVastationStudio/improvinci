@@ -4,10 +4,11 @@ import java.util.LinkedList;
 
 public class Room {
 	
-	private static LinkedList<Player> players = new LinkedList<Player>();
+	private LinkedList<Player> players = new LinkedList<Player>();
 	private int numeroJugadores;
 	private int maxPlayers;
 	private String roomCode;
+	private Player leader;
 	
 	public Room(int numMaxPlayers, String rCode) 
 	{
@@ -22,28 +23,44 @@ public class Room {
 	
 	public boolean tryJoin(Player player, String rC) 
 	{
-		if(numeroJugadores<maxPlayers) 
-		{
-			players.add(player);
-			numeroJugadores++;
-			player.setInRoom(true);
-			player.setRoomCode(rC);
-			return true;
+		synchronized (this) {
+			if(numeroJugadores<maxPlayers) {
+				players.add(player);
+				numeroJugadores++;
+				if (numeroJugadores == 1) {
+					leader = player;
+				}
+
+				player.setInRoom(true);
+				player.setRoomCode(rC);
+				return true;
+			}
 		}
 		return false;
 	}
 	
 	public void tryleaveRoom(Player player) 
 	{
-		players.remove(players.indexOf(player));
+		synchronized (this) {
+			players.remove(players.indexOf(player));
+			numeroJugadores--;
+			if (player == leader) {
+				if (numeroJugadores > 0) {
+					leader = players.getFirst();
+				}
+			}
+		}
 		player.setInRoom(false);
 		player.setRoomCode("X");
-		numeroJugadores--;
 	}
 
 	public String getRoomCode() 
 	{
 		return roomCode;
+	}
+
+	public Player getLeader() {
+		return leader;
 	}
 
 }
