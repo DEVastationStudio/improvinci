@@ -59,8 +59,8 @@ class InGame extends Phaser.Scene {
 
             
 
-            msg.image = canvas.toString();
-            console.log("Sending " + image_to_send);
+            msg.image = this.canvas.toString();
+            console.log("Sending " + msg.image);
             game.global.socketDir.send(JSON.stringify(msg));
         }
     }

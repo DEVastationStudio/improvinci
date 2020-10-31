@@ -19,7 +19,7 @@ var config = {
             debug: false
         }
     },
-    scene: [Preloader, Menu, Credits, Options, DrawAvatar, Lobby, InGame, GameOver]
+    scene: [Preloader, Menu, Credits, Options, DrawAvatar, Lobby, InGame, GameOver, DisconnectOverlay]
 };
 
 
