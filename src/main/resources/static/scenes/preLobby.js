@@ -123,7 +123,9 @@ class PreLobby extends Phaser.Scene {
     }
 
     create() {
-        this.bg = this.add.image(game.canvas.width/2,  game.canvas.height/2,'Menu'); 
+        this.bg = this.add.image(game.canvas.width/2,  game.canvas.height/2,'Menu');
+        this.bg.scaleX = game.canvas.width/1920;
+    	this.bg.scaleY = game.canvas.width/2200;
 
         
     	this.button_create = this.add.image(game.canvas.width / 4, game.canvas.height / 4, 'Ready_es').setInteractive();

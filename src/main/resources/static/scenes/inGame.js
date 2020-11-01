@@ -9,10 +9,13 @@ class InGame extends Phaser.Scene {
 
     create() {
     	
-    	this.return_options_bt = this.add.image(game.canvas.width*4/5 ,game.canvas.height*1/5,'Ronda_es').setInteractive();
+    	this.gameplay = this.add.image(game.canvas.width/2,  game.canvas.height/2,'Gameplay');
+    	this.gameplay.scaleX = game.canvas.width/1920;
+    	this.gameplay.scaleY = game.canvas.width/2200;
     	this.caballete_gameplay = this.add.image(game.canvas.width/2 ,game.canvas.height/2,'Caballete_gameplay');
     	this.caballete_gameplay.scaleX = game.canvas.width/5250;
     	this.caballete_gameplay.scaleY = game.canvas.width/5250;
+    	this.return_options_bt = this.add.image(game.canvas.width*4/5 ,game.canvas.height*1/5,'Ronda_es').setInteractive();
     	
     	this.return_options_bt.on('pointerdown', function (pointer){
 			this.scene.start("Menu");
