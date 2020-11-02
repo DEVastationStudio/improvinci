@@ -56,14 +56,7 @@ class PreLobby extends Phaser.Scene {
                     this.scene.get("Lobby").updateAvatars({players: msg.playerArray, leader: msg.leader});
                     break;
                 case 'SEND_IMAGE_RETURN':
-                    this.scene.get("InGame").randomize = false;
-                    if(msg.isImage)
-                    {
-                        console.log("["+msg.event+"] "+msg.image);
-                        this.scene.get("InGame").decodeImage(msg.image);
-                    }
-                    else
-                        console.log("["+msg.event+"] "+msg.message);
+                    this.scene.get("InGame").updateDrawing(msg.player, msg.image);
                     break;
                 case 'HEARTBEAT_RETURN':
                     if(!conectionUp){actualHeartBeat = Date.now(); conectionUp = true;}
@@ -75,6 +68,23 @@ class PreLobby extends Phaser.Scene {
                     console.log("["+msg.event+"] "+msg.message);
                     this.scene.get("Lobby").updateAvatars({players: msg.playerArray, leader: msg.leader});
                     break;*/
+                case 'START_GAME_RETURN':
+                    if (this.scene.get("Lobby").scene.isActive()) {
+                        this.scene.get("Lobby").scene.start("InGame", {maxRounds: msg.maxRounds, players: msg.players});
+                    }
+                    break;
+                case 'CHOSEN_WORD':
+                    this.scene.get("InGame").showWord(msg.word, msg.faker);
+                    break;
+                case 'DRAW_START':
+                    this.scene.get("InGame").drawStart(msg.time, msg.round);
+                    break;
+                case 'TIME_UPDATE':
+                    this.scene.get("InGame").updateTime(msg.time);
+                    break;
+                case 'ROUND_OVER':
+                    this.scene.get("InGame").roundOver();
+                    break;
                 default :
                     break;
             }
@@ -134,6 +144,8 @@ class PreLobby extends Phaser.Scene {
             msg.event = 'CREATE_ROOM';
             msg.players = 3;
             game.global.socketDir.send(JSON.stringify(msg));
+            this.button_create.removeInteractive();
+            this.button_join.removeInteractive();
 		}, this);
 		
 		this.button_join.on('pointerdown', function (pointer){
@@ -142,6 +154,9 @@ class PreLobby extends Phaser.Scene {
             msg.roomCode = prompt("Enter room code: ");
             msg.picture = localStorage.getItem("lastAvatar");
             game.global.socketDir.send(JSON.stringify(msg));
+            //expand this when it's implemented properly because it can fail I guess (if you type a wrong code or something like that, idk)
+            this.button_create.removeInteractive();
+            this.button_join.removeInteractive();
         }, this);
         
         this.add.text(game.canvas.width/2, 10, "CODE OVER HERE", { fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' });

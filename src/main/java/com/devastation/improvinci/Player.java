@@ -10,6 +10,8 @@ public class Player {
 	private boolean inRoom;
 	private String roomCode;
 	private String picture;
+	private boolean inGame;
+	private boolean faker;
 	
 	public Player(String playerId, WebSocketSession session) {
 		this.playerId= playerId;
@@ -45,15 +47,32 @@ public class Player {
 		return this.session;
 	}
 
-	public void sendMessage(String msg) throws Exception {
+	/*public void sendMessage(String msg) throws Exception {
 		this.session.sendMessage(new TextMessage(msg));
-	}
+	}*/
 
 	public void setPicture(String picture) {
 		this.picture = picture;
 	}
 	public String getPicture() {
 		return picture;
+	}
+
+	public boolean isInGame() {
+		return inGame;
+	}
+	public void setInGame(boolean b) 
+	{
+		inGame = b;
+	}
+
+	public boolean isFaker() {
+		return faker;
+	}
+	
+	public void setFaker(boolean b) 
+	{
+		faker = b;
 	}
 }
 

@@ -10,6 +10,8 @@ class improCanvas {
         this.x = game.canvas.width / 2;
         this.y = game.canvas.height / 2;
         this.creationTime = Date.now();
+        this.hidden = false;
+        this.locked = false;
 
         this.modes = {
             DEFAULT: "default",
@@ -25,10 +27,11 @@ class improCanvas {
 
     onPointer()
     {
+        if (this.hidden || this.locked) return;
         let pointer = this.curScene.input.activePointer;
         if (pointer.isDown)
         {
-            if (((pointer.worldX > (this.x - this.imageHalf)) && (pointer.worldX < (this.x + this.imageHalf))) && ((pointer.worldY > (this.y - this.imageHalf)) && (pointer.worldY < (this.y + this.imageHalf)))) { 
+            //if (((pointer.worldX > (this.x - this.imageHalf)) && (pointer.worldX < (this.x + this.imageHalf))) && ((pointer.worldY > (this.y - this.imageHalf)) && (pointer.worldY < (this.y + this.imageHalf)))) { 
                 //maybe check this later when implementing device pixel ratio
                                
                 let positions = pointer.getInterpolatedPosition(64);
@@ -40,7 +43,7 @@ class improCanvas {
     
                     this.drawAt(drawX, drawY);
                 }
-            }
+            //}
         }
                 
     }
@@ -81,12 +84,12 @@ class improCanvas {
     }
 
     onUpdate() {
-
+        if (this.hidden) return;
         //if middle position is different, update it
         if (this.x !== game.canvas.width / 2) this.x = game.canvas.width / 2;
         if (this.y !== game.canvas.height / 2) this.y = game.canvas.height / 2;
 
-        if (Date.now()-this.creationTime >= 1000) this.onPointer();
+        if (Date.now()-this.creationTime >= 250) this.onPointer();
 
         this.graphics.clear();
         let sX = Math.floor(this.x - this.imageHalf);
@@ -144,6 +147,24 @@ class improCanvas {
     clear() {
         this.drawing = Array(this.imageSize).fill(0).map(x => Array(this.imageSize).fill(0));
     }
+
+    showCanvas() {
+        this.hidden = false;
+        this.unlockCanvas();
+    }
+
+    hideCanvas() {
+        this.graphics.clear();
+        this.hidden = true;
+    }
+
+    lockCanvas() {
+        this.locked = true;
+    }
+    unlockCanvas() {
+        this.locked = false;
+    }
+
     static makeTexture(name, img, scene, size) {
         let texture = [];
         for (let i = 0; i < size; i++) {
@@ -155,7 +176,6 @@ class improCanvas {
                 }
             }
         }
-        
         scene.textures.generate(name, { data: texture, pixelWidth: 1, palette: {0:'#ffffff', 1:'#000000'}}); 
     }
 }

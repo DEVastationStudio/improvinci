@@ -54,7 +54,9 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 				if(!room.getPlayers().get(i).getPlayerId().equals(player.getPlayerId()))
 				{
 					msg.put("leader", room.getPlayers().get(i) == room.getLeader());
-					room.getPlayers().get(i).WSSession().sendMessage(new TextMessage(msg.toString()));
+					synchronized(room.getPlayers().get(i).WSSession()) {
+						room.getPlayers().get(i).WSSession().sendMessage(new TextMessage(msg.toString()));
+					}
 				}
 			}
 		}
@@ -75,7 +77,9 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 				{
 					msg.put("event", "CREATE_ROOM_RETURN");
 					msg.put("roomCode", createRoom(node.get("players").asInt()));
-					player.WSSession().sendMessage(new TextMessage(msg.toString()));
+					synchronized(player.WSSession()) {
+						player.WSSession().sendMessage(new TextMessage(msg.toString()));
+					}
 				}
 				break;
 			case "TRY_JOIN":
@@ -107,26 +111,34 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 								msg.put("message", "Player " + player.getPlayerId() + " joined the room");
 								msg.put("joining", false);
 
-								room.getPlayers().get(i).WSSession().sendMessage(new TextMessage(msg.toString()));
+								synchronized(room.getPlayers().get(i).WSSession()) {
+									room.getPlayers().get(i).WSSession().sendMessage(new TextMessage(msg.toString()));
+								}
 							}
 							else 
 							{
 								msg.put("message", "Joined succesfully");
 								msg.put("joining", true);
-								player.WSSession().sendMessage(new TextMessage(msg.toString()));
+								synchronized(player.WSSession()) {
+									player.WSSession().sendMessage(new TextMessage(msg.toString()));
+								}
 							}
 						}
 					}
 					else
 					{
 						msg.put("message", "The room is full, try joining later");
-						player.WSSession().sendMessage(new TextMessage(msg.toString()));
+						synchronized(player.WSSession()) {
+							player.WSSession().sendMessage(new TextMessage(msg.toString()));
+						}	
 					}
 				}
 				else
 				{
 					msg.put("message", "You are already in a room");
-					player.WSSession().sendMessage(new TextMessage(msg.toString()));
+					synchronized(player.WSSession()) {
+						player.WSSession().sendMessage(new TextMessage(msg.toString()));
+					}
 				}
 				break;
 			case "TRY_LEAVE":
@@ -149,19 +161,25 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 
 						msg.put("leader", rooms.get(rC).getPlayers().get(i) == rooms.get(rC).getLeader());
 
-						if(rooms.get(rC).getPlayers().get(i).getPlayerId() != player.getPlayerId()) 
+						if(!rooms.get(rC).getPlayers().get(i).getPlayerId().equals(player.getPlayerId())) 
 						{
 							msg.put("message", "Player " + player.getPlayerId() + " left the room");
-							rooms.get(rC).getPlayers().get(i).WSSession().sendMessage(new TextMessage(msg.toString()));
+							synchronized(rooms.get(rC).getPlayers().get(i).WSSession()) {
+								rooms.get(rC).getPlayers().get(i).WSSession().sendMessage(new TextMessage(msg.toString()));
+							}
 						}
 					}
 					msg.put("message", "Left room succesfully");
-					player.WSSession().sendMessage(new TextMessage(msg.toString()));
+					synchronized(player.WSSession()) {
+						player.WSSession().sendMessage(new TextMessage(msg.toString()));
+					}
 				}
 				else
 				{
 					msg.put("message", "You are not in a room");
-					player.WSSession().sendMessage(new TextMessage(msg.toString()));
+					synchronized(player.WSSession()) {
+						player.WSSession().sendMessage(new TextMessage(msg.toString()));
+					}
 				}
 				break;
 			case "PEOPLE_IN_ROOM":
@@ -184,7 +202,9 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 				{
 					msg.put("message", "You are not in a room");
 				}
-				player.WSSession().sendMessage(new TextMessage(msg.toString()));
+				synchronized(player.WSSession()) {
+					player.WSSession().sendMessage(new TextMessage(msg.toString()));
+				}
 				break;
 			case "SEND_IMAGE":
 				msg.put("event", "SEND_IMAGE_RETURN");
@@ -194,17 +214,10 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 					{
 						if (rooms.get(player.getRoomCode()).getPlayers().get(i).WSSession().isOpen())
 						{
-							if(rooms.get(player.getRoomCode()).getPlayers().get(i).getPlayerId() != player.getPlayerId()) 
-							{
-								msg.put("isImage", true);
-								msg.put("image", node.get("image").asText());
+							msg.put("player", player.getPlayerId());
+							msg.put("image", node.get("image").asText());
+							synchronized(rooms.get(player.getRoomCode()).getPlayers().get(i).WSSession()) {
 								rooms.get(player.getRoomCode()).getPlayers().get(i).WSSession().sendMessage(new TextMessage(msg.toString()));
-							}
-							else
-							{
-								msg.put("isImage", false);
-								msg.put("message", "Image sent");
-								player.WSSession().sendMessage(new TextMessage(msg.toString()));
 							}
 						}
 					}
@@ -212,19 +225,47 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 				else
 				{
 					msg.put("message", "You are not in a room");
-					player.WSSession().sendMessage(new TextMessage(msg.toString()));
+					synchronized(player.WSSession()) {
+						player.WSSession().sendMessage(new TextMessage(msg.toString()));
+					}
 				}
 				break;
 			case "HEARTBEAT":
 				msg.put("event", "HEARTBEAT_RETURN");
 				msg.put("message", "Connection is alive");
-				player.WSSession().sendMessage(new TextMessage(msg.toString()));
+				synchronized(player.WSSession()) {
+						player.WSSession().sendMessage(new TextMessage(msg.toString()));
+					}
 				break;
 			case "PLAYER_DISCONNECTION":
 				msg.put("event", "PLAYER_DISCONNECTION_RETURN");
 				msg.put("message", "Player disconnected");
 				rooms.get(node.get("roomCode").asText().toUpperCase()).getPlayers().get(0);
 				
+				break;
+			case "START_GAME":
+				msg.put("event", "START_GAME_RETURN");
+				msg.put("maxRounds", rooms.get(player.getRoomCode()).getMaxRounds());
+				ArrayNode arrNode = mapper.valueToTree(rooms.get(player.getRoomCode()).getPlayers());
+				msg.putArray("players").addAll(arrNode);
+				if(player.isInRoom()) 
+				{
+					for(int i = 0; i<rooms.get(player.getRoomCode()).getPlayers().size(); i++) 
+					{
+						if (rooms.get(player.getRoomCode()).getPlayers().get(i).WSSession().isOpen())
+						{
+							synchronized(rooms.get(player.getRoomCode()).getPlayers().get(i).WSSession()) {
+								rooms.get(player.getRoomCode()).getPlayers().get(i).WSSession().sendMessage(new TextMessage(msg.toString()));
+							}
+						}
+					}
+				}
+				rooms.get(player.getRoomCode()).startGame();
+				break;
+			case "GAME_LOADED":
+				if (player.isInRoom()) {
+					player.setInGame(true);
+				}
 				break;
 			default:
 				break;
