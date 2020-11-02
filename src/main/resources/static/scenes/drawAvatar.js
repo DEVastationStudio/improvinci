@@ -16,6 +16,8 @@ class DrawAvatar extends Phaser.Scene {
         }
 
         this.bg = this.add.image(game.canvas.width/2,  game.canvas.height/2,'Menu');
+        this.bg.scaleX = game.canvas.width/1920;
+    	this.bg.scaleY = game.canvas.width/2200;
         this.canvas = new improCanvas(this, 128);
 
 

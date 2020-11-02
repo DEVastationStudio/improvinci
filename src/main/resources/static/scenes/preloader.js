@@ -8,6 +8,7 @@ class Preloader extends Phaser.Scene {
     }
     preload() {
     	this.load.image('Menu', 'assets/Menu.png');
+    	this.load.image('Gameplay', 'assets/Gameplay.png');
     	this.load.image('Caballete_gameplay', 'assets/Caballete_gameplay.png');
     	this.load.image('Ready_es', 'assets/Ready_es.png');
     	this.load.image('Ready_en', 'assets/Ready_en.png');
