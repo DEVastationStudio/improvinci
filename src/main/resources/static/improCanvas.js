@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 class improCanvas {
 
     constructor(scene, imageSize) {
@@ -14,12 +14,12 @@ class improCanvas {
         this.locked = false;
 
         this.modes = {
-            DEFAULT: "default",
-            LIMIT: "limit",
-            ONE: "one",
-            BLIND: "blind",
-            FIGURES: "figures",
-            GROWING: "growing"
+            DEFAULT: 'default',
+            LIMIT: 'limit',
+            ONE: 'one',
+            BLIND: 'blind',
+            FIGURES: 'figures',
+            GROWING: 'growing'
         }
 
         this.pointer_mode = this.modes.DEFAULT;
@@ -104,15 +104,15 @@ class improCanvas {
     }
 
     toString() {
-        let image_to_send = "";
-        let partial_image = "";
+        let image_to_send = '';
+        let partial_image = '';
         for (let i = 0; i < this.imageSize; i++) {
             for (let j = 0; j < this.imageSize / 4; j++) {
                 for (let k = 0; k < 4; k++) {
                     partial_image += this.drawing[j * 4 + k][i];
                 }
                 image_to_send += parseInt(partial_image, 2).toString(16).toUpperCase();
-                partial_image = "";
+                partial_image = '';
             }
         }
         return image_to_send;
@@ -123,7 +123,7 @@ class improCanvas {
 
         for (let i = 0; i < this.drawing.length; i++) {
             for (let j = 0; j < this.drawing.length / 4; j++) {
-                arr = parseInt(img[j + i * this.drawing.length / 4], 16).toString(2).padStart(4, "0");
+                arr = parseInt(img[j + i * this.drawing.length / 4], 16).toString(2).padStart(4, '0');
                 for (let k = 0; k < 4; k++) {
                     this.drawing[j * 4 + k][i] = arr[k];
                 }
@@ -168,9 +168,9 @@ class improCanvas {
     static makeTexture(name, img, scene, size) {
         let texture = [];
         for (let i = 0; i < size; i++) {
-            texture[i] = "";
+            texture[i] = '';
             for (let j = 0; j < size / 4; j++) {
-                let arr = parseInt(img[j + i * size / 4], 16).toString(2).padStart(4, "0");
+                let arr = parseInt(img[j + i * size / 4], 16).toString(2).padStart(4, '0');
                 for (let k = 0; k < 4; k++) {
                     texture[i] += arr[k];
                 }
