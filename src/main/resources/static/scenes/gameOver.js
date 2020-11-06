@@ -1,8 +1,8 @@
-"use strict";
+'use strict';
 
 class GameOver extends Phaser.Scene {
     constructor() {
-        super("GameOver");
+        super('GameOver');
     }
     preload() {
 

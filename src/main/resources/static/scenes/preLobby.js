@@ -1,13 +1,13 @@
-"use strict";
+'use strict';
 
 class PreLobby extends Phaser.Scene {
     constructor() {
-        super("PreLobby");
+        super('PreLobby');
     }
 
     preload() {
-        game.global.socketDir = new WebSocket("wss://improvinci.herokuapp.com/improvinci");
-        //game.global.socketDir = new WebSocket("ws://localhost:8080/improvinci");
+        game.global.socketDir = new WebSocket('wss://improvinci.herokuapp.com/improvinci');
+        //game.global.socketDir = new WebSocket('ws://localhost:8080/improvinci');
 	
         game.global.socketDir.onopen = () => {
             if (game.global.DEBUG_MODE) {
@@ -25,65 +25,68 @@ class PreLobby extends Phaser.Scene {
             switch (msg.event) {
                 case 'PRUEBA_RETURN':
                     if(msg.sent)
-                        console.log("["+msg.event+"] "+"("+msg.idSender+" => "+msg.idReciever+") - "+msg.message);
+                        console.log('['+msg.event+'] '+'('+msg.idSender+' => '+msg.idReciever+') - '+msg.message);
                     else
-                        console.log("["+msg.event+"] "+"Message can't be sent");
+                        console.log('['+msg.event+'] '+'Message can\'t be sent');
                     break;
                 case 'TRY_JOIN_RETURN':
-                    console.log("["+msg.event+"] "+msg.message);
+                    console.log('['+msg.event+'] '+msg.message);
                     console.log(msg.playerArray);
                     console.log(msg.leader);
 
                     if (msg.joining) {
-                        this.scene.start("Lobby", {code: msg.roomCode, players: msg.playerArray, leader: msg.leader});
+                        this.scene.start('Lobby', {code: msg.roomCode, players: msg.playerArray, leader: msg.leader});
                     } else {
-                        this.scene.get("Lobby").updateAvatars({players: msg.playerArray, leader: msg.leader});
+                        this.scene.get('Lobby').updateAvatars({players: msg.playerArray, leader: msg.leader});
                     }
                     break;
                 case 'CREATE_ROOM_RETURN':
-                    console.log("["+msg.event+"] "+msg.roomCode);
-                    this.scene.get("PreLobby").joinRoom(msg.roomCode);
+                    console.log('['+msg.event+'] '+msg.roomCode);
+                    this.scene.get('PreLobby').joinRoom(msg.roomCode);
                     break;
                 case 'GET_ROOM_CODE_RETURN':
-                    console.log("["+msg.event+"] "+msg.roomCode);
+                    console.log('['+msg.event+'] '+msg.roomCode);
                     break;
                 case 'PEOPLE_IN_ROOM_RETURN':
-                    console.log("["+msg.event+"] "+msg.message);
+                    console.log('['+msg.event+'] '+msg.message);
                     break;
                 case 'TRY_LEAVE_RETURN':
                 case 'PLAYER_DISCONNECTION_RETURN':
-                    console.log("["+msg.event+"] "+msg.message);
-                    this.scene.get("Lobby").updateAvatars({players: msg.playerArray, leader: msg.leader});
+                    console.log('['+msg.event+'] '+msg.message);
+                    this.scene.get('Lobby').updateAvatars({players: msg.playerArray, leader: msg.leader});
                     break;
                 case 'SEND_IMAGE_RETURN':
-                    this.scene.get("InGame").updateDrawing(msg.player, msg.image);
+                    this.scene.get('InGame').updateDrawing(msg.player, msg.image, msg.isSelf);
                     break;
                 case 'HEARTBEAT_RETURN':
                     if(!conectionUp){actualHeartBeat = Date.now(); conectionUp = true;}
                     lastHeartBeat = actualHeartBeat;
                     actualHeartBeat = Date.now();
-                    console.log("["+msg.event+"] "+msg.message);
+                    console.log('['+msg.event+'] '+msg.message);
                     break;
                 /*case 'PLAYER_DISCONNECTION_RETURN':
-                    console.log("["+msg.event+"] "+msg.message);
-                    this.scene.get("Lobby").updateAvatars({players: msg.playerArray, leader: msg.leader});
+                    console.log('['+msg.event+'] '+msg.message);
+                    this.scene.get('Lobby').updateAvatars({players: msg.playerArray, leader: msg.leader});
                     break;*/
                 case 'START_GAME_RETURN':
-                    if (this.scene.get("Lobby").scene.isActive()) {
-                        this.scene.get("Lobby").scene.start("InGame", {maxRounds: msg.maxRounds, players: msg.players});
+                    if (this.scene.get('Lobby').scene.isActive()) {
+                        this.scene.get('Lobby').scene.start('InGame', {maxRounds: msg.maxRounds, players: msg.players});
                     }
                     break;
                 case 'CHOSEN_WORD':
-                    this.scene.get("InGame").showWord(msg.word, msg.faker);
+                    this.scene.get('InGame').showWord(msg.word, msg.faker);
                     break;
                 case 'DRAW_START':
-                    this.scene.get("InGame").drawStart(msg.time, msg.round);
+                    this.scene.get('InGame').drawStart(msg.time, msg.round);
                     break;
                 case 'TIME_UPDATE':
-                    this.scene.get("InGame").updateTime(msg.time);
+                    this.scene.get('InGame').updateTime(msg.time);
                     break;
                 case 'ROUND_OVER':
-                    this.scene.get("InGame").roundOver();
+                    this.scene.get('InGame').roundOver();
+                    break;
+                case 'ROUND_VOTES':
+                    this.scene.get('InGame').updateVoteResults(msg);
                     break;
                 default :
                     break;
@@ -108,11 +111,11 @@ class PreLobby extends Phaser.Scene {
                     msg.event = 'HEARTBEAT';
                     game.global.socketDir.send(JSON.stringify(msg));
                 }, heartRate);
-                console.log("[heartMonitor] Heart is beating");
+                console.log('[heartMonitor] Heart is beating');
             }else
             {
                 clearInterval(heartbeat);
-                console.log("[heartMonitor] Heart died");
+                console.log('[heartMonitor] Heart died');
             }
         }
 
@@ -138,8 +141,8 @@ class PreLobby extends Phaser.Scene {
     	this.bg.scaleY = game.canvas.width/2200;
 
         
-    	this.button_create = this.add.image(game.canvas.width / 4, game.canvas.height / 4, 'Ready_es').setInteractive();
-    	this.button_join = this.add.image(game.canvas.width * 3 / 4, game.canvas.height / 4, 'Ready_host_es').setInteractive();
+    	this.button_create = this.add.image(game.canvas.width / 4, game.canvas.height / 4, 'Ready_es').setInteractive({cursor: 'pointer'});
+    	this.button_join = this.add.image(game.canvas.width * 3 / 4, game.canvas.height / 4, 'Ready_host_es').setInteractive({cursor: 'pointer'});
         
 		this.button_create.on('pointerdown', function (pointer){
             let msg = new Object();
@@ -153,15 +156,15 @@ class PreLobby extends Phaser.Scene {
 		this.button_join.on('pointerdown', function (pointer){
             let msg = new Object();
             msg.event = 'TRY_JOIN';
-            msg.roomCode = prompt("Enter room code: ");
-            msg.picture = localStorage.getItem("lastAvatar");
+            msg.roomCode = prompt('Enter room code: ');
+            msg.picture = localStorage.getItem('lastAvatar');
             game.global.socketDir.send(JSON.stringify(msg));
             //expand this when it's implemented properly because it can fail I guess (if you type a wrong code or something like that, idk)
             this.button_create.removeInteractive();
             this.button_join.removeInteractive();
         }, this);
         
-        this.add.text(game.canvas.width/2, 10, "CODE OVER HERE", { fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' });
+        this.add.text(game.canvas.width/2, 10, 'CODE OVER HERE', { fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' });
     }
     
     update() { 
@@ -172,7 +175,7 @@ class PreLobby extends Phaser.Scene {
         let msg = new Object();
         msg.event = 'TRY_JOIN';
         msg.roomCode = roomCode;
-        msg.picture = localStorage.getItem("lastAvatar");
+        msg.picture = localStorage.getItem('lastAvatar');
         game.global.socketDir.send(JSON.stringify(msg));
     }
 }

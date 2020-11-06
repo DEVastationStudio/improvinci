@@ -12,6 +12,7 @@ public class Player {
 	private String picture;
 	private boolean inGame;
 	private boolean faker;
+	private int votes;
 	
 	public Player(String playerId, WebSocketSession session) {
 		this.playerId= playerId;
@@ -73,6 +74,18 @@ public class Player {
 	public void setFaker(boolean b) 
 	{
 		faker = b;
+	}
+
+	public void clearVotes() {
+		votes = 0;
+	}
+
+	public int getVotes() {
+		return votes;
+	}
+
+	public synchronized void addVote() {
+		votes++;
 	}
 }
 

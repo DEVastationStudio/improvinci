@@ -1,8 +1,8 @@
-"use strict";
+'use strict';
 
 class Lobby extends Phaser.Scene {
     constructor() {
-        super("Lobby");
+        super('Lobby');
     }
     preload() {
 
@@ -11,7 +11,7 @@ class Lobby extends Phaser.Scene {
     create(data) {
         this.bg = this.add.image(game.canvas.width/2,  game.canvas.height/2,'Menu'); 
 
-        this.button_start = this.add.image(game.canvas.width * 3 / 4, game.canvas.height / 4, 'Ready_host_es').setInteractive();
+        this.button_start = this.add.image(game.canvas.width * 3 / 4, game.canvas.height / 4, 'Ready_host_es').setInteractive({cursor: 'pointer'});
         
 		this.button_start.on('pointerdown', function (pointer){
             let msg = new Object();
@@ -32,15 +32,15 @@ class Lobby extends Phaser.Scene {
                     }
 
                     improCanvas.makeTexture(data.players[i+j*3].playerId, data.players[i+j*3].picture, this, 128);
-                    this.avatars[i+j*3] = this.add.image(game.canvas.width/2 + (140*i-2),  game.canvas.height/2 + (140*j-2),data.players[i+j*3].playerId); 
+                    this.avatars[i+j*3] = this.add.image(game.canvas.width/2 + (140*(i-1)),  game.canvas.height/2 + (140*(j-1)),data.players[i+j*3].playerId); 
                 } else {
-                    this.avatars[i+j*3] = this.add.image(game.canvas.width/2 + (140*i-2),  game.canvas.height/2 + (140*j-2),""); 
+                    this.avatars[i+j*3] = this.add.image(game.canvas.width/2 + (140*(i-1)),  game.canvas.height/2 + (140*(j-1)),''); 
                 }
             }
         }
     }
     showHideStart(leader) {
-        (leader)?this.button_start.setInteractive():this.button_start.removeInteractive();
+        (leader)?this.button_start.setInteractive({cursor: 'pointer'}):this.button_start.removeInteractive();
         this.button_start.visible = leader;
     }
     
@@ -56,7 +56,7 @@ class Lobby extends Phaser.Scene {
                         improCanvas.makeTexture(data.players[i+j*3].playerId, data.players[i+j*3].picture, this, 128);
                     this.avatars[i+j*3].setTexture(data.players[i+j*3].playerId); 
                 } else {
-                    this.avatars[i+j*3].setTexture(""); 
+                    this.avatars[i+j*3].setTexture(''); 
                 }
             }
         }

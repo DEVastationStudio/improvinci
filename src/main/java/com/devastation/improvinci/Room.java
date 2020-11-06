@@ -34,6 +34,7 @@ public class Room {
 	private int voteTime;
 	private int gameTimer;
 	private String word;
+	private String fakerId;
 
 	
 	public Room(int numMaxPlayers, String rCode) 
@@ -150,6 +151,12 @@ public class Room {
 						gameState = State.VOTING;
 						gameTimer = voteTime;
 						msg.put("event", "ROUND_OVER");
+
+						//Clearing all votes before sending the messages just in case they vote someone before their votes are cleared
+						for (Player p : players) {
+							p.clearVotes();
+						} 
+
 						for (Player p : players) {
 							synchronized(p.WSSession()) {
 								p.WSSession().sendMessage(new TextMessage(msg.toString()));
@@ -169,6 +176,18 @@ public class Room {
 						} 
 					} else {
 						//Enviar votos /!!!!!!!!!!!!!!!!\
+						msg.put("event", "ROUND_VOTES");
+						msg.put("players",players.size());
+						for (int i = 0; i < players.size(); i++) {
+							msg.put("id_"+i,players.get(i).getPlayerId());
+							msg.put("votes_"+i,players.get(i).getVotes());
+						}
+						msg.put("faker", fakerId);
+						for (Player p : players) {
+							synchronized(p.WSSession()) {
+								p.WSSession().sendMessage(new TextMessage(msg.toString()));
+							}
+						} 
 						gameState = State.RESULTS;
 						gameTimer = RESULTS_TIME;
 					}
@@ -178,6 +197,7 @@ public class Room {
 						gameTimer--;
 					} else {
 						if (curRound == rounds) {
+							//game end message, etc.
 							gameState = State.ENDING;
 							stopGame();
 						}
@@ -193,12 +213,13 @@ public class Room {
 		synchronized (this) {
 			//Choose random """impostor"""
 			int faker = random.nextInt(players.size());
+			System.out.println("DEBUG: Generated faker " + faker);
 
 			for (int i = 0; i < players.size(); i++) {
-				if (i == faker) {
-					players.get(faker).setFaker(true);
-				} else {
-					players.get(faker).setFaker(false);
+				boolean isFaker = (i==faker);
+				players.get(i).setFaker(isFaker);
+				if (isFaker) {
+					fakerId = players.get(i).getPlayerId();
 				}
 			}
 
@@ -220,5 +241,15 @@ public class Room {
 
 	public int getMaxRounds() {
 		return rounds;
+	}
+
+	public void vote(String id) {
+		synchronized (this) {
+			for (Player player : players) {
+				if (player.getPlayerId().equals(id)) {
+					player.addVote();
+				}
+			}
+		}
 	}
 }

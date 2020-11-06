@@ -1,10 +1,10 @@
-"use strict";
+'use strict';
 
 class Preloader extends Phaser.Scene {
 
 
     constructor() {
-        super("Preloader");
+        super('Preloader');
     }
     preload() {
     	this.load.image('Menu', 'assets/Menu.png');
@@ -20,7 +20,7 @@ class Preloader extends Phaser.Scene {
 
     create() {
         this.input.on('pointerdown', function(pointer){
-            this.scene.scene.start("Menu");
+            this.scene.scene.start('Menu');
         });
     }
     

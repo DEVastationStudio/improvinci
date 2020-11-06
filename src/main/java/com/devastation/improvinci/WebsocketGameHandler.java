@@ -216,6 +216,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 						{
 							msg.put("player", player.getPlayerId());
 							msg.put("image", node.get("image").asText());
+							msg.put("isSelf", player.getPlayerId().equals(rooms.get(player.getRoomCode()).getPlayers().get(i).getPlayerId()));
 							synchronized(rooms.get(player.getRoomCode()).getPlayers().get(i).WSSession()) {
 								rooms.get(player.getRoomCode()).getPlayers().get(i).WSSession().sendMessage(new TextMessage(msg.toString()));
 							}
@@ -265,6 +266,12 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 			case "GAME_LOADED":
 				if (player.isInRoom()) {
 					player.setInGame(true);
+				}
+				break;
+			case "VOTE":
+				if(player.isInRoom()) {
+					Room r = rooms.get(player.getRoomCode());
+					r.vote(node.get("playerVoted").asText());
 				}
 				break;
 			default:

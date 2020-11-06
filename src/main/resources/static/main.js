@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 //Phaser configuration
 var config = {
@@ -9,7 +9,7 @@ var config = {
         width: 1280,
         height: 720
     },
-    parent: "game",
+    parent: 'game',
     dom: {
         createContainer: true
     },

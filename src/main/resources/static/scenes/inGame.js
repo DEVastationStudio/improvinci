@@ -18,21 +18,25 @@ class InGame extends Phaser.Scene {
         this.players = data.players;
         console.log(this.players);
         
-    	this.return_options_bt = this.add.image(game.canvas.width*4/5 ,game.canvas.height*1/5,'Ronda_es').setInteractive();
+    	//this.return_options_bt = this.add.image(game.canvas.width*4/5 ,game.canvas.height*1/5,'Ronda_es').setInteractive({cursor: 'pointer'});
     	this.caballete_gameplay = this.add.image(game.canvas.width/2 ,game.canvas.height/2,'Caballete_gameplay');
     	this.caballete_gameplay.scaleX = game.canvas.width/5250;
     	this.caballete_gameplay.scaleY = game.canvas.width/5250;
-    	this.return_options_bt = this.add.image(game.canvas.width*4/5 ,game.canvas.height*1/5,'Ronda_es').setInteractive();
+    	//this.return_options_bt = this.add.image(game.canvas.width*4/5 ,game.canvas.height*1/5,'Ronda_es').setInteractive({cursor: 'pointer'});
     	
-    	this.return_options_bt.on('pointerdown', function (pointer){
+    	/*this.return_options_bt.on('pointerdown', function (pointer){
 			this.scene.start('Menu');
-		}, this);
+		}, this);*/
         
         
         this.drawings = [];
+        this.votes = [];
+
         for (let i = 0; i < 3; i++) {
             for (let j = 0; j < 3; j++) {
-                this.drawings[i+j*3] = this.add.image(game.canvas.width/2 + (280*i-2),  game.canvas.height/2 + (280*j-2),''); 
+                this.drawings[i+j*3] = this.add.image(game.canvas.width/2 + (140*(i-1)), game.canvas.height/2 + (140*(j-1)),''); 
+                this.drawings[i+j*3].setScale(0.25,0.25);
+                this.votes[i+j*3] = this.add.text(game.canvas.width/2 + (140*(i-1)), game.canvas.height/2 + (140*(j-1)) + 64, '', { fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#ff6600', stroke: '#000000' });
             }
         }
 
@@ -43,10 +47,10 @@ class InGame extends Phaser.Scene {
         this.canvas = new improCanvas(this, 256);
         this.canvas.hideCanvas();
 
-        this.word = this.add.text(game.canvas.width/2 ,game.canvas.height/2, '', { fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' });
-        this.timer = this.add.text(game.canvas.width/2 ,game.canvas.height/8, '', { fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' });
-        this.inGameWord = this.add.text(game.canvas.width/2 ,game.canvas.height/10, '', { fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' });
-        this.roundText = this.add.text(game.canvas.width*6/8 ,game.canvas.height/10, '0/'+this.maxRounds, { fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' });
+        this.word = this.add.text(game.canvas.width/2 ,game.canvas.height/2, '', { fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#ff6600', stroke: '#000000' });
+        this.timer = this.add.text(game.canvas.width/2 ,game.canvas.height/8, '', { fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#ff6600', stroke: '#000000' });
+        this.inGameWord = this.add.text(game.canvas.width/2 ,game.canvas.height/10, '', { fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#ff6600', stroke: '#000000' });
+        this.roundText = this.add.text(game.canvas.width*6/8 ,game.canvas.height/10, '0/'+this.maxRounds, { fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#ff6600', stroke: '#000000' });
 
         let msg = new Object();
         msg.event = 'GAME_LOADED';
@@ -115,6 +119,7 @@ class InGame extends Phaser.Scene {
     }
 
     showWord(word, faker) {
+        this.hideDrawings();
         this.inGameWord.text = '';
         if (faker) {
             this.word.text = word;
@@ -148,11 +153,12 @@ class InGame extends Phaser.Scene {
         //fade (maybe not)
     }
 
-    hideDrawings() { ///////////////////////////////////////////CALL THIS WHEN VOTING ENDS
+    hideDrawings() {
         for (let i = 0; i < 3; i++) {
             for (let j = 0; j < 3; j++) {
                 this.drawings[i+j*3].setTexture('');
                 this.drawings[i+j*3].removeInteractive();
+                this.votes[i+j*3].text = '';
             }
         }
     }
@@ -164,7 +170,7 @@ class InGame extends Phaser.Scene {
         }
     }
 
-    updateDrawing(player, drawing) {
+    updateDrawing(player, drawing, isSelf) {
         /*this.avatars = [];
         for (let i = 0; i < 3; i++) {
             for (let j = 0; j < 3; j++) {
@@ -192,14 +198,17 @@ class InGame extends Phaser.Scene {
                         improCanvas.makeTexture(player+'r', drawing, this, 256);
 
                         this.drawings[i+j*3].setTexture(player+'r'); 
-                        this.drawings[i+j*3].setInteractive();
-                        this.drawings[i+j*3].on('pointerdown', function (pointer){
-                            let msg = new Object();
-                            msg.event = 'VOTE';
-                            msg.playerVoted = player;
-                            game.global.socketDir.send(JSON.stringify(msg));
-                            this.disableDrawings();
-                        }, this);
+                        if (!isSelf) { //this should be changed in the near future
+                            this.drawings[i+j*3].setInteractive({cursor: 'pointer'});
+                            this.drawings[i+j*3].on('pointerdown', function (pointer){
+                                let msg = new Object();
+                                msg.event = 'VOTE';
+                                msg.playerVoted = player;
+                                game.global.socketDir.send(JSON.stringify(msg));
+                                alert('YOU VOTED');
+                                this.disableDrawings();
+                            }, this);
+                        }
                     }
                 }
                 
@@ -208,9 +217,34 @@ class InGame extends Phaser.Scene {
         }
     }
     
+    updateVoteResults(msg) {
+        /*msg.put('event', 'ROUND_VOTES');
+        for (int i = 0; i < players.size(); i++) {
+            msg.put('id_'+i,players.get(i).getPlayerId());
+            msg.put('votes_'+i,players.get(i).getVotes());
+        }
+        msg.put('faker', fakerId);*/
+        let playerVotes = new Array(msg.players);
+        for (let i = 0; i < playerVotes.length; i++) {
+            eval('playerVotes[msg.id_'+i+'] = msg.votes_'+i); //eval shouldn't be a problem here, hopefully
+        }
+        console.log(playerVotes);
+
+        for (let i = 0; i < 3; i++) {
+            for (let j = 0; j < 3; j++) {
+                if (this.players[i+j*3] !== undefined) {
+                    if (playerVotes[this.players[i+j*3].playerId] !== undefined) {
+                        this.votes[i+j*3].text = playerVotes[this.players[i+j*3].playerId];
+                    }
+                }
+            }
+        }
+
+    }
+
     writeRoomCode(roomCode)
     {
-        this.add.text(10, 10, roomCode, { fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' });
+        this.add.text(10, 10, roomCode, { fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#ff6600', stroke: '#000000' });
     }
 }
 var joinRoomOnce = false;
