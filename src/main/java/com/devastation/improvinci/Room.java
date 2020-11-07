@@ -39,6 +39,9 @@ public class Room {
 	private int gameTimer;
 	private String word;
 	private String fakerId;
+	private final String[] modes = {"default","limit","one","blind","figures","growing"};
+	private boolean[] modeInUse = {false, true, true, true, false, true};
+	private LinkedList<String> availableModes;
 
 	
 	public Room(int numMaxPlayers, String rCode) 
@@ -121,7 +124,13 @@ public class Room {
 					for (Player p : players) {
 						if (!p.isInGame())
 							return;
-					} 
+					}
+					availableModes = new LinkedList<String>();
+					for(int i = 0; i<modes.length; i++)
+					{
+						if(modeInUse[i])
+							availableModes.add(modes[i]);
+					}
 					sendWord(msg);
 				break;
 				case WORD:
@@ -245,11 +254,13 @@ public class Room {
 			word = "FEDERICO";
 
 			//Choose draw mode
+			String drawMode = availableModes.get(random.nextInt(availableModes.size()));
 
 			gameState = State.WORD;
 			gameTimer = WORD_TIME;
 			msg.put("event", "CHOSEN_WORD");
 			msg.put("word", word);
+			msg.put("drawMode", drawMode);
 			for (Player p : players) {
 				msg.put("faker", p.getPlayerId().equals(fakerId));
 				synchronized(p.WSSession()) {

@@ -12,9 +12,18 @@ class improCanvas {
         this.creationTime = Date.now();
         this.hidden = false;
         this.locked = false;
+        this.pointerSize = 2;
+        this.maxPointerSize = 30;
+        this.pointerChangeSizeTime = 250;
+        this.maxTrazos = 10;
+        this.inPainting = false;
+        this.backgroundColour = 0x000000;
+        this.fadeFactor = 0x020202;
+        this.fadeStatus = -1;
 
-        this.curScene.input.on('pointermove', function (pointer) {this.scene.canvas.onPointer(pointer, false)});
-        this.curScene.input.on('pointerdown', function (pointer) {this.scene.canvas.onPointer(pointer, true)});
+        this.curScene.input.on('pointermove', function (pointer) {this.scene.canvas.onPointer(pointer, 0)});
+        this.curScene.input.on('pointerdown', function (pointer) {this.scene.canvas.onPointer(pointer, 1)});
+        this.curScene.input.on('pointerup', function (pointer) {if(this.scene.canvas.inPainting){this.scene.canvas.maxTrazos--; this.scene.canvas.inPainting = false}});
 
         this.modes = {
             DEFAULT: 'default',
@@ -27,30 +36,41 @@ class improCanvas {
 
         this.pointer_mode = this.modes.DEFAULT;
     }
-    
-    onPointer(pointer, isPointerDown)
+
+    backGroundFadeOut()
+    {   
+        this.backgroundColour = Math.max(this.backgroundColour - this.fadeFactor, 0x000000);
+        if(this.backgroundColour === 0x000000) this.fadeStatus = -2;
+    }
+
+    backGroundFadeIn()
+    {
+        this.backgroundColour = Math.min(this.backgroundColour + this.fadeFactor, 0xFFFFFF);
+        if(this.backgroundColour === 0xFFFFFF) this.fadeStatus = 1;
+    }
+
+    onPointer(pointer, pointerStatus)
     {
         if (Date.now()-this.creationTime < 250) return;
         if (this.hidden || this.locked) return;
         //let pointer = this.curScene.input.activePointer;
-        //pointer.getDuration();
+        
         if (pointer.isDown)
         {
             //if (((pointer.worldX > (this.x - this.imageHalf)) && (pointer.worldX < (this.x + this.imageHalf))) && ((pointer.worldY > (this.y - this.imageHalf)) && (pointer.worldY < (this.y + this.imageHalf)))) { 
                 //maybe check this later when implementing device pixel ratio
                 let positions;
-                if (isPointerDown) {
+                if (pointerStatus === 1) {
                     positions = [pointer];
                 } else {
                     positions = pointer.getInterpolatedPosition(256);
                 }    
-
                 for (let k = 0; k < positions.length; k++)
                 {
                     let drawX = Math.floor(positions[k].x - this.x + this.imageHalf);
                     let drawY = Math.floor(positions[k].y - this.y + this.imageHalf);
     
-                    this.drawAt(drawX, drawY);
+                    this.drawAt(drawX, drawY, pointer);
                 }
             //}
         }
@@ -61,39 +81,53 @@ class improCanvas {
         return (((x-x0)*(y1-y0))/(x1-x0))+y0;
     }
 
-    drawAt(x,y) {
+    drawAt(x,y,pointer) {
 
         switch (this.pointer_mode) {
             case this.modes.LIMIT:
-            break;
             case this.modes.ONE:
-            break;
-            case this.modes.BLIND:
+                if(this.maxTrazos>0) this.defaultPainting(x, y, 2);
             break;
             case this.modes.FIGURES:
             break;
             case this.modes.GROWING:
+                if(pointer.getDuration()<(this.pointerChangeSizeTime*this.maxPointerSize))
+                    this.pointerSize = Math.floor(pointer.getDuration()/this.pointerChangeSizeTime)+1;
+                this.defaultPainting(x, y, this.pointerSize);
             break;
             case this.modes.DEFAULT:
+            case this.modes.BLIND:
             default:
-                let size = 2;
-                for (let i = x-size; i < x+size; i++)
+                this.defaultPainting(x, y, 2)
+            break;
+        }
+    }
+
+    defaultPainting(x,y,size)
+    {
+        for (let i = x-size; i < x+size; i++)
                 {
                     for (let j = y-size; j < y+size; j++)
                     {
                         if (i >= 0 && i < this.drawing.length && j >= 0 && j < this.drawing.length)
                         {
                             if (this.drawing[i][j] !== 1) this.drawing[i][j] = 1;
+                            if(!this.inPainting) this.inPainting = true;
                         }
                     }
                 }
-            break;
-        }
-        
     }
 
     onUpdate() {
         if (this.hidden) return;
+        if(this.pointer_mode === this.modes.BLIND)
+        {
+            //console.log("Estoy ciego");
+            if(this.fadeStatus === 0)
+                this.backGroundFadeIn();
+            if(this.fadeStatus === 1)
+                this.backGroundFadeOut();
+        }
         //if middle position is different, update it
         if (this.x !== game.canvas.width / 2) this.x = game.canvas.width / 2;
         if (this.y !== game.canvas.height / 2) this.y = game.canvas.height / 2;
@@ -104,7 +138,7 @@ class improCanvas {
 
         for (let i = 0; i < this.imageSize; i++) {
             for (let j = 0; j < this.imageSize; j++) {
-                this.graphics.fillStyle(((this.drawing[i][j] == 0) ? 0xFFFFFF : 0x000000), 1.0);
+                this.graphics.fillStyle(((this.drawing[i][j] == 0) ? ((this.pointer_mode === this.modes.BLIND) ?this.backgroundColour : 0xFFFFFF) : 0x000000), 1.0);
                 this.graphics.fillPoint(sX + i, sY + j);
             }
         }
@@ -153,6 +187,7 @@ class improCanvas {
     }
     clear() {
         this.drawing = Array(this.imageSize).fill(0).map(x => Array(this.imageSize).fill(0));
+        this.fadeStatus = -1;
     }
 
     showCanvas() {
@@ -174,6 +209,11 @@ class improCanvas {
 
     setDrawMode(drawMode) {
         this.pointer_mode = drawMode;
+        if(this.pointer_mode === this.modes.LIMIT)
+            this.maxTrazos = 10;
+        if(this.pointer_mode === this.modes.ONE)
+            this.maxTrazos = 1;
+        console.log(drawMode);
     }
 
     static makeTexture(name, img, scene, size) {
