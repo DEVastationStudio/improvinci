@@ -271,7 +271,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 			case "VOTE":
 				if(player.isInRoom()) {
 					Room r = rooms.get(player.getRoomCode());
-					r.vote(node.get("playerVoted").asText());
+					r.vote(node.get("playerVoted").asText(), player);
 				}
 				break;
 			default:

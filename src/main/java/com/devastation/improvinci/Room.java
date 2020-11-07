@@ -1,5 +1,6 @@
 package com.devastation.improvinci;
 
+import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.Random;
 import java.util.concurrent.Executors;
@@ -74,6 +75,7 @@ public class Room {
 	{
 		synchronized (this) {
 			//IF THIS PLAYER IS THE FAKER AND THE GAME IS RUNNING, RESTART THIS ROUND.
+			//IF IT'S NOT, JUST NOTIFY EVERYONE
 			players.remove(players.indexOf(player));
 			numeroJugadores--;
 			if (player == leader) {
@@ -213,25 +215,28 @@ public class Room {
 		synchronized (this) {
 			//Choose random """impostor"""
 			int faker = random.nextInt(players.size());
-			System.out.println("DEBUG: Generated faker " + faker);
+			System.out.println("["+LocalDateTime.now()+"]DEBUG: Generated faker " + faker);
 
 			for (int i = 0; i < players.size(); i++) {
-				boolean isFaker = (i==faker);
-				players.get(i).setFaker(isFaker);
-				if (isFaker) {
+				//boolean isFaker = (i==faker);
+				//players.get(i).setFaker(isFaker);
+				if (i==faker) {
 					fakerId = players.get(i).getPlayerId();
+					break;
 				}
 			}
 
 			//Choose """random""" word
 			word = "FEDERICO";
 
+			//Choose draw mode
+			
 			gameState = State.WORD;
 			gameTimer = WORD_TIME;
 			msg.put("event", "CHOSEN_WORD");
 			msg.put("word", word);
 			for (Player p : players) {
-				msg.put("faker", p.isFaker());
+				msg.put("faker", p.getPlayerId().equals(fakerId));
 				synchronized(p.WSSession()) {
 					p.WSSession().sendMessage(new TextMessage(msg.toString()));
 				}
@@ -243,11 +248,19 @@ public class Room {
 		return rounds;
 	}
 
-	public void vote(String id) {
+	public void vote(String id, Player votingPlayer) {
 		synchronized (this) {
 			for (Player player : players) {
 				if (player.getPlayerId().equals(id)) {
 					player.addVote();
+					if (id.equals(fakerId)) {
+						votingPlayer.addScore(1);
+						//?
+					} else {
+						votingPlayer.addScore(-1);
+						//?
+					}
+					break;
 				}
 			}
 		}

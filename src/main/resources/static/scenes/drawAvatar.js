@@ -27,7 +27,7 @@ class DrawAvatar extends Phaser.Scene {
             }
         }
 
-        this.add.text(game.canvas.width/2, 10, 'Draw yourself!', { fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' });
+        this.drawYourself = this.add.text(game.canvas.width/2, 10, 'Draw yourself!', { fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' });
 
         
     	this.button_confirm = this.add.image(game.canvas.width / 4, game.canvas.height / 4, 'Ready_es').setInteractive({cursor: 'pointer'});

@@ -118,7 +118,8 @@ class InGame extends Phaser.Scene {
         }*/
     }
 
-    showWord(word, faker) {
+    showWord(word, faker, drawMode) {
+        //this.canvas.setDrawMode(drawMode);
         this.hideDrawings();
         this.inGameWord.text = '';
         if (faker) {

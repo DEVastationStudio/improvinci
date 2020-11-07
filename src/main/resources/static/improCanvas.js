@@ -13,6 +13,9 @@ class improCanvas {
         this.hidden = false;
         this.locked = false;
 
+        this.curScene.input.on('pointermove', function (pointer) {this.scene.canvas.onPointer(pointer, false)});
+        this.curScene.input.on('pointerdown', function (pointer) {this.scene.canvas.onPointer(pointer, true)});
+
         this.modes = {
             DEFAULT: 'default',
             LIMIT: 'limit',
@@ -24,17 +27,23 @@ class improCanvas {
 
         this.pointer_mode = this.modes.DEFAULT;
     }
-
-    onPointer()
+    
+    onPointer(pointer, isPointerDown)
     {
+        if (Date.now()-this.creationTime < 250) return;
         if (this.hidden || this.locked) return;
-        let pointer = this.curScene.input.activePointer;
+        //let pointer = this.curScene.input.activePointer;
+        //pointer.getDuration();
         if (pointer.isDown)
         {
             //if (((pointer.worldX > (this.x - this.imageHalf)) && (pointer.worldX < (this.x + this.imageHalf))) && ((pointer.worldY > (this.y - this.imageHalf)) && (pointer.worldY < (this.y + this.imageHalf)))) { 
                 //maybe check this later when implementing device pixel ratio
-                               
-                let positions = pointer.getInterpolatedPosition(64);
+                let positions;
+                if (isPointerDown) {
+                    positions = [pointer];
+                } else {
+                    positions = pointer.getInterpolatedPosition(256);
+                }    
 
                 for (let k = 0; k < positions.length; k++)
                 {
@@ -88,8 +97,6 @@ class improCanvas {
         //if middle position is different, update it
         if (this.x !== game.canvas.width / 2) this.x = game.canvas.width / 2;
         if (this.y !== game.canvas.height / 2) this.y = game.canvas.height / 2;
-
-        if (Date.now()-this.creationTime >= 250) this.onPointer();
 
         this.graphics.clear();
         let sX = Math.floor(this.x - this.imageHalf);
@@ -163,6 +170,10 @@ class improCanvas {
     }
     unlockCanvas() {
         this.locked = false;
+    }
+
+    setDrawMode(drawMode) {
+        this.pointer_mode = drawMode;
     }
 
     static makeTexture(name, img, scene, size) {

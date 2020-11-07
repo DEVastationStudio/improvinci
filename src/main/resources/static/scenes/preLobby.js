@@ -74,7 +74,7 @@ class PreLobby extends Phaser.Scene {
                     }
                     break;
                 case 'CHOSEN_WORD':
-                    this.scene.get('InGame').showWord(msg.word, msg.faker);
+                    this.scene.get('InGame').showWord(msg.word, msg.faker, msg.drawMode);
                     break;
                 case 'DRAW_START':
                     this.scene.get('InGame').drawStart(msg.time, msg.round);

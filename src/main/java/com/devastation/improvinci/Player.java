@@ -11,8 +11,9 @@ public class Player {
 	private String roomCode;
 	private String picture;
 	private boolean inGame;
-	private boolean faker;
+	//private boolean faker;
 	private int votes;
+	private int score;
 	
 	public Player(String playerId, WebSocketSession session) {
 		this.playerId= playerId;
@@ -67,14 +68,14 @@ public class Player {
 		inGame = b;
 	}
 
-	public boolean isFaker() {
+	/*public boolean isFaker() {
 		return faker;
-	}
+	}*/
 	
-	public void setFaker(boolean b) 
+	/*public void setFaker(boolean b) 
 	{
 		faker = b;
-	}
+	}*/
 
 	public void clearVotes() {
 		votes = 0;
@@ -86,6 +87,18 @@ public class Player {
 
 	public synchronized void addVote() {
 		votes++;
+	}
+
+	public int getScore() {
+		return score;
+	}
+
+	public void setScore(int score) {
+		this.score = score;
+	}
+
+	public void addScore(int score) {
+		this.score += score;
 	}
 }
 
