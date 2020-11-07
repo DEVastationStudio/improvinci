@@ -88,6 +88,9 @@ class PreLobby extends Phaser.Scene {
                 case 'ROUND_VOTES':
                     this.scene.get('InGame').updateVoteResults(msg);
                     break;
+                case 'POINTS':
+                    this.scene.start('GameOver', {code: msg.roomCode, players: msg.playerArray, leader: msg.leader});
+                    break;
                 default :
                     break;
             }

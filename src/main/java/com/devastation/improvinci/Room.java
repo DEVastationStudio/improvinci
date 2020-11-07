@@ -1,6 +1,8 @@
 package com.devastation.improvinci;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Random;
 import java.util.concurrent.Executors;
@@ -8,6 +10,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import org.springframework.web.socket.TextMessage;
@@ -200,6 +203,18 @@ public class Room {
 					} else {
 						if (curRound == rounds) {
 							//game end message, etc.
+							msg.put("event", "POINTS");
+							msg.put("roomCode",roomCode);
+							LinkedList<Player> sortedPlayers = (LinkedList<Player>)players.clone();
+							Collections.sort(sortedPlayers, (a, b) -> Integer.compare(b.getScore(), a.getScore()));
+							ArrayNode arrNode = mapper.valueToTree(sortedPlayers);
+							msg.putArray("playerArray").addAll(arrNode);
+							for (Player p : players) {
+								synchronized(p.WSSession()) {
+									msg.put("leader", p == leader);
+									p.WSSession().sendMessage(new TextMessage(msg.toString()));
+								}
+							} 
 							gameState = State.ENDING;
 							stopGame();
 						}
@@ -230,7 +245,7 @@ public class Room {
 			word = "FEDERICO";
 
 			//Choose draw mode
-			
+
 			gameState = State.WORD;
 			gameTimer = WORD_TIME;
 			msg.put("event", "CHOSEN_WORD");
