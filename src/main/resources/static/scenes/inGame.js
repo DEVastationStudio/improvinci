@@ -28,7 +28,7 @@ class InGame extends Phaser.Scene {
 			this.scene.start('Menu');
 		}, this);*/
         
-        
+        this.maxTime = 0;
         this.drawings = [];
         this.votes = [];
 
@@ -119,7 +119,7 @@ class InGame extends Phaser.Scene {
     }
 
     showWord(word, faker, drawMode) {
-        //this.canvas.setDrawMode(drawMode);
+        this.canvas.setDrawMode(drawMode);
         this.hideDrawings();
         this.inGameWord.text = '';
         if (faker) {
@@ -133,6 +133,7 @@ class InGame extends Phaser.Scene {
         this.inGameWord.text = this.word.text;
         this.word.text = '';
         this.timer.text = time;
+        this.maxTime = time;
         this.curRound = round;
         this.roundText.text = this.curRound+'/'+this.maxRounds;
         this.canvas.clear();
@@ -141,6 +142,7 @@ class InGame extends Phaser.Scene {
 
     updateTime(time) {
         this.timer.text = time;
+        if(time/this.maxTime < 0.5 && this.canvas.fadeStatus === -1) this.canvas.fadeStatus = 0;
     }
 
     roundOver() {
