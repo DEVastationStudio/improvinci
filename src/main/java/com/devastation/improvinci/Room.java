@@ -1,5 +1,11 @@
 package com.devastation.improvinci;
 
+import java.io.LineNumberReader;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileReader;
+import java.io.InputStreamReader;
+import java.io.LineNumberReader;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collections;
@@ -38,6 +44,8 @@ public class Room {
 	private int voteTime;
 	private int gameTimer;
 	private String word;
+	private boolean isEnglish = false;
+	private LinkedList<String> words = new LinkedList<String>();
 	private String fakerId;
 	private final String[] modes = {"default","limit","one","blind","figures","growing"};
 	private boolean[] modeInUse = {false, true, true, true, false, true};
@@ -104,6 +112,51 @@ public class Room {
 	}
 
 	public void startGame() {
+		try
+		{
+		words.clear();
+		String language = "";
+		if(isEnglish)
+			language = "wordsENG.txt";
+		else
+			language = "wordsESP.txt";
+		FileReader input = new FileReader(language);
+		LineNumberReader count = new LineNumberReader(input);
+		int lines = (int)count.lines().count();
+		count.close();
+
+		LinkedList<Integer> numWords = new LinkedList<Integer>();
+		int aux = -1;
+		
+		for(int i = 0; i<rounds; i++)
+		{
+			do
+			{
+				aux = random.nextInt(lines);
+			}
+			while(numWords.contains(aux));
+
+			numWords.add(aux);
+		}
+		
+		Collections.sort(numWords);
+
+		FileInputStream fs= new FileInputStream(language);
+		BufferedReader br = new BufferedReader(new InputStreamReader(fs));
+		int j = 0;
+		for(int i = 0; i <= numWords.getLast(); ++i)
+		{
+			if(i == numWords.get(j))
+			{
+				words.add(br.readLine());
+				j++;
+			}
+			else
+				br.readLine();
+		}
+		br.close();
+		}catch(Exception ex){ System.out.println(ex);}
+		
 		gameState = State.JOINING;
 		scheduler = Executors.newScheduledThreadPool(1);
 		scheduler.scheduleAtFixedRate(() -> tick(), TICK_DELAY, TICK_DELAY, TimeUnit.MILLISECONDS);
@@ -231,11 +284,10 @@ public class Room {
 					}
 				break;
 			}
-		} catch (Exception ex) { }
+		} catch (Exception ex) { System.out.println(ex); }
 	}
 
 	private void sendWord(ObjectNode msg) throws Exception {
-
 		synchronized (this) {
 			//Choose random """impostor"""
 			int faker = random.nextInt(players.size());
@@ -250,9 +302,8 @@ public class Room {
 				}
 			}
 
-			//Choose """random""" word
-			word = "FEDERICO";
-
+			word = words.remove(random.nextInt(words.size()));
+			//word = "FEDERICO";
 			//Choose draw mode
 			String drawMode = availableModes.get(random.nextInt(availableModes.size()));
 
