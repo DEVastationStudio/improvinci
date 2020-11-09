@@ -296,6 +296,63 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 			roomCode += Integer.toHexString(date.getNano()/10000000).toUpperCase();
 		}
 
+		String[] arrRoomCode = roomCode.split("");
+		roomCode = "";
+		
+		for (int i = 0; i < arrRoomCode.length; i++) {
+			switch(arrRoomCode[i])
+			{
+			case "1":
+				roomCode += "A";
+				break;
+			case "2":
+				roomCode += "B";
+				break;
+			case "3":
+				roomCode += "C";
+				break;
+			case "4":
+				roomCode += "D";
+				break;
+			case "5":
+				roomCode += "E";
+				break;
+			case "6":
+				roomCode += "F";
+				break;
+			case "7":
+				roomCode += "G";
+				break;
+			case "8":
+				roomCode += "H";
+				break;
+			case "9":
+				roomCode += "I";
+				break;
+			case "A":
+				roomCode += "J";
+				break;
+			case "B":
+				roomCode += "K";
+				break;
+			case "C":
+				roomCode += "L";
+				break;
+			case "D":
+				roomCode += "M";
+				break;
+			case "E":
+				roomCode += "N";
+				break;
+			case "F":
+				roomCode += "O";
+				break;
+			case "0":
+				roomCode += "P";
+				break;
+			}
+		}
+		
 		rooms.put(roomCode,new Room(numberPeople, roomCode));
 		return roomCode;
 	}
