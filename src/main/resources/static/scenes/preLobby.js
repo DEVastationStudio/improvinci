@@ -150,7 +150,7 @@ class PreLobby extends Phaser.Scene {
 		this.button_create.on('pointerdown', function (pointer){
             let msg = new Object();
             msg.event = 'CREATE_ROOM';
-            msg.players = 3;
+            msg.players = 9;
             game.global.socketDir.send(JSON.stringify(msg));
             this.button_create.removeInteractive();
             this.button_join.removeInteractive();
