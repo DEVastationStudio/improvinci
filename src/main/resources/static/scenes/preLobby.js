@@ -31,13 +31,16 @@ class PreLobby extends Phaser.Scene {
                     break;
                 case 'TRY_JOIN_RETURN':
                     console.log('['+msg.event+'] '+msg.message);
-                    console.log(msg.playerArray);
-                    console.log(msg.leader);
 
                     if (msg.joining) {
-                        this.scene.start('Lobby', {code: msg.roomCode, players: msg.playerArray, leader: msg.leader});
+                        if (this.scene.isActive())
+                            this.scene.start('Lobby', {code: msg.roomCode, players: msg.playerArray, leader: msg.leader});
+                        else if (this.scene.get('GameOver').scene.isActive())
+                            this.scene.get('GameOver').scene.start('Lobby', {code: msg.roomCode, players: msg.playerArray, leader: msg.leader});
                     } else {
-                        this.scene.get('Lobby').updateAvatars({players: msg.playerArray, leader: msg.leader});
+                        if (this.scene.get('Lobby').scene.isActive()) {
+                            this.scene.get('Lobby').updateAvatars({players: msg.playerArray, leader: msg.leader});
+                        }
                     }
                     break;
                 case 'CREATE_ROOM_RETURN':
@@ -53,7 +56,9 @@ class PreLobby extends Phaser.Scene {
                 case 'TRY_LEAVE_RETURN':
                 case 'PLAYER_DISCONNECTION_RETURN':
                     console.log('['+msg.event+'] '+msg.message);
-                    this.scene.get('Lobby').updateAvatars({players: msg.playerArray, leader: msg.leader});
+                    if (this.scene.get('Lobby').scene.isActive()) {
+                        this.scene.get('Lobby').updateAvatars({players: msg.playerArray, leader: msg.leader});
+                    }
                     break;
                 case 'SEND_IMAGE_RETURN':
                     this.scene.get('InGame').updateDrawing(msg.player, msg.image, msg.isSelf);
@@ -89,8 +94,15 @@ class PreLobby extends Phaser.Scene {
                     this.scene.get('InGame').updateVoteResults(msg);
                     break;
                 case 'POINTS':
-                    this.scene.start('GameOver', {code: msg.roomCode, players: msg.playerArray, leader: msg.leader});
+                    if (this.scene.get('InGame').scene.isActive()) {
+                        this.scene.get('InGame').scene.start('GameOver', {code: msg.roomCode, players: msg.playerArray, leader: msg.leader});
+                    }
                     break;
+                case 'ALL_READY_RETURN':
+                    if (this.scene.get('Lobby').scene.isActive()) {
+                        this.scene.get('Lobby').updateAvatars({players: msg.playerArray, leader: msg.leader});
+                    }
+                break;
                 default :
                     break;
             }

@@ -14,6 +14,7 @@ public class Player {
 	//private boolean faker;
 	private int votes;
 	private int score;
+	private boolean inLobby;
 	
 	public Player(String playerId, WebSocketSession session) {
 		this.playerId= playerId;
@@ -99,6 +100,14 @@ public class Player {
 
 	public void addScore(int score) {
 		this.score += score;
+	}
+
+	public boolean isInLobby() {
+		return inLobby;
+	}
+
+	public void setInLobby(boolean b) {
+		inLobby = b;
 	}
 }
 

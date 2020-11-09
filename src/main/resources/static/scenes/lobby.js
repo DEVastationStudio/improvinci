@@ -9,6 +9,13 @@ class Lobby extends Phaser.Scene {
     }
 
     create(data) {
+
+        if (data.leader) {
+            let msg = new Object();
+            msg.event = 'ALL_READY';
+            game.global.socketDir.send(JSON.stringify(msg));
+        }
+
         this.bg = this.add.image(game.canvas.width/2,  game.canvas.height/2,'Menu'); 
 
         this.button_start = this.add.image(game.canvas.width * 3 / 4, game.canvas.height / 4, 'Ready_host_es').setInteractive({cursor: 'pointer'});
@@ -55,6 +62,10 @@ class Lobby extends Phaser.Scene {
                     if (!this.textures.exists(data.players[i+j*3].playerId))
                         improCanvas.makeTexture(data.players[i+j*3].playerId, data.players[i+j*3].picture, this, 128);
                     this.avatars[i+j*3].setTexture(data.players[i+j*3].playerId); 
+                    if (!data.players[i+j*3].inLobby)
+                        this.avatars[i+j*3].setTint(0x888888);
+                    else
+                        this.avatars[i+j*3].setTint(0xffffff);
                 } else {
                     this.avatars[i+j*3].setTexture(''); 
                 }

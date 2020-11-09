@@ -70,14 +70,18 @@ public class Room {
 	public boolean tryJoin(Player player, String rC) 
 	{
 		synchronized (this) {
-			if(numeroJugadores<maxPlayers) {
-				players.add(player);
-				numeroJugadores++;
-				if (numeroJugadores == 1) {
-					leader = player;
+			if(numeroJugadores<maxPlayers || players.contains(player)) {
+				if (!players.contains(player))
+				{
+					players.add(player);
+					numeroJugadores++;
+					if (numeroJugadores == 1) {
+						leader = player;
+					}
 				}
 
 				player.setInRoom(true);
+				player.setInLobby(true);
 				player.setRoomCode(rC);
 				return true;
 			}
@@ -112,51 +116,55 @@ public class Room {
 	}
 
 	public void startGame() {
-		try
-		{
-		words.clear();
-		String language = "";
-		if(isEnglish)
-			language = "wordsENG.txt";
-		else
-			language = "wordsESP.txt";
-		FileReader input = new FileReader(language);
-		LineNumberReader count = new LineNumberReader(input);
-		int lines = (int)count.lines().count();
-		count.close();
-
-		LinkedList<Integer> numWords = new LinkedList<Integer>();
-		int aux = -1;
-		
-		for(int i = 0; i<rounds; i++)
-		{
-			do
-			{
-				aux = random.nextInt(lines);
-			}
-			while(numWords.contains(aux));
-
-			numWords.add(aux);
-		}
-		
-		Collections.sort(numWords);
-
-		FileInputStream fs= new FileInputStream(language);
-		BufferedReader br = new BufferedReader(new InputStreamReader(fs));
-		int j = 0;
-		for(int i = 0; i <= numWords.getLast(); ++i)
-		{
-			if(i == numWords.get(j))
-			{
-				words.add(br.readLine());
-				j++;
-			}
+		FileInputStream fs;
+		BufferedReader br;
+		try {
+			words.clear();
+			String language = "";
+			if(isEnglish)
+				language = "wordsENG.txt";
 			else
-				br.readLine();
+				language = "wordsESP.txt";
+			FileReader input = new FileReader(language);
+			LineNumberReader count = new LineNumberReader(input);
+			int lines = (int)count.lines().count();
+			count.close();
+
+			LinkedList<Integer> numWords = new LinkedList<Integer>();
+			int aux = -1;
+			
+			for(int i = 0; i<rounds; i++)
+			{
+				do
+				{
+					aux = random.nextInt(lines);
+				}
+				while(numWords.contains(aux));
+
+				numWords.add(aux);
+			}
+			
+			Collections.sort(numWords);
+
+			fs = new FileInputStream(language);
+			br = new BufferedReader(new InputStreamReader(fs));
+			int j = 0;
+			for(int i = 0; i <= numWords.getLast(); ++i)
+			{
+				if(i == numWords.get(j))
+				{
+					words.add(br.readLine());
+					j++;
+				}
+				else
+					br.readLine();
+			}
+			br.close();
+		} catch(Exception ex) { 
+			ex.printStackTrace();
 		}
-		br.close();
-		}catch(Exception ex){ System.out.println(ex);}
 		
+		curRound = 0;
 		gameState = State.JOINING;
 		scheduler = Executors.newScheduledThreadPool(1);
 		scheduler.scheduleAtFixedRate(() -> tick(), TICK_DELAY, TICK_DELAY, TimeUnit.MILLISECONDS);
@@ -165,6 +173,10 @@ public class Room {
 	public void stopGame() {
 		if (scheduler != null) {
 			scheduler.shutdown();
+		}
+		for (Player p : players) {
+			if (!leader.equals(p))
+				p.setInLobby(false);
 		}
 	}
 
@@ -183,6 +195,9 @@ public class Room {
 					{
 						if(modeInUse[i])
 							availableModes.add(modes[i]);
+					}
+					for (Player p : players) {
+						p.setScore(0);
 					}
 					sendWord(msg);
 				break;
@@ -268,7 +283,7 @@ public class Room {
 							msg.put("event", "POINTS");
 							msg.put("roomCode",roomCode);
 							LinkedList<Player> sortedPlayers = (LinkedList<Player>)players.clone();
-							Collections.sort(sortedPlayers, (a, b) -> Integer.compare(b.getScore(), a.getScore()));
+							Collections.sort(sortedPlayers, (a, b) -> Integer.compare(a.getScore(), b.getScore()));
 							ArrayNode arrNode = mapper.valueToTree(sortedPlayers);
 							msg.putArray("playerArray").addAll(arrNode);
 							for (Player p : players) {
@@ -279,12 +294,13 @@ public class Room {
 							} 
 							gameState = State.ENDING;
 							stopGame();
+						} else {
+							sendWord(msg);
 						}
-						sendWord(msg);
 					}
 				break;
 			}
-		} catch (Exception ex) { System.out.println(ex); }
+		} catch (Exception ex) { ex.printStackTrace(); }
 	}
 
 	private void sendWord(ObjectNode msg) throws Exception {

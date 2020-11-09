@@ -19,16 +19,30 @@ class GameOver extends Phaser.Scene {
 
         this.wipScoreText = this.add.text(game.canvas.width/2, 10, '', { fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' });
 
-        for (let p in data.players) {
-            this.wipScoreText.text += p.playerId + " - " + p.score + "\n";
+        for (let i = 0; i < data.players.length; i++) {
+            this.wipScoreText.text += data.players[i].playerId + " - " + data.players[i].score + "\n";
         }
         
         this.playAgain_bt.on('pointerdown', function (pointer){
-            this.scene.start('Lobby', {code: data.code, players: data.players, leader: data.leader});
+            if (data.leader) {
+                this.scene.start('Lobby', {code: data.code, players: data.players, leader: data.leader});
+            } else {
+                //this.scene.start('Lobby', {code: data.code, players: data.players, leader: data.leader});
+                let msg = new Object();
+                msg.event = 'TRY_JOIN';
+                msg.roomCode = data.code;
+                msg.picture = localStorage.getItem('lastAvatar');
+                game.global.socketDir.send(JSON.stringify(msg));
+            }
+            //expand this when it's implemented properly because it can fail I guess (if you type a wrong code or something like that, idk)
+            this.playAgain_bt.removeInteractive();
+            this.quit_bt.removeInteractive();
         }, this);
         
         this.quit_bt.on('pointerdown', function (pointer){
             this.scene.start('Menu');
+            this.playAgain_bt.removeInteractive();
+            this.quit_bt.removeInteractive();
         }, this);
     }
     

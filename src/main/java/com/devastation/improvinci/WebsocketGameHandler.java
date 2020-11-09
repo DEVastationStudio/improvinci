@@ -89,7 +89,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 
 				Room room = getRoom(node.get("roomCode").asText().toUpperCase());
 
-				if(!player.isInRoom())
+				if(!player.isInRoom() || player.getRoomCode().equals(node.get("roomCode").asText()))
 				{
 					if(room.tryJoin(player, node.get("roomCode").asText().toUpperCase()))
 					{
@@ -106,7 +106,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 
 							msg.put("leader", room.getPlayers().get(i) == room.getLeader());
 							
-							if(room.getPlayers().get(i).getPlayerId() != player.getPlayerId()) 
+							if(!room.getPlayers().get(i).getPlayerId().equals(player.getPlayerId())) 
 							{
 								msg.put("message", "Player " + player.getPlayerId() + " joined the room");
 								msg.put("joining", false);
@@ -272,6 +272,15 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 				if(player.isInRoom()) {
 					Room r = rooms.get(player.getRoomCode());
 					r.vote(node.get("playerVoted").asText(), player);
+				}
+				break;
+			case "ALL_READY":
+				msg.put("event", "ALL_READY_RETURN");
+				ArrayNode arrayNode = mapper.valueToTree(rooms.get(player.getRoomCode()).getPlayers());
+				msg.putArray("playerArray").addAll(arrayNode);
+				msg.put("leader", player.equals(rooms.get(player.getRoomCode()).getLeader()));
+				synchronized(player.WSSession()) {
+					player.WSSession().sendMessage(new TextMessage(msg.toString()));
 				}
 				break;
 			default:
