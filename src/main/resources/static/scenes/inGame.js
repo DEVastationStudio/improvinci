@@ -47,13 +47,6 @@ class InGame extends Phaser.Scene {
                 this.votes[i+j*3] = this.add.text(game.canvas.width/2 + ((0.3*game.canvas.height)*(i-1)), game.canvas.height/2 + ((0.3*game.canvas.height)*(j-1)) + (0.15*game.canvas.height), '', { fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#ff6600', stroke: '#000000', align: 'center'}).setOrigin(0.5, 0.5);
             
                 this.drawings[i+j*3].on('pointerdown', function (pointer){
-                    /*let msg = new Object();
-                    msg.event = 'VOTE';
-                    msg.playerVoted = this.players[i+j*3].playerId;
-                    game.global.socketDir.send(JSON.stringify(msg));
-                    alert('YOU VOTED');
-                    this.scene.get('InGame').disableDrawings();*/
-
                     this.scene.get('InGame').enhanceImage(i+j*3);
                 }, this);
             }
@@ -105,9 +98,9 @@ class InGame extends Phaser.Scene {
             this.canvas.resetStrokes();
         }, this);
         
-        let msg = new Object();
-        msg.event = 'GAME_LOADED';
-        game.global.socketDir.send(JSON.stringify(msg));
+        let msg2 = new Object();
+        msg2.event = 'GAME_LOADED';
+        game.global.socketDir.send(JSON.stringify(msg2));
     }
 
     update() {
