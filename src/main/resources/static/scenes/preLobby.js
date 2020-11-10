@@ -151,14 +151,20 @@ class PreLobby extends Phaser.Scene {
     }
 
     create() {
-        this.bg = this.add.image(game.canvas.width/2,  game.canvas.height/2,'Menu');
+
+        this.codeFocus = false;
+
+        this.input.keyboard.addKey(8);
+
+        this.bg = this.add.image(game.canvas.width/2,  game.canvas.height/2,'Menu').setInteractive();
         this.bg.scaleX = game.canvas.width/1920;
     	this.bg.scaleY = game.canvas.width/2200;
 
         
     	this.button_create = this.add.image(game.canvas.width / 4, game.canvas.height / 4, 'Ready_es').setInteractive({cursor: 'pointer'});
     	this.button_join = this.add.image(game.canvas.width * 3 / 4, game.canvas.height / 4, 'Ready_host_es').setInteractive({cursor: 'pointer'});
-        
+        this.codeButton = this.add.image(game.canvas.width / 4, game.canvas.height / 2, 'Ready_host_es').setInteractive({cursor: 'pointer'});
+        this.codeText = this.add.text(game.canvas.width * 3 / 4, game.canvas.height / 2, '', { fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' });
 		this.button_create.on('pointerdown', function (pointer){
             let msg = new Object();
             msg.event = 'CREATE_ROOM';
@@ -166,22 +172,63 @@ class PreLobby extends Phaser.Scene {
             game.global.socketDir.send(JSON.stringify(msg));
             this.button_create.removeInteractive();
             this.button_join.removeInteractive();
-		}, this);
-		
-		this.button_join.on('pointerdown', function (pointer){
-            let msg = new Object();
-            msg.event = 'TRY_JOIN';
-            msg.roomCode = prompt('Enter room code: ');
-            msg.picture = localStorage.getItem('lastAvatar');
-            game.global.socketDir.send(JSON.stringify(msg));
-            //expand this when it's implemented properly because it can fail I guess (if you type a wrong code or something like that, idk)
-            this.button_create.removeInteractive();
-            this.button_join.removeInteractive();
         }, this);
         
-        this.add.text(game.canvas.width/2, 10, 'CODE OVER HERE', { fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' });
+        this.codeButton.on('pointerdown', function (pointer){
+            this.scene.codeFocus = true;
+            //console.log(this.scene);
+            this.codeButton.setTint(0x00ffff);
+		}, this);
+        this.bg.on('pointerdown', function (pointer){
+            this.scene.codeFocus = false;
+            this.codeButton.setTint(0xffffff);
+		}, this);
+		this.button_join.on('pointerdown', function (pointer){
+            this.scene.get('PreLobby').tryJoin();
+        }, this);
+        
+		this.input.keyboard.on('keydown', 
+            function (event) { 
+                //console.log(this.scene.scene);
+                //console.log(event.keyCode);
+                console.log(event);
+                if (event.keyCode >= 65 && event.keyCode <= 90) {
+                    if (!this.scene.scene.codeFocus) return;
+                    this.scene.updateText(event.key);
+                } else if (event.keyCode == 8) {
+                    if (!this.scene.scene.codeFocus) return;
+                    this.scene.trimText();
+                    event.stopImmediatePropagation();
+                } else if (event.keyCode == 13) {
+                    this.scene.tryJoin();
+                    //enter
+                }
+                /*switch (event.keyCode) {
+            
+                }*/
+            }
+        );
     }
     
+    updateText(text) {
+        this.codeText.text += text.toUpperCase();
+    }
+
+    trimText() {
+        this.codeText.text = this.codeText.text.substring(0, this.codeText.text.length - 1); 
+    }
+
+    tryJoin() {
+        let msg = new Object();
+        msg.event = 'TRY_JOIN';
+        msg.roomCode = this.codeText.text;//prompt('Enter room code: ');
+        msg.picture = localStorage.getItem('lastAvatar');
+        game.global.socketDir.send(JSON.stringify(msg));
+        //expand this when it's implemented properly because it can fail I guess (if you type a wrong code or something like that, idk)
+        this.button_create.removeInteractive();
+        this.button_join.removeInteractive();
+    }
+
     update() { 
 
     }

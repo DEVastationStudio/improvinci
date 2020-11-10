@@ -16,6 +16,11 @@ class Preloader extends Phaser.Scene {
     	this.load.image('Ready_host_en', 'assets/Ready_host_en.png');
     	this.load.image('Ronda_es', 'assets/Ronda_es.png');
     	this.load.image('Ronda_es', 'assets/Ronda_en.png');
+    	this.load.image('Corona', 'assets/Corona.png');
+    	this.load.image('Marco1', 'assets/Marco1.png');
+    	this.load.image('Marco2', 'assets/Marco2.png');
+    	this.load.image('Marco3', 'assets/Marco3.png');
+    	this.load.image('Marco4', 'assets/Marco4.png');
     }
 
     create() {

@@ -18,7 +18,7 @@ class improCanvas {
         this.maxTrazos = 10;
         this.inPainting = false;
         this.backgroundColour = 0x000000;
-        this.fadeFactor = 0x020202;
+        this.fadeFactor = 0x040404;
         this.fadeStatus = -1;
 
         this.curScene.input.on('pointermove', function (pointer) {this.scene.canvas.onPointer(pointer, 0)});
@@ -209,11 +209,15 @@ class improCanvas {
 
     setDrawMode(drawMode) {
         this.pointer_mode = drawMode;
+        this.resetStrokes();
+        console.log(drawMode);
+    }
+    
+    resetStrokes() {
         if(this.pointer_mode === this.modes.LIMIT)
             this.maxTrazos = 10;
         if(this.pointer_mode === this.modes.ONE)
             this.maxTrazos = 1;
-        console.log(drawMode);
     }
 
     static makeTexture(name, img, scene, size) {

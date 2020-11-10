@@ -31,7 +31,7 @@ class DrawAvatar extends Phaser.Scene {
 
         
     	this.button_confirm = this.add.image(game.canvas.width / 4, game.canvas.height / 4, 'Ready_es').setInteractive({cursor: 'pointer'});
-    	this.button_clear = this.add.image(game.canvas.width * 3 / 4, game.canvas.height / 4, 'Ready_host_es').setInteractive({cursor: 'pointer'});
+    	this.button_clear = this.add.image(game.canvas.width * 3 / 4, game.canvas.height / 4, 'Corona').setInteractive({cursor: 'pointer'});
         
 		this.button_confirm.on('pointerdown', function (pointer){
 			localStorage.setItem('lastAvatar',this.canvas.toString());

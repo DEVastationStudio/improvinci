@@ -48,7 +48,7 @@ public class Room {
 	private LinkedList<String> words = new LinkedList<String>();
 	private String fakerId;
 	private final String[] modes = {"default","limit","one","blind","figures","growing"};
-	private boolean[] modeInUse = {false, true, true, true, false, true};
+	private boolean[] modeInUse = {true, true, true, true, false, true};
 	private LinkedList<String> availableModes;
 
 	

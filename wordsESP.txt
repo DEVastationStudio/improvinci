@@ -1,6 +1,14 @@
-Test1ESP
-test2ESP
-TEST3ESP
-Test4ESP
-test5ESP
-TEST6ESP
+coche
+avión
+sombrilla de playa
+mar
+tienda de campaña
+autocaravana
+familia
+verano
+carretera
+mapa
+billete
+equipaje
+museo
+vuelta al mundo
