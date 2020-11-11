@@ -166,12 +166,12 @@ class PreLobby extends Phaser.Scene {
 		this.sY = game.canvas.height/game.global.HEIGHT;
 
         //Background
-        this.bg = this.add.image(game.canvas.width/2,  game.canvas.height/2,'Menu').setInteractive();
+        this.bg = this.add.image(0,0,'Menu').setInteractive();
 
         //Buttons
-        this.button_create = this.add.image(game.canvas.width / 4, game.canvas.height / 4, 'Ready_es').setInteractive({cursor: 'pointer'});
-        this.button_join = this.add.image(game.canvas.width * 3 / 4, game.canvas.height / 4, 'Ready_host_es').setInteractive({cursor: 'pointer'});
-        this.codeButton = this.add.image(game.canvas.width / 4, game.canvas.height / 2, 'Ready_host_es').setInteractive({cursor: 'pointer'});
+        this.button_create = this.add.image(0,0, 'Ready_es').setInteractive({cursor: 'pointer'});
+        this.button_join = this.add.image(0,0, 'Ready_host_es').setInteractive({cursor: 'pointer'});
+        this.codeButton = this.add.image(0,0, 'Ready_host_es').setInteractive({cursor: 'pointer'});
         this.scaler();
 
         this.input.keyboard.addKey(8);

@@ -14,15 +14,14 @@ class Menu extends Phaser.Scene {
 		this.sY = game.canvas.height/game.global.HEIGHT;
 
 		//Background
-		this.menu = this.add.image(game.canvas.width/2,  game.canvas.height/2,'Menu');
-    	this.menu.scale = this.sX;
+		this.bg = this.add.image(0,0,'Menu');
+		
 		//Buttons
-    	this.ready_bt = this.add.image(game.canvas.width*26 / 50 , game.canvas.height*2 / 5,'Ready_es').setInteractive({cursor: 'pointer'});
-    	this.ready_bt.setScale(this.sY);
-    	this.options_bt = this.add.image(game.canvas.width / 2, game.canvas.height*30 / 50,'Ready_host_es').setInteractive({cursor: 'pointer'});
-    	this.options_bt.setScale(this.sY);
-    	this.credits_bt = this.add.image(game.canvas.width / 2, game.canvas.height*40 / 50,'Ronda_es').setInteractive({cursor: 'pointer'});
-    	this.credits_bt.setScale(this.sY);
+    	this.ready_bt = this.add.image(0,0,'Ready_es').setInteractive({cursor: 'pointer'});
+    	this.options_bt = this.add.image(0,0,'Ready_host_es').setInteractive({cursor: 'pointer'});
+		this.credits_bt = this.add.image(0,0,'Ronda_es').setInteractive({cursor: 'pointer'});
+		this.scaler();
+
 
     	//Button actions
 		this.ready_bt.on('pointerdown', function (pointer){
@@ -49,7 +48,6 @@ class Menu extends Phaser.Scene {
 
 	scaler()
 	{
-		let scale = (this.sX+this.sY)/2;
 		//Buttons
 		this.ready_bt.x = game.canvas.width / 2;
 		this.ready_bt.y = game.canvas.height * 10 / 50;
@@ -64,8 +62,8 @@ class Menu extends Phaser.Scene {
 		this.credits_bt.setScale(this.sY);
 		
 		//Background
-		this.menu.x = game.canvas.width / 2;
-		this.menu.y = game.canvas.height / 2;
-		this.menu.setScale(this.sX);
+		this.bg.x = game.canvas.width / 2;
+		this.bg.y = game.canvas.height / 2;
+		this.bg.setScale(this.sX);
 	}
 }

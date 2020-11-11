@@ -14,14 +14,12 @@ class DrawAvatar extends Phaser.Scene {
 		this.sY = game.canvas.height/game.global.HEIGHT;
 
         //Background
-        this.bg = this.add.image(game.canvas.width/2,  game.canvas.height/2,'Menu');
-        this.bg.scale = this.sX;
+        this.bg = this.add.image(0,0,'Menu');
 
         //Buttons
-        this.button_confirm = this.add.image(game.canvas.width / 4, game.canvas.height / 4, 'Ready_es').setInteractive({cursor: 'pointer'});
-        this.button_confirm.scale = (this.sX+this.sY)/2;
-        this.button_clear = this.add.image(game.canvas.width * 3 / 4, game.canvas.height / 4, 'Corona').setInteractive({cursor: 'pointer'});
-        this.button_clear.scale = (this.sX+this.sY)/2;
+        this.button_confirm = this.add.image(0,0, 'Ready_es').setInteractive({cursor: 'pointer'});
+        this.button_clear = this.add.image(0,0, 'Corona').setInteractive({cursor: 'pointer'});
+        this.scaler();
         
         //Button actions
         this.button_confirm.on('pointerdown', function (pointer){

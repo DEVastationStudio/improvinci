@@ -9,13 +9,16 @@ class GameOver extends Phaser.Scene {
     }
 
     create(data) {
-        this.background = this.add.image(game.canvas.width/2,  game.canvas.height/2,'Menu');
-    	this.background.scaleX = game.canvas.width/1920;
-    	this.background.scaleY = game.canvas.width/2200;
-    	this.playAgain_bt = this.add.image(game.canvas.width*26 / 50 , game.canvas.height*2 / 5,'Ready_es').setInteractive({cursor: 'pointer'});
-    	this.playAgain_bt.setScale(game.canvas.height/1080);
-    	this.quit_bt = this.add.image(game.canvas.width / 2,game.canvas.height*30 / 50,'Ready_host_es').setInteractive({cursor: 'pointer'});
-        this.quit_bt.setScale(game.canvas.height/1080);
+        //Scale factors
+        this.sX = game.canvas.width/game.global.WIDTH;
+        this.sY = game.canvas.height/game.global.HEIGHT;
+
+        //Background
+        this.background = this.add.image(0,0,'Menu');
+
+        //Buttons
+    	this.playAgain_bt = this.add.image(0,0,'Ready_es').setInteractive({cursor: 'pointer'});
+    	this.quit_bt = this.add.image(0,0,'Ready_host_es').setInteractive({cursor: 'pointer'});
 
         this.wipScoreText = this.add.text(game.canvas.width/2, 10, '', { fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' });
 
@@ -47,6 +50,27 @@ class GameOver extends Phaser.Scene {
     }
     
     update() { 
-
+        if(this.sX != game.canvas.width/game.global.WIDTH || this.sY != game.canvas.height/game.global.HEIGHT)
+		{
+			this.sX = game.canvas.width/game.global.WIDTH;
+			this.sY = game.canvas.height/game.global.HEIGHT;
+			this.scaler();
+		}
     }
+    scaler()
+	{
+		//Buttons
+		this.quit_bt.x = game.canvas.width / 2;
+		this.quit_bt.y = game.canvas.height * 2/ 5;
+		this.quit_bt.setScale(this.sY);
+
+    	this.playAgain_bt.x = game.canvas.width / 2;
+		this.playAgain_bt.y = game.canvas.height * 3/ 5;
+		this.playAgain_bt.setScale(this.sY);
+		
+		//Background
+		this.bg.x = game.canvas.width / 2;
+		this.bg.y = game.canvas.height / 2;
+		this.bg.setScale(this.sX);
+	}
 }

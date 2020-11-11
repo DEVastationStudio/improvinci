@@ -8,11 +8,24 @@ class InGame extends Phaser.Scene {
     }
 
     create(data) {
-        
-        this.gameplay = this.add.image(game.canvas.width/2,  game.canvas.height/2,'Gameplay');
-    	this.gameplay.scaleX = game.canvas.width/1920;
-        this.gameplay.scaleY = game.canvas.width/2200;
-        
+        //Scale factors
+        this.sX = game.canvas.width/game.global.WIDTH;
+        this.sY = game.canvas.height/game.global.HEIGHT;
+
+        //Background
+        this.bg = this.add.image(0,0,'Gameplay');
+
+        //Buttons
+        this.confirmVoteButton = this.add.image(0,0,'Ready_es'); 
+        this.cancelVoteButton = this.add.image(0,0, 'Ready_en');
+        this.fakerPeekButton = this.add.image(0,0,'Ready_es'); 
+        this.fakerPeekButton.setAlpha(0);
+        this.button_clear = this.add.image(game.canvas.width * 3 / 4, game.canvas.height / 4, 'Corona').setInteractive({cursor: 'pointer'});
+        //this.fakerPeekButton.setScale(0.2, 0.2);
+
+        this.scaler();
+
+
         this.maxRounds = data.maxRounds;
         this.curRound = 0;
         this.players = data.players;
@@ -66,9 +79,6 @@ class InGame extends Phaser.Scene {
         this.bigFrame.setScale(game.canvas.height/460.8,game.canvas.height/460.8);
         this.bigFrame.setAlpha(0);
 
-        this.confirmVoteButton = this.add.image(game.canvas.width/4, game.canvas.height*7/8,'Ready_es'); 
-        this.cancelVoteButton = this.add.image(game.canvas.width*3/4, game.canvas.height*7/8, 'Ready_en'); 
-
         this.confirmVoteButton.setAlpha(0);
         this.cancelVoteButton.setAlpha(0);
 
@@ -93,9 +103,6 @@ class InGame extends Phaser.Scene {
         this.fakerFrame.setScale(game.canvas.height/960.8,game.canvas.height/960.8);
         this.fakerFrame.setAlpha(0);
 
-        this.fakerPeekButton = this.add.image(game.canvas.width/4, game.canvas.height/2,'Ready_es'); 
-        this.fakerPeekButton.setScale(0.2, 0.2);
-        this.fakerPeekButton.setAlpha(0);
         this.fakerPeekButton.on('pointerdown', function (pointer){
             let msg = new Object();
             msg.event = 'PEEK';
@@ -117,7 +124,7 @@ class InGame extends Phaser.Scene {
         this.inGameWord = this.add.text(game.canvas.width/2 ,game.canvas.height/10, '', { fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#ff6600', stroke: '#000000' });
         this.roundText = this.add.text(game.canvas.width*6/8 ,game.canvas.height/10, '0/'+this.maxRounds, { fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#ff6600', stroke: '#000000' });
 
-    	this.button_clear = this.add.image(game.canvas.width * 3 / 4, game.canvas.height / 4, 'Corona').setInteractive({cursor: 'pointer'});
+    	
         this.button_clear.on('pointerdown', function (pointer){
             this.canvas.clear();
             this.canvas.resetStrokes();
@@ -129,7 +136,38 @@ class InGame extends Phaser.Scene {
     }
 
     update() {
+        if(this.sX != game.canvas.width/game.global.WIDTH || this.sY != game.canvas.height/game.global.HEIGHT)
+		{
+			this.sX = game.canvas.width/game.global.WIDTH;
+			this.sY = game.canvas.height/game.global.HEIGHT;
+			this.scaler();
+		}
         this.canvas.onUpdate();
+    }
+
+    scaler()
+    {0,0
+        //Buttons
+        this.confirmVoteButton.x = game.canvas.width/4;
+        this.confirmVoteButton.y = game.canvas.height *7/ 8;
+        this.confirmVoteButton.setScale(this.sY);
+        
+        this.cancelVoteButton.x = game.canvas.width * 3 / 4;
+        this.cancelVoteButton.y = game.canvas.height *7/ 8;
+        this.cancelVoteButton.setScale(this.sY);
+        
+        this.fakerPeekButton.x = game.canvas.width / 4;
+        this.fakerPeekButton.y = game.canvas.height / 2;
+        this.fakerPeekButton.setScale(this.sY);
+        
+        this.button_clear.x = game.canvas.width * 3 / 4;
+        this.button_clear.y = game.canvas.height / 4;
+        this.button_clear.setScale(0.2);
+
+        //Background
+        this.bg.x = game.canvas.width / 2;
+		this.bg.y = game.canvas.height / 2;
+		this.bg.setScale(this.sX);
     }
 
     enhanceImage(id) {

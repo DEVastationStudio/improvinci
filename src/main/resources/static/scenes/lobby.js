@@ -14,10 +14,10 @@ class Lobby extends Phaser.Scene {
         this.sY = game.canvas.height/game.global.HEIGHT;
 
         //Background
-        this.bg = this.add.image(game.canvas.width/2,  game.canvas.height/2,'Menu').setInteractive();
+        this.bg = this.add.image(0,0,'Menu').setInteractive();
 
         //Buttons
-        this.button_start = this.add.image(game.canvas.width * 3 / 4, game.canvas.height / 4, 'Ready_host_es').setInteractive({cursor: 'pointer'});
+        this.button_start = this.add.image(0,0, 'Ready_host_es').setInteractive({cursor: 'pointer'});
         this.scaler();
 
         if (data.leader) {
@@ -71,7 +71,7 @@ class Lobby extends Phaser.Scene {
 
     scaler()
     {
-        //Buttons
+        //Buttons0,0
         this.button_start.x = game.canvas.width * 3 / 4;
         this.button_start.y = game.canvas.height / 4;
         this.button_start.setScale(this.sY);
