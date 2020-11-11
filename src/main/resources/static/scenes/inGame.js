@@ -17,6 +17,13 @@ class InGame extends Phaser.Scene {
         this.curRound = 0;
         this.players = data.players;
         console.log(this.players);
+
+        this.roundWord = '';
+        this.roundFaker = false;
+
+        this.wordBoolArray = [];
+        this.wordPositionArray = [];
+        this.wordTimeArray = [];
         
     	//this.return_options_bt = this.add.image(game.canvas.width*4/5 ,game.canvas.height*1/5,'Ronda_es').setInteractive({cursor: 'pointer'});
     	this.caballete_gameplay = this.add.image(game.canvas.width/2 ,game.canvas.height/2,'Caballete_gameplay');
@@ -140,11 +147,13 @@ class InGame extends Phaser.Scene {
     }
 
     showWord(word, faker, drawMode) {
+        this.roundWord = word;
+        this.roundFaker = faker;
         this.canvas.setDrawMode(drawMode);
         this.hideDrawings();
         this.inGameWord.text = '';
-        if (!faker) {
-            this.word.text = word;
+        if (!this.roundFaker) {
+            this.word.text = this.roundWord;
         } else {
             this.word.text = 'YOU ARE THE FAKER';
         }
@@ -152,7 +161,11 @@ class InGame extends Phaser.Scene {
     }
 
     drawStart(time, round) {
-        this.inGameWord.text = this.word.text;
+        if (!this.roundFaker) {
+            this.inGameWord.text = this.roundWord;
+        } else {
+            this.manageWord(time);
+        }
         this.word.text = '';
         this.timer.text = time;
         this.maxTime = time;
@@ -165,6 +178,7 @@ class InGame extends Phaser.Scene {
     updateTime(time) {
         this.timer.text = time;
         if(time/this.maxTime < 0.5 && this.canvas.fadeStatus === -1) this.canvas.fadeStatus = 0;
+        this.updateWord(time);
     }
 
     roundOver() {
@@ -177,6 +191,54 @@ class InGame extends Phaser.Scene {
 
         //fade (maybe not)
     }
+
+    manageWord(maxTime) {
+        let size = this.roundWord.length;
+        this.wordBoolArray = new Array(size);
+        this.wordPositionArray = [];
+        for (let i = 0; i < size; i++) {
+            if (this.roundWord[i] === ' ') {
+                this.wordBoolArray[i] = true;
+            } else {
+                this.wordBoolArray[i] = false;
+
+                if (this.roundWord[i].toUpperCase() !== 'A' && this.roundWord[i].toUpperCase() !== 'E' && this.roundWord[i].toUpperCase() !== 'I' && this.roundWord[i].toUpperCase() !== 'O' && this.roundWord[i].toUpperCase() !== 'U') {
+                    this.wordPositionArray.push(i)
+                }
+            }
+        }
+
+        this.wordTimeArray = new Array(this.wordPositionArray.length);
+        let timeFactor = (3*maxTime)/(4*this.wordPositionArray.length);
+        for (let i = 0; i < this.wordTimeArray.length; i++) {
+            this.wordTimeArray[i] = maxTime - ((i+1)*timeFactor);
+        }
+        this.wordTimeArray.reverse();
+        console.log(this.wordTimeArray);
+        this.drawWord();
+    }
+
+    updateWord(curTime) {
+        if (this.wordTimeArray.length === 0) return;
+
+        while (this.wordTimeArray[this.wordTimeArray.length-1] > curTime) {
+            let i = this.wordPositionArray.splice(Math.random()*this.wordPositionArray.length,1);
+            this.wordTimeArray.pop();
+            this.wordBoolArray[i] = true;
+            if (this.wordTimeArray.length === 0) break;
+        }
+        this.drawWord();
+    }
+
+    drawWord() {
+        let word = '';
+        for (let i = 0; i < this.wordBoolArray.length; i++) {
+            word += this.wordBoolArray[i]?this.roundWord[i]:'-';
+        }
+        this.inGameWord.text = word;
+    }
+
+
 
     hideDrawings() {
         for (let i = 0; i < 3; i++) {
