@@ -283,6 +283,18 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 					player.WSSession().sendMessage(new TextMessage(msg.toString()));
 				}
 				break;
+			case "PEEK":
+				if(player.isInRoom()) {
+					Room r = rooms.get(player.getRoomCode());
+					r.peek();
+				}
+				break;
+			case "BE_PEEKED_RETURN":
+				if(player.isInRoom()) {
+					Room r = rooms.get(player.getRoomCode());
+					r.returnPeek(node.get("image").asText());
+				}
+				break;
 			default:
 				break;
 			}

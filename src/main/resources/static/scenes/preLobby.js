@@ -103,6 +103,16 @@ class PreLobby extends Phaser.Scene {
                         this.scene.get('Lobby').updateAvatars({players: msg.playerArray, leader: msg.leader});
                     }
                 break;
+                case 'BE_PEEKED':
+                    if (this.scene.get('InGame').scene.isActive()) {
+                        this.scene.get('InGame').bePeeked();
+                    }
+                break;
+                case 'PEEK_RETURN':
+                    if (this.scene.get('InGame').scene.isActive()) {
+                        this.scene.get('InGame').peekReturn(msg.image);
+                    }
+                break;
                 default :
                     break;
             }
