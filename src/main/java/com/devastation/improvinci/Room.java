@@ -50,6 +50,8 @@ public class Room {
 	private final String[] modes = {"default","limit","one","blind","figures","growing"};
 	private boolean[] modeInUse = {true, true, true, true, false, true};
 	private LinkedList<String> availableModes;
+	private int peekTimeout = -1;
+	private boolean peekedThisRound = false;
 
 	
 	public Room(int numMaxPlayers, String rCode) 
@@ -229,6 +231,14 @@ public class Room {
 								p.WSSession().sendMessage(new TextMessage(msg.toString()));
 							}
 						} 
+						if (!peekedThisRound) {
+							if (peekTimeout > -1 && peekTimeout < 3) {
+								peekTimeout++;
+							} else if (peekTimeout >= 3) {
+								peekTimeout = -1;
+								peek();
+							}
+						}
 					} else {
 						gameState = State.VOTING;
 						gameTimer = voteTime;
@@ -305,6 +315,7 @@ public class Room {
 
 	private void sendWord(ObjectNode msg) throws Exception {
 		synchronized (this) {
+			peekedThisRound = false;
 			//Choose random """impostor"""
 			int faker = random.nextInt(players.size());
 			System.out.println("["+LocalDateTime.now()+"]DEBUG: Generated faker " + faker);
@@ -356,6 +367,50 @@ public class Room {
 					break;
 				}
 			}
+		}
+	}
+
+	public void peek() {
+		synchronized (this) {
+			peekTimeout = 0;
+			Player peekedPlayer = players.get(random.nextInt(players.size()));
+
+			ObjectNode msg = mapper.createObjectNode();
+			msg.put("event", "BE_PEEKED");
+
+			synchronized(peekedPlayer.WSSession()) {
+				try {
+				peekedPlayer.WSSession().sendMessage(new TextMessage(msg.toString()));
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+
+		}
+	}
+	public void returnPeek(String image) {
+		synchronized (this) {
+			if (peekedThisRound) return;
+			peekedThisRound = true;
+			Player fakerPlayer = players.get(0); //Just in case it breaks
+			for (Player p : players) {
+				if (p.getPlayerId().equals(fakerId)) {
+					fakerPlayer = p;
+				}
+			}
+
+			ObjectNode msg = mapper.createObjectNode();
+			msg.put("event", "PEEK_RETURN");
+			msg.put("image", image);
+
+			synchronized(fakerPlayer.WSSession()) {
+				try {
+				fakerPlayer.WSSession().sendMessage(new TextMessage(msg.toString()));
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+
 		}
 	}
 }

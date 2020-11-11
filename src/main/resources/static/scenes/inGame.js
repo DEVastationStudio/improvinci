@@ -85,6 +85,24 @@ class InGame extends Phaser.Scene {
             this.scene.get('InGame').denhanceImage();
         }, this);
 
+        this.fakerImage = this.add.image(game.canvas.width/4, game.canvas.height*3/4,''); 
+        this.fakerImage.setScale(game.canvas.height/960.8,game.canvas.height/960.8);
+        this.fakerImage.setAlpha(0);
+
+        this.fakerFrame = this.add.image(game.canvas.width/4, game.canvas.height*3/4,this.frameImages[Math.floor(Math.random()*this.frameImages.length)]); 
+        this.fakerFrame.setScale(game.canvas.height/960.8,game.canvas.height/960.8);
+        this.fakerFrame.setAlpha(0);
+
+        this.fakerPeekButton = this.add.image(game.canvas.width/4, game.canvas.height/2,'Ready_es'); 
+        this.fakerPeekButton.setScale(0.2, 0.2);
+        this.fakerPeekButton.setAlpha(0);
+        this.fakerPeekButton.on('pointerdown', function (pointer){
+            let msg = new Object();
+            msg.event = 'PEEK';
+            game.global.socketDir.send(JSON.stringify(msg));
+            this.scene.get('InGame').fakerPeekButton.setAlpha(0);
+            this.scene.get('InGame').fakerPeekButton.removeInteractive();
+        }, this);
 
         this.hideDrawings();
 
@@ -129,8 +147,10 @@ class InGame extends Phaser.Scene {
     }
 
     showVoteButtons() {
-        this.confirmVoteButton.setInteractive({cursor: 'pointer'});
-        this.confirmVoteButton.setAlpha(1);
+        if (!this.roundFaker) {
+            this.confirmVoteButton.setInteractive({cursor: 'pointer'});
+            this.confirmVoteButton.setAlpha(1);
+        }
         this.cancelVoteButton.setInteractive({cursor: 'pointer'});
         this.cancelVoteButton.setAlpha(1);
         this.bigImage.setAlpha(1);
@@ -151,6 +171,8 @@ class InGame extends Phaser.Scene {
         this.roundFaker = faker;
         this.canvas.setDrawMode(drawMode);
         this.hideDrawings();
+        this.button_clear.setAlpha(1);
+        this.button_clear.setInteractive({cursor: 'pointer'})
         this.inGameWord.text = '';
         if (!this.roundFaker) {
             this.word.text = this.roundWord;
@@ -158,6 +180,12 @@ class InGame extends Phaser.Scene {
             this.word.text = 'YOU ARE THE FAKER';
         }
         this.gameMode.text = drawMode;
+        if (!this.roundFaker) {
+            this.fakerImage.setAlpha(0);
+            this.fakerFrame.setAlpha(0);
+            this.fakerPeekButton.setAlpha(0);
+            this.fakerPeekButton.removeInteractive();
+        }
     }
 
     drawStart(time, round) {
@@ -179,10 +207,21 @@ class InGame extends Phaser.Scene {
         this.timer.text = time;
         if(time/this.maxTime < 0.5 && this.canvas.fadeStatus === -1) this.canvas.fadeStatus = 0;
         this.updateWord(time);
+        if (time === Math.floor(this.maxTime/2) && this.roundFaker && !this.canvas.hidden) {
+            this.fakerPeekButton.setAlpha(1);
+            this.fakerPeekButton.setInteractive({cursor: 'pointer'});
+        }
     }
 
     roundOver() {
         this.canvas.hideCanvas();
+        this.fakerFrame.setAlpha(0);
+        this.fakerImage.setAlpha(0);
+        this.fakerPeekButton.setAlpha(0);
+        this.fakerPeekButton.removeInteractive();
+        
+        this.button_clear.setAlpha(0);
+        this.button_clear.removeInteractive();
 
         let msg = new Object();
         msg.event = 'SEND_IMAGE';
@@ -190,6 +229,24 @@ class InGame extends Phaser.Scene {
         game.global.socketDir.send(JSON.stringify(msg));
 
         //fade (maybe not)
+    }
+    bePeeked() {
+        let msg = new Object();
+        msg.event = 'BE_PEEKED_RETURN';
+        msg.image = this.canvas.toString();
+        game.global.socketDir.send(JSON.stringify(msg));
+    }
+
+    peekReturn(image) {
+        if (this.textures.exists('peekImage')) {
+            this.textures.get('peekImage').destroy();
+        }
+        improCanvas.makeTexture('peekImage', image, this, 256);
+
+        this.fakerImage.setTexture('peekImage'); 
+        
+        this.fakerImage.setAlpha(1);
+        this.fakerFrame.setAlpha(1);
     }
 
     manageWord(maxTime) {
@@ -202,7 +259,7 @@ class InGame extends Phaser.Scene {
             } else {
                 this.wordBoolArray[i] = false;
 
-                if (this.roundWord[i].toUpperCase() !== 'A' && this.roundWord[i].toUpperCase() !== 'E' && this.roundWord[i].toUpperCase() !== 'I' && this.roundWord[i].toUpperCase() !== 'O' && this.roundWord[i].toUpperCase() !== 'U') {
+                if (this.roundWord[i].toUpperCase() !== 'A' && this.roundWord[i].toUpperCase() !== 'E' && this.roundWord[i].toUpperCase() !== 'I' && this.roundWord[i].toUpperCase() !== 'O' && this.roundWord[i].toUpperCase() !== 'U' && this.roundWord[i].toUpperCase() !== 'Á' && this.roundWord[i].toUpperCase() !== 'É' && this.roundWord[i].toUpperCase() !== 'Í' && this.roundWord[i].toUpperCase() !== 'Ó' && this.roundWord[i].toUpperCase() !== 'Ú' && this.roundWord[i].toUpperCase() !== 'Ü') {
                     this.wordPositionArray.push(i)
                 }
             }
