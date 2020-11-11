@@ -151,19 +151,22 @@ class PreLobby extends Phaser.Scene {
     }
 
     create() {
+        //Scale factors
+    	this.sX = game.canvas.width/game.global.WIDTH;
+		this.sY = game.canvas.height/game.global.HEIGHT;
 
-        this.codeFocus = false;
+        //Background
+        this.bg = this.add.image(game.canvas.width/2,  game.canvas.height/2,'Menu').setInteractive();
+
+        //Buttons
+        this.button_create = this.add.image(game.canvas.width / 4, game.canvas.height / 4, 'Ready_es').setInteractive({cursor: 'pointer'});
+        this.button_join = this.add.image(game.canvas.width * 3 / 4, game.canvas.height / 4, 'Ready_host_es').setInteractive({cursor: 'pointer'});
+        this.codeButton = this.add.image(game.canvas.width / 4, game.canvas.height / 2, 'Ready_host_es').setInteractive({cursor: 'pointer'});
+        this.scaler();
 
         this.input.keyboard.addKey(8);
-
-        this.bg = this.add.image(game.canvas.width/2,  game.canvas.height/2,'Menu').setInteractive();
-        this.bg.scaleX = game.canvas.width/1920;
-    	this.bg.scaleY = game.canvas.width/2200;
-
-        
-    	this.button_create = this.add.image(game.canvas.width / 4, game.canvas.height / 4, 'Ready_es').setInteractive({cursor: 'pointer'});
-    	this.button_join = this.add.image(game.canvas.width * 3 / 4, game.canvas.height / 4, 'Ready_host_es').setInteractive({cursor: 'pointer'});
-        this.codeButton = this.add.image(game.canvas.width / 4, game.canvas.height / 2, 'Ready_host_es').setInteractive({cursor: 'pointer'});
+        this.codeFocus = false;
+    	
         this.codeText = this.add.text(game.canvas.width * 3 / 4, game.canvas.height / 2, '', { fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' });
 		this.button_create.on('pointerdown', function (pointer){
             let msg = new Object();
@@ -230,8 +233,35 @@ class PreLobby extends Phaser.Scene {
     }
 
     update() { 
-
+        if(this.sX != game.canvas.width/game.global.WIDTH || this.sY != game.canvas.height/game.global.HEIGHT)
+		{
+			this.sX = game.canvas.width/game.global.WIDTH;
+			this.sY = game.canvas.height/game.global.HEIGHT;
+			this.scaler();
+		}
     }
+
+    scaler()
+    {
+        //Buttons
+        this.button_create.x = game.canvas.width / 4;
+        this.button_create.y = game.canvas.height / 4;
+        this.button_create.setScale(this.sY);
+
+        this.button_join.x = game.canvas.width * 3 / 4;
+        this.button_join.y = game.canvas.height / 4;
+        this.button_join.setScale(this.sY);
+
+        this.codeButton.x = game.canvas.width / 4;
+        this.codeButton.y = game.canvas.height / 2;
+        this.codeButton.setScale(this.sY);
+
+        //Background
+        this.bg.x = game.canvas.width / 2;
+		this.bg.y = game.canvas.height / 2;
+		this.bg.setScale(this.sX);
+    }
+
     joinRoom(roomCode)
     {
         let msg = new Object();

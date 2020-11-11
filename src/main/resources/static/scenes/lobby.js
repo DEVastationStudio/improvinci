@@ -9,6 +9,16 @@ class Lobby extends Phaser.Scene {
     }
 
     create(data) {
+        //Scale factors
+        this.sX = game.canvas.width/game.global.WIDTH;
+        this.sY = game.canvas.height/game.global.HEIGHT;
+
+        //Background
+        this.bg = this.add.image(game.canvas.width/2,  game.canvas.height/2,'Menu').setInteractive();
+
+        //Buttons
+        this.button_start = this.add.image(game.canvas.width * 3 / 4, game.canvas.height / 4, 'Ready_host_es').setInteractive({cursor: 'pointer'});
+        this.scaler();
 
         if (data.leader) {
             let msg = new Object();
@@ -16,9 +26,7 @@ class Lobby extends Phaser.Scene {
             game.global.socketDir.send(JSON.stringify(msg));
         }
 
-        this.bg = this.add.image(game.canvas.width/2,  game.canvas.height/2,'Menu'); 
-
-        this.button_start = this.add.image(game.canvas.width * 3 / 4, game.canvas.height / 4, 'Ready_host_es').setInteractive({cursor: 'pointer'});
+        
         
 		this.button_start.on('pointerdown', function (pointer){
             let msg = new Object();
@@ -46,14 +54,34 @@ class Lobby extends Phaser.Scene {
             }
         }
     }
+
     showHideStart(leader) {
         (leader)?this.button_start.setInteractive({cursor: 'pointer'}):this.button_start.removeInteractive();
         this.button_start.visible = leader;
     }
     
     update() { 
-
+        if(this.sX != game.canvas.width/game.global.WIDTH || this.sY != game.canvas.height/game.global.HEIGHT)
+		{
+			this.sX = game.canvas.width/game.global.WIDTH;
+			this.sY = game.canvas.height/game.global.HEIGHT;
+			this.scaler();
+		}
     }
+
+    scaler()
+    {
+        //Buttons
+        this.button_start.x = game.canvas.width * 3 / 4;
+        this.button_start.y = game.canvas.height / 4;
+        this.button_start.setScale(this.sY);
+
+        //Background
+        this.bg.x = game.canvas.width / 2;
+		this.bg.y = game.canvas.height / 2;
+		this.bg.setScale(this.sX);
+    }
+
     updateAvatars(data) {
         this.showHideStart(data.leader);
         for (let i = 0; i < 3; i++) {

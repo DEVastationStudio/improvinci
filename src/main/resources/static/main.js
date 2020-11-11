@@ -26,4 +26,6 @@ var config = {
 var game = new Phaser.Game(config);
 
 game.global = {
+    WIDTH:1920,
+    HEIGHT:1080
 }
