@@ -146,7 +146,7 @@ class InGame extends Phaser.Scene {
     }
 
     scaler()
-    {0,0
+    {
         //Buttons
         this.confirmVoteButton.x = game.canvas.width/4;
         this.confirmVoteButton.y = game.canvas.height *7/ 8;
@@ -252,6 +252,7 @@ class InGame extends Phaser.Scene {
     }
 
     roundOver() {
+        this.inGameWord.text = this.roundWord;
         this.canvas.hideCanvas();
         this.fakerFrame.setAlpha(0);
         this.fakerImage.setAlpha(0);

@@ -98,7 +98,7 @@ class improCanvas {
             case this.modes.DEFAULT:
             case this.modes.BLIND:
             default:
-                this.defaultPainting(x, y, 2)
+                this.defaultPainting(x, y, 3)
             break;
         }
     }
@@ -106,16 +106,17 @@ class improCanvas {
     defaultPainting(x,y,size)
     {
         for (let i = x-size; i < x+size; i++)
+            {
+                for (let j = y-size; j < y+size; j++)
                 {
-                    for (let j = y-size; j < y+size; j++)
+                    if (i >= 0 && i < this.drawing.length && j >= 0 && j < this.drawing.length)
                     {
-                        if (i >= 0 && i < this.drawing.length && j >= 0 && j < this.drawing.length)
-                        {
-                            if (this.drawing[i][j] !== 1) this.drawing[i][j] = 1;
-                            if(!this.inPainting) this.inPainting = true;
-                        }
+                        if (Math.pow(i-x,2) + Math.pow(j-y,2) >= size*2) continue;
+                        if (this.drawing[i][j] !== 1) this.drawing[i][j] = 1;
+                        if(!this.inPainting) this.inPainting = true;
                     }
                 }
+            }
     }
 
     onUpdate() {

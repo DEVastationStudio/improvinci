@@ -52,6 +52,7 @@ public class Room {
 	private LinkedList<String> availableModes;
 	private int peekTimeout = -1;
 	private boolean peekedThisRound = false;
+	private int votesLeft = 8;
 
 	
 	public Room(int numMaxPlayers, String rCode) 
@@ -245,15 +246,18 @@ public class Room {
 						msg.put("event", "ROUND_OVER");
 
 						//Clearing all votes before sending the messages just in case they vote someone before their votes are cleared
-						for (Player p : players) {
-							p.clearVotes();
-						} 
+						synchronized(this) {
+							votesLeft = players.size()-1;
+							for (Player p : players) {
+								p.clearVotes();
+							} 
 
-						for (Player p : players) {
-							synchronized(p.WSSession()) {
-								p.WSSession().sendMessage(new TextMessage(msg.toString()));
-							}
-						} 
+							for (Player p : players) {
+								synchronized(p.WSSession()) {
+									p.WSSession().sendMessage(new TextMessage(msg.toString()));
+								}
+							} 
+						}
 					}
 				break;
 				case VOTING:
@@ -267,7 +271,7 @@ public class Room {
 							}
 						} 
 					} else {
-						//Enviar votos /!!!!!!!!!!!!!!!!\
+						//Send votes /!!!!!!!!!!!!!!!!\
 						msg.put("event", "ROUND_VOTES");
 						msg.put("players",players.size());
 						for (int i = 0; i < players.size(); i++) {
@@ -316,6 +320,7 @@ public class Room {
 	private void sendWord(ObjectNode msg) throws Exception {
 		synchronized (this) {
 			peekedThisRound = false;
+			peekTimeout = -1;
 			//Choose random """impostor"""
 			int faker = random.nextInt(players.size());
 			System.out.println("["+LocalDateTime.now()+"]DEBUG: Generated faker " + faker);
@@ -354,6 +359,7 @@ public class Room {
 
 	public void vote(String id, Player votingPlayer) {
 		synchronized (this) {
+			votesLeft--;
 			for (Player player : players) {
 				if (player.getPlayerId().equals(id)) {
 					player.addVote();
@@ -367,13 +373,27 @@ public class Room {
 					break;
 				}
 			}
+			if (votesLeft == 0 && gameTimer > 3 && gameState == State.VOTING) {
+				gameTimer = 3;
+			}
 		}
 	}
 
 	public void peek() {
 		synchronized (this) {
+			if (players.size() == 1) return;
 			peekTimeout = 0;
-			Player peekedPlayer = players.get(random.nextInt(players.size()));
+			int chosenPlayer = random.nextInt(players.size()-1);
+			int fakerPos = -1;
+			for (int i = 0; i < players.size(); i++) {
+				Player p = players.get(i);
+				if (p.getPlayerId().equals(fakerId)) {
+					fakerPos = i;
+				}
+			} 
+
+			if (chosenPlayer >= fakerPos) chosenPlayer++;
+			Player peekedPlayer = players.get(chosenPlayer);
 
 			ObjectNode msg = mapper.createObjectNode();
 			msg.put("event", "BE_PEEKED");

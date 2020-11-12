@@ -14,12 +14,14 @@ class GameOver extends Phaser.Scene {
         this.sY = game.canvas.height/game.global.HEIGHT;
 
         //Background
-        this.background = this.add.image(0,0,'Menu');
+        this.bg = this.add.image(0,0,'Menu');
 
         //Buttons
     	this.playAgain_bt = this.add.image(0,0,'Ready_es').setInteractive({cursor: 'pointer'});
     	this.quit_bt = this.add.image(0,0,'Ready_host_es').setInteractive({cursor: 'pointer'});
 
+        this.scaler();
+        
         this.wipScoreText = this.add.text(game.canvas.width/2, 10, '', { fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' });
 
         for (let i = 0; i < data.players.length; i++) {
