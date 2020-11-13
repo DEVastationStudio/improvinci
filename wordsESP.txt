@@ -34,8 +34,7 @@ Albóndigas
 Dónut
 Sushi
 Pollo
-Patatas
-Fritas
+Patatas fritas
 Nachos
 Costillas
 Tortilla
@@ -99,3 +98,53 @@ Riñonera
 Broche
 Gafas de sol
 Gargantilla
+Cascos
+Móvil
+Ordenador
+Auriculares
+Pantalla
+Ratón
+Teclado
+Tablet
+Micrófono
+Batería
+Cargador
+Frigorífico
+Lavavajillas
+Videoconsola
+Memoria USB
+Altavoces
+Transistor
+Router
+Máquina de coser
+Robot
+Televisión
+Microondas
+Androide
+Aerogenerador
+Ventilador
+Placa solar
+Gafas de Realidad Virtual
+Virus informático
+Cámara
+Impresora
+Láser
+Central Nuclear
+Bomba
+Telescopio
+Fábrica
+Motor
+Cable
+Poste de electricidad
+Teléfono
+Proyector
+Disco
+Cafetera
+Plancha de pelo
+Aspiradora
+Walkie talkie
+Dron
+Detector de metales
+Microscopio
+Tuneladora
+Taladro

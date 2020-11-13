@@ -98,3 +98,53 @@ Fanny pack
 Brooch
 Sunglasses
 Choker
+Headphones
+Mobile phone
+Computer
+Earphones
+Screen
+Mouse
+Keyboard
+Tablet
+Microphone
+Battery
+Charger
+Fridge
+Dishwasher
+Videogame console
+Pen drive
+Speakers
+Transistor
+Router
+Sewing machine
+Robot
+TV
+Microwave
+Android
+Aerogenerator
+Fan
+Solar pannel
+Virtual reality glasses
+Computer virus
+Camera
+Printer
+Laser
+Nuclear plant
+Bomb
+Telescope
+Factory
+Engine
+Cable
+Utility pole
+Phone
+Projector
+Disc
+Coffee maker
+Hair iron
+Vacuum cleaner
+Walkie talkie
+Drone
+Metal detector
+Microscope
+Tunnel boring machine
+Drill
