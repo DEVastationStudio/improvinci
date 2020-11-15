@@ -30,7 +30,6 @@ class improCanvas {
             LIMIT: 'limit',
             ONE: 'one',
             BLIND: 'blind',
-            FIGURES: 'figures',
             GROWING: 'growing'
         }
 
@@ -87,8 +86,6 @@ class improCanvas {
             case this.modes.LIMIT:
             case this.modes.ONE:
                 if(this.maxTrazos>0) this.defaultPainting(x, y, 2);
-            break;
-            case this.modes.FIGURES:
             break;
             case this.modes.GROWING:
                 if(pointer.getDuration()<(this.pointerChangeSizeTime*this.maxPointerSize))

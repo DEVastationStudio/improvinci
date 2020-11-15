@@ -17,9 +17,10 @@ class Lobby extends Phaser.Scene {
         this.bg = this.add.image(0,0,'Menu').setInteractive();
 
         //Buttons
-        this.button_start = this.add.image(0,0, 'Ready_host_es').setInteractive({cursor: 'pointer'});
-        this.button_Options = this.add.image(0,0, 'Ready_host_es').setInteractive({cursor: 'pointer'});
+        this.button_start = this.add.image(0,0, 'Ready_host_es');
+        this.button_start.setAlpha(0.5);
         this.button_back = this.add.image(0,0, '').setInteractive({cursor: 'pointer'});
+        this.button_Options = this.add.image(0,0, 'Ready_host_es').setInteractive({cursor: 'pointer'});
 
         //if (data.leader) {
         let msg = new Object();
@@ -33,7 +34,7 @@ class Lobby extends Phaser.Scene {
             let msg2 = new Object();
             msg2.event = 'START_GAME';
             game.global.socketDir.send(JSON.stringify(msg2));
-            this.showHideStart(false);
+            this.button_start.removeInteractive();
         }, this);
 
         this.button_Options.on('pointerdown', function (pointer){
@@ -42,8 +43,6 @@ class Lobby extends Phaser.Scene {
             msg.event = 'GET_CONFIG_ROOM';
             game.global.socketDir.send(JSON.stringify(msg)); 
         }, this);
-
-        this.showHideStart(data.leader);
         
         this.add.text(game.canvas.width/2, 10, data.code, { fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' });
         
@@ -325,9 +324,23 @@ class Lobby extends Phaser.Scene {
         }
     }
 
-    showHideStart(leader) {
+    /*showHideStart(leader) {
         (leader)?this.button_start.setInteractive({cursor: 'pointer'}):this.button_start.removeInteractive();
         this.button_start.visible = leader;
+    }*/
+    showHideStart(leader, players) {
+        if (leader) {
+            if (players >= 3) {
+                this.button_start.setInteractive({cursor: 'pointer'});
+                this.button_start.setAlpha(1);
+            } else {
+                this.button_start.removeInteractive();
+                this.button_start.setAlpha(0.5);
+            }
+        } else {
+            this.button_start.removeInteractive();
+            this.button_start.setAlpha(0);
+        }
     }
     
     update() { 
@@ -582,7 +595,7 @@ class Lobby extends Phaser.Scene {
     }
 
     updateAvatars(data) {
-        this.showHideStart(data.leader);
+        this.showHideStart(data.leader, data.players.length);
         for (let i = 0; i < 3; i++) {
             for (let j = 0; j < 3; j++) {
                 if (data.players[i+j*3] !== undefined) {
