@@ -118,11 +118,11 @@ class InGame extends Phaser.Scene {
         this.canvas = new improCanvas(this, 256);
         this.canvas.hideCanvas();
 
-        this.word = this.add.text(game.canvas.width/2 ,game.canvas.height/2, '', { fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#ff6600', stroke: '#000000' });
-        this.gameMode = this.add.text(game.canvas.width/6 ,game.canvas.height/6, '', { fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#ff6600', stroke: '#000000' });
-        this.timer = this.add.text(game.canvas.width/2 ,game.canvas.height/8, '', { fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#ff6600', stroke: '#000000' });
-        this.inGameWord = this.add.text(game.canvas.width/2 ,game.canvas.height/10, '', { fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#ff6600', stroke: '#000000' });
-        this.roundText = this.add.text(game.canvas.width*6/8 ,game.canvas.height/10, '0/'+this.maxRounds, { fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#ff6600', stroke: '#000000' });
+        this.word = this.add.text(game.canvas.width/2 ,game.canvas.height/2, '', {fontSize: '50px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#000000', stroke: '#000000' });
+        this.gameMode = this.add.text(game.canvas.width/4 ,game.canvas.height/6, '', { fontSize: '50px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#000000', stroke: '#000000' });
+        this.timer = this.add.text(game.canvas.width/8 ,game.canvas.height/8, '', { fontSize: '50px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#000000', stroke: '#000000' });
+        this.inGameWord = this.add.text(game.canvas.width/2 ,game.canvas.height/10, '', { fontSize: '50px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#000000', stroke: '#000000' });
+        this.roundText = this.add.text(game.canvas.width*6/8 ,game.canvas.height/10, '0/'+this.maxRounds, { fontSize: '50px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#000000', stroke: '#000000' });
 
     	
         this.button_clear.on('pointerdown', function (pointer){

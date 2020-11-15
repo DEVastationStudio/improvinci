@@ -120,6 +120,45 @@ public class Room {
 		}
 	}
 
+	public void easyMode(Player player)
+	{
+		modeInUse[0] = true;
+		modeInUse[1] = false;
+		modeInUse[2] = false;
+		modeInUse[3] = false;
+		modeInUse[4] = false;
+		rounds = 5;
+		drawTime = 45;
+		voteTime = 30;
+		sendInfo(player);
+	}
+
+	public void difficultMode(Player player)
+	{
+		modeInUse[0] = false;
+		modeInUse[1] = true;
+		modeInUse[2] = true;
+		modeInUse[3] = true;
+		modeInUse[4] = true;
+		rounds = 9;
+		drawTime = 15;
+		voteTime = 15;
+		sendInfo(player);
+	}
+
+	public void dailyMode(Player player)
+	{
+		modeInUse[0] = false;
+		modeInUse[1] = true;
+		modeInUse[2] = false;
+		modeInUse[3] = true;
+		modeInUse[4] = false;
+		rounds = 2;
+		drawTime = 15;
+		voteTime = 15;
+		sendInfo(player);
+	}
+
 	public void sendInfo(Player player)
 	{
 		try{

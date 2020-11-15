@@ -339,6 +339,15 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 			case "VOTETIME":
 				rooms.get(player.getRoomCode()).setTimeVote(player, node.get("type").asBoolean());
 				break;
+			case "EASYMODE":
+				rooms.get(player.getRoomCode()).easyMode(player);
+				break;
+			case "DIFFICULTMODE":
+				rooms.get(player.getRoomCode()).difficultMode(player);
+				break;
+			case "DAILYMODE":
+				rooms.get(player.getRoomCode()).dailyMode(player);
+				break;
 			default:
 				break;
 			}

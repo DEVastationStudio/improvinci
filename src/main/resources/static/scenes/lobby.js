@@ -65,6 +65,7 @@ class Lobby extends Phaser.Scene {
 
          //Options
          this.keyBoardBg = this.add.image(0,0,'Gameplay');
+         this.DailyImg = this.add.image(0,0,'Daily').setInteractive({cursor: 'pointer'});
          this.BlindImg = this.add.image(0,0,'Blind').setInteractive({cursor: 'pointer'});
          this.DefaultImg = this.add.image(0,0,'Default').setInteractive({cursor: 'pointer'});
          this.DificilImg = this.add.image(0,0,'Dificil').setInteractive({cursor: 'pointer'});
@@ -110,6 +111,24 @@ class Lobby extends Phaser.Scene {
          this.scaler();
 
          //Config Actions
+         this.FacilImg.on('pointerdown', function (pointer){
+            let msg = new Object();
+            msg.event = 'EASYMODE';
+            game.global.socketDir.send(JSON.stringify(msg));
+        }, this);
+
+        this.DificilImg.on('pointerdown', function (pointer){
+            let msg = new Object();
+            msg.event = 'DIFFICULTMODE';
+            game.global.socketDir.send(JSON.stringify(msg));
+        }, this);
+
+        this.DailyImg.on('pointerdown', function (pointer){
+            let msg = new Object();
+            msg.event = 'DAILYMODE';
+            game.global.socketDir.send(JSON.stringify(msg));
+        }, this);
+
          this.SalirCod.on('pointerdown', function (pointer){
             this.scene.get('Lobby').invisible(false);
         }, this);
@@ -371,7 +390,7 @@ class Lobby extends Phaser.Scene {
 
     invisible(isVisible)
     {
-        //Checks modes
+        //Checks modes 
         //----NoChecks
         this.DefaultTickNoCheck.setAlpha(isVisible);
         this.BlindTickNoCheck.setAlpha(isVisible);
@@ -386,6 +405,7 @@ class Lobby extends Phaser.Scene {
         this.GrowingTickCheck.setAlpha(isVisible);
 
         this.keyBoardBg.setAlpha(isVisible);
+        this.DailyImg.setAlpha(isVisible);
         this.BlindImg.setAlpha(isVisible);
         this.DefaultImg.setAlpha(isVisible);
         this.DificilImg.setAlpha(isVisible);
@@ -592,11 +612,15 @@ class Lobby extends Phaser.Scene {
         //Presets
         this.FacilImg.x = kbLTCornerX+columnPos*6;
         this.FacilImg.y = kbLTCornerY+rowPos*18;
-        this.FacilImg.setScale(this.keyBoardBg.scale*2);
+        this.FacilImg.setScale(this.keyBoardBg.scale);
 
-        this.DificilImg.x = kbLTCornerX+columnPos*14;
+        this.DificilImg.x = kbLTCornerX+columnPos*10;
         this.DificilImg.y = kbLTCornerY+rowPos*18;
-        this.DificilImg.setScale(this.keyBoardBg.scale*2);
+        this.DificilImg.setScale(this.keyBoardBg.scale);
+
+        this.DailyImg.x = kbLTCornerX+columnPos*14;
+        this.DailyImg.y = kbLTCornerY+rowPos*18;
+        this.DailyImg.setScale(this.keyBoardBg.scale*2);
     }
 
     updateAvatars(data) {

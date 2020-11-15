@@ -45,6 +45,7 @@ class Preloader extends Phaser.Scene {
 		this.load.image('Letra_P', 'assets/backgrounds/letras/P.png');
 
 		//menu Configuración
+		this.load.image('Daily', 'assets/backgrounds/Configuracion/Daily.png');
 		this.load.image('Blind', 'assets/backgrounds/Configuracion/Blind.png');
 		this.load.image('Default', 'assets/backgrounds/Configuracion/Default.png');
 		this.load.image('Dificil', 'assets/backgrounds/Configuracion/Dificil.png');
