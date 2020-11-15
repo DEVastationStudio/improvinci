@@ -367,20 +367,6 @@ class InGame extends Phaser.Scene {
     }
 
     updateDrawing(player, drawing, isSelf) {
-        /*this.avatars = [];
-        for (let i = 0; i < 3; i++) {
-            for (let j = 0; j < 3; j++) {
-                if (data.players[i+j*3] !== undefined) {
-                    if (this.textures.exists(data.players[i+j*3].playerId+'r')) {
-                        this.textures.get(data.players[i+j*3].playerId+'r').destroy();
-                    }
-                    improCanvas.makeTexture(data.players[i+j*3].playerId+'r', data.players[i+j*3].picture, this, 256);
-                    this.avatars[i+j*3] = this.add.image(game.canvas.width/2 + (140*i-2),  game.canvas.height/2 + (140*j-2),data.players[i+j*3].playerId); 
-                } else {
-                    this.avatars[i+j*3] = this.add.image(game.canvas.width/2 + (140*i-2),  game.canvas.height/2 + (140*j-2),''); 
-                }
-            }
-        }*/
         for (let i = 0; i < 3; i++) {
             for (let j = 0; j < 3; j++) {
                 if (this.players[i+j*3] !== undefined) {
@@ -393,6 +379,7 @@ class InGame extends Phaser.Scene {
                         improCanvas.makeTexture(player+'r', drawing, this, 256);
 
                         this.drawings[i+j*3].setTexture(player+'r'); 
+                        this.drawings[i+j*3].setTint(0xFFFFFF);
                         
                         this.drawings[i+j*3].setAlpha(1);
                         this.frames[i+j*3].setAlpha(1);
@@ -414,12 +401,6 @@ class InGame extends Phaser.Scene {
     updateVoteResults(msg) {
         this.denhanceImage();
         this.disableDrawings();
-        /*msg.put('event', 'ROUND_VOTES');
-        for (int i = 0; i < players.size(); i++) {
-            msg.put('id_'+i,players.get(i).getPlayerId());
-            msg.put('votes_'+i,players.get(i).getVotes());
-        }
-        msg.put('faker', fakerId);*/
         let playerVotes = new Array(msg.players);
         for (let i = 0; i < playerVotes.length; i++) {
             eval('playerVotes[msg.id_'+i+'] = msg.votes_'+i); //eval shouldn't be a problem here, hopefully
@@ -431,6 +412,9 @@ class InGame extends Phaser.Scene {
                 if (this.players[i+j*3] !== undefined) {
                     if (playerVotes[this.players[i+j*3].playerId] !== undefined) {
                         this.votes[i+j*3].text = playerVotes[this.players[i+j*3].playerId];
+                        if (msg.faker === this.players[i+j*3].playerId) {
+                            this.drawings[i+j*3].setTint(0xff8888);
+                        }
                     }
                 }
             }

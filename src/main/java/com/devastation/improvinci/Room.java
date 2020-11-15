@@ -4,6 +4,7 @@ import java.io.LineNumberReader;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.LineNumberReader;
 import java.time.LocalDateTime;
@@ -108,10 +109,12 @@ public class Room {
 					leader = players.getFirst();
 				}
 			}
-			if (players.size() == 0) {
+			if (players.isEmpty()) {
 				stopGame();
 				rooms.remove(roomCode);
 				System.out.println("Room " + roomCode + " closed.");
+			} else if (players.size() < 3 && gameStarted) {
+				try {finishGame(mapper.createObjectNode());} catch (Exception e) {e.printStackTrace();}
 			}
 		}
 		player.setInRoom(false);
@@ -128,6 +131,17 @@ public class Room {
 	}
 
 	public void startGame() {
+		gameStarted = true;
+		synchronized(this) {
+			for (Player p : players) {
+				if (!p.isInLobby()) {
+					synchronized(p.WSSession()) {
+						try {p.WSSession().close();} catch (Exception e) {e.printStackTrace();}
+					}
+				}
+			}
+		}
+
 		FileInputStream fs;
 		BufferedReader br;
 		try {
@@ -178,7 +192,6 @@ public class Room {
 		
 		curRound = 0;
 		gameState = State.JOINING;
-		gameStarted = true;
 		scheduler = Executors.newScheduledThreadPool(1);
 		scheduler.scheduleAtFixedRate(() -> tick(), TICK_DELAY, TICK_DELAY, TimeUnit.MILLISECONDS);
 	}
@@ -307,21 +320,7 @@ public class Room {
 						gameTimer--;
 					} else {
 						if (curRound == rounds) {
-							//game end message, etc.
-							msg.put("event", "POINTS");
-							msg.put("roomCode",roomCode);
-							LinkedList<Player> sortedPlayers = (LinkedList<Player>)players.clone();
-							Collections.sort(sortedPlayers, (a, b) -> Integer.compare(a.getScore(), b.getScore()));
-							ArrayNode arrNode = mapper.valueToTree(sortedPlayers);
-							msg.putArray("playerArray").addAll(arrNode);
-							for (Player p : players) {
-								synchronized(p.WSSession()) {
-									msg.put("leader", p == leader);
-									p.WSSession().sendMessage(new TextMessage(msg.toString()));
-								}
-							} 
-							gameState = State.ENDING;
-							stopGame();
+							finishGame(msg);
 						} else {
 							sendWord(msg);
 						}
@@ -329,6 +328,24 @@ public class Room {
 				break;
 			}
 		} catch (Exception ex) { ex.printStackTrace(); }
+	}
+
+	private void finishGame(ObjectNode msg) throws IOException {
+		//game end message, etc.
+		msg.put("event", "POINTS");
+		msg.put("roomCode",roomCode);
+		LinkedList<Player> sortedPlayers = (LinkedList<Player>)players.clone();
+		Collections.sort(sortedPlayers, (a, b) -> Integer.compare(a.getScore(), b.getScore()));
+		ArrayNode arrNode = mapper.valueToTree(sortedPlayers);
+		msg.putArray("playerArray").addAll(arrNode);
+		for (Player p : players) {
+			synchronized(p.WSSession()) {
+				msg.put("leader", p == leader);
+				p.WSSession().sendMessage(new TextMessage(msg.toString()));
+			}
+		} 
+		gameState = State.ENDING;
+		stopGame();
 	}
 
 	private void sendWord(ObjectNode msg) throws Exception {

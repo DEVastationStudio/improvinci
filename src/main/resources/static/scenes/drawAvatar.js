@@ -19,6 +19,8 @@ class DrawAvatar extends Phaser.Scene {
         //Buttons
         this.button_confirm = this.add.image(0,0, 'Ready_es').setInteractive({cursor: 'pointer'});
         this.button_clear = this.add.image(0,0, 'Corona').setInteractive({cursor: 'pointer'});
+    	this.return_bt = this.add.image(game.canvas.width*4/5 ,game.canvas.height*1/5,'Ronda_es').setInteractive({cursor: 'pointer'});
+    	
         this.scaler();
         
         //Button actions
@@ -31,6 +33,9 @@ class DrawAvatar extends Phaser.Scene {
             this.canvas.clear();
 		}, this);
 
+    	this.return_bt.on('pointerdown', function (pointer){
+			this.scene.start('Menu');
+		}, this);
 
         if (typeof(Storage) !== 'undefined') {
         this.usesLocalStorage = true;
@@ -68,6 +73,10 @@ class DrawAvatar extends Phaser.Scene {
         this.button_clear.x = game.canvas.width * 3 / 4;
         this.button_clear.y = game.canvas.height / 4;
         this.button_clear.setScale(this.sY);
+
+        this.return_bt.x = game.canvas.width / 4;
+        this.return_bt.y = game.canvas.height * 3 / 4;
+        this.return_bt.setScale(this.sY);
 
         //Background
         this.bg.x = game.canvas.width / 2;
