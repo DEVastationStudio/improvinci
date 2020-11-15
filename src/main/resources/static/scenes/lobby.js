@@ -18,20 +18,21 @@ class Lobby extends Phaser.Scene {
 
         //Buttons
         this.button_start = this.add.image(0,0, 'Ready_host_es').setInteractive({cursor: 'pointer'});
+        this.button_back = this.add.image(0,0, '').setInteractive({cursor: 'pointer'});
         this.scaler();
 
-        if (data.leader) {
-            let msg = new Object();
-            msg.event = 'ALL_READY';
-            game.global.socketDir.send(JSON.stringify(msg));
-        }
+        //if (data.leader) {
+        let msg = new Object();
+        msg.event = 'ALL_READY';
+        game.global.socketDir.send(JSON.stringify(msg));
+        //}
 
         
         
 		this.button_start.on('pointerdown', function (pointer){
-            let msg = new Object();
-            msg.event = 'START_GAME';
-            game.global.socketDir.send(JSON.stringify(msg));
+            let msg2 = new Object();
+            msg2.event = 'START_GAME';
+            game.global.socketDir.send(JSON.stringify(msg2));
             this.showHideStart(false);
         }, this);
         this.showHideStart(data.leader);
@@ -71,7 +72,7 @@ class Lobby extends Phaser.Scene {
 
     scaler()
     {
-        //Buttons0,0
+        //Buttons
         this.button_start.x = game.canvas.width * 3 / 4;
         this.button_start.y = game.canvas.height / 4;
         this.button_start.setScale(this.sY);

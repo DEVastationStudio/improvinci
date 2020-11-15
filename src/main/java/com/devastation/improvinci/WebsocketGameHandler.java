@@ -89,6 +89,20 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 
 				Room room = getRoom(node.get("roomCode").asText().toUpperCase());
 
+				if (room == null) {
+					msg.put("state","null");
+					synchronized(player.WSSession()) {
+						player.WSSession().sendMessage(new TextMessage(msg.toString()));
+					}
+					return;
+				} else if (room.isInGame()) {
+					msg.put("state","ingame");
+					synchronized(player.WSSession()) {
+						player.WSSession().sendMessage(new TextMessage(msg.toString()));
+					}
+					return;
+				}
+
 				if(!player.isInRoom() || player.getRoomCode().equals(node.get("roomCode").asText()))
 				{
 					if(room.tryJoin(player, node.get("roomCode").asText().toUpperCase()))
@@ -110,6 +124,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 							{
 								msg.put("message", "Player " + player.getPlayerId() + " joined the room");
 								msg.put("joining", false);
+								msg.put("state","ok");
 
 								synchronized(room.getPlayers().get(i).WSSession()) {
 									room.getPlayers().get(i).WSSession().sendMessage(new TextMessage(msg.toString()));
@@ -119,6 +134,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 							{
 								msg.put("message", "Joined succesfully");
 								msg.put("joining", true);
+								msg.put("state","ok");
 								synchronized(player.WSSession()) {
 									player.WSSession().sendMessage(new TextMessage(msg.toString()));
 								}
@@ -128,6 +144,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 					else
 					{
 						msg.put("message", "The room is full, try joining later");
+						msg.put("state","full");
 						synchronized(player.WSSession()) {
 							player.WSSession().sendMessage(new TextMessage(msg.toString()));
 						}	
@@ -136,6 +153,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 				else
 				{
 					msg.put("message", "You are already in a room");
+					msg.put("state","full");
 					synchronized(player.WSSession()) {
 						player.WSSession().sendMessage(new TextMessage(msg.toString()));
 					}

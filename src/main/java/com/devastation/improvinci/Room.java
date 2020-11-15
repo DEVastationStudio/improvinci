@@ -55,6 +55,7 @@ public class Room {
 	private boolean peekedThisRound = false;
 	private int votesLeft = 8;
 	private ConcurrentHashMap<String, Room> rooms;
+	private boolean gameStarted;
 
 	
 	public Room(int numMaxPlayers, String rCode, ConcurrentHashMap<String, Room> rooms) 
@@ -110,6 +111,7 @@ public class Room {
 			if (players.size() == 0) {
 				stopGame();
 				rooms.remove(roomCode);
+				System.out.println("Room " + roomCode + " closed.");
 			}
 		}
 		player.setInRoom(false);
@@ -176,6 +178,7 @@ public class Room {
 		
 		curRound = 0;
 		gameState = State.JOINING;
+		gameStarted = true;
 		scheduler = Executors.newScheduledThreadPool(1);
 		scheduler.scheduleAtFixedRate(() -> tick(), TICK_DELAY, TICK_DELAY, TimeUnit.MILLISECONDS);
 	}
@@ -190,7 +193,8 @@ public class Room {
 					p.setInLobby(false);
 			}
 		}
-		System.out.println("Room " + roomCode + " closed.");
+		gameStarted = false;
+		System.out.println("Game ended in room " + roomCode + ".");
 	}
 
 	private void tick() {
@@ -442,5 +446,9 @@ public class Room {
 			}
 
 		}
+	}
+
+	public boolean isInGame() {
+		return gameStarted;
 	}
 }

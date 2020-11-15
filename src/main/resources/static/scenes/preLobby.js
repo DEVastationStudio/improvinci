@@ -31,16 +31,28 @@ class PreLobby extends Phaser.Scene {
                     break;
                 case 'TRY_JOIN_RETURN':
                     console.log('['+msg.event+'] '+msg.message);
-
-                    if (msg.joining) {
-                        if (this.scene.isActive())
-                            this.scene.start('Lobby', {code: msg.roomCode, players: msg.playerArray, leader: msg.leader});
-                        else if (this.scene.get('GameOver').scene.isActive())
-                            this.scene.get('GameOver').scene.start('Lobby', {code: msg.roomCode, players: msg.playerArray, leader: msg.leader});
-                    } else {
-                        if (this.scene.get('Lobby').scene.isActive()) {
-                            this.scene.get('Lobby').updateAvatars({players: msg.playerArray, leader: msg.leader});
-                        }
+                    switch (msg.state) {
+                        case 'null':
+                            if (this.scene.isActive()) this.onRoomGone();
+                            break;
+                        case 'ingame':
+                            if (this.scene.isActive()) this.onRoomStarted();
+                            break;
+                        case 'full':
+                            if (this.scene.isActive()) this.onRoomFull();
+                            break;
+                        case 'ok':
+                            if (msg.joining) {
+                                if (this.scene.isActive())
+                                    this.scene.start('Lobby', {code: msg.roomCode, players: msg.playerArray, leader: msg.leader});
+                                else if (this.scene.get('GameOver').scene.isActive())
+                                    this.scene.get('GameOver').scene.start('Lobby', {code: msg.roomCode, players: msg.playerArray, leader: msg.leader});
+                            } else {
+                                if (this.scene.get('Lobby').scene.isActive()) {
+                                    this.scene.get('Lobby').updateAvatars({players: msg.playerArray, leader: msg.leader});
+                                }
+                            }
+                            break;
                     }
                     break;
                 case 'CREATE_ROOM_RETURN':
@@ -171,6 +183,7 @@ class PreLobby extends Phaser.Scene {
         //buttons
         this.button_create = this.add.image(0,0, 'Ready_es').setInteractive({cursor: 'pointer'});
         this.codeButton = this.add.image(0,0, 'Ready_host_es').setInteractive({cursor: 'pointer'});
+        this.button_back = this.add.image(0,0, '').setInteractive({cursor: 'pointer'});
 
         //keyboard
         this.keyBoardBg = this.add.image(0,0,'Gameplay').setInteractive();
@@ -197,6 +210,17 @@ class PreLobby extends Phaser.Scene {
 
         this.codeText = this.add.text(0, 0, '', { fontSize: '70px',color: '#000000',fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' });
 
+        //Connection popup
+        this.popupBg = this.add.image(0,0,'Gameplay');
+        this.popupBg.setAlpha(0);
+        this.popupText = this.add.text(0, 0, '', { fontSize: '70px',color: '#000000',fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', align: 'center'}).setOrigin(0.5, 0.5);
+        this.popupText.setAlpha(0);
+        this.popupCancel = this.add.image(0,0,'SalirCod');
+        this.popupCancel.setAlpha(0);
+        this.popupCancel.on('pointerdown', function (pointer){
+            this.cancelConnection();
+        }, this);
+
         this.invisible(false);
         this.scaler();
 
@@ -209,39 +233,47 @@ class PreLobby extends Phaser.Scene {
             msg.players = 9;
             game.global.socketDir.send(JSON.stringify(msg));
             this.button_create.removeInteractive();
-            this.button_join.removeInteractive();
+            this.button_back.removeInteractive();
+            this.showConnectingInterface();
         }, this);
         
         this.codeButton.on('pointerdown', function (pointer){
             this.codeButton.setAlpha(0);
             this.button_create.setAlpha(0);
+            this.button_back.setAlpha(0);
             this.scene.get('PreLobby').scene.codeFocus = true;
             this.scene.get('PreLobby').invisible(true);
             this.codeButton.removeInteractive();
             this.button_create.removeInteractive();
+            this.button_back.removeInteractive();
 		}, this);
         this.bg.on('pointerdown', function (pointer){
             this.codeButton.setAlpha(1);
             this.button_create.setAlpha(1);
+            this.button_back.setAlpha(1);
             this.scene.get('PreLobby').scene.codeFocus = false;
             this.scene.get('PreLobby').invisible(false);
             this.codeButton.setInteractive({cursor: 'pointer'});
             this.button_create.setInteractive({cursor: 'pointer'});
+            this.button_back.setInteractive({cursor: 'pointer'});
         }, this);
         this.SalirCod.on('pointerdown', function (pointer){
             this.codeButton.setAlpha(1);
             this.button_create.setAlpha(1);
+            this.button_back.setAlpha(1);
             this.scene.get('PreLobby').scene.codeFocus = false;
             this.scene.get('PreLobby').invisible(false);
             this.codeButton.setInteractive({cursor: 'pointer'});
             this.button_create.setInteractive({cursor: 'pointer'});
+            this.button_back.setInteractive({cursor: 'pointer'});
 		}, this);
 		this.ConfirmarCod.on('pointerdown', function (pointer){
             this.scene.get('PreLobby').tryJoin();
+            this.showConnectingInterface();
         }, this);
         this.BorrarCod.on('pointerdown', function (pointer){
             if (!this.scene.get('PreLobby').scene.codeFocus) return;
-                    this.scene.get('PreLobby').trimText();
+            this.scene.get('PreLobby').trimText();
         }, this);
 
         this.Letra_A.on('pointerdown', function (pointer){
@@ -308,6 +340,7 @@ class PreLobby extends Phaser.Scene {
                     event.stopImmediatePropagation();
                 } else if (event.keyCode == 13) {
                     this.scene.tryJoin();
+                    this.scene.showConnectingInterface();
                     //enter
                 }
                 /*switch (event.keyCode) {
@@ -333,7 +366,7 @@ class PreLobby extends Phaser.Scene {
         game.global.socketDir.send(JSON.stringify(msg));
         //expand this when it's implemented properly because it can fail I guess (if you type a wrong code or something like that, idk)
         this.button_create.removeInteractive();
-        this.button_join.removeInteractive();
+        this.button_back.removeInteractive();
     }
 
     update() { 
@@ -381,6 +414,10 @@ class PreLobby extends Phaser.Scene {
         this.codeButton.x = game.canvas.width / 4;
         this.codeButton.y = game.canvas.height / 2;
         this.codeButton.setScale(this.sY);
+
+        this.button_back.x = game.canvas.width / 4;
+        this.button_back.y = game.canvas.height * 3 / 4;
+        this.button_back.setScale(this.sY);
 
         //Background
         this.bg.x = game.canvas.width / 2;
@@ -485,6 +522,75 @@ class PreLobby extends Phaser.Scene {
         this.codeText.scaleX = this.BarraCod.scaleX;
         this.codeText.scaleY = this.BarraCod.scaleY;
 
+        this.popupBg.x = game.canvas.width / 2;
+		this.popupBg.y = game.canvas.height / 2;
+        this.popupBg.setScale(this.sY*3/4);
+
+        this.popupText.x = this.popupBg.x
+        this.popupText.y = this.popupBg.y - this.popupBg.height*this.popupBg.scaleY/6;
+        this.popupText.setScale(this.popupBg.scale);
+        
+        this.popupCancel.x = this.popupBg.x
+        this.popupCancel.y = this.popupBg.y + this.popupBg.height*this.popupBg.scaleY/6;
+        this.popupCancel.setScale(this.popupBg.scale);
+        
+        
+
+    }
+
+    showConnectingInterface() {
+        //Show popup
+        this.popupBg.setAlpha(1);
+        //Show text that reads 'connecting...'
+        this.popupText.setAlpha(1);
+        this.popupText.text = 'Connecting...';
+        //Disable interactive on all other buttons and also hide the keyboard thingy
+        this.invisible(false);
+        this.codeButton.setAlpha(0);
+        this.button_create.setAlpha(0);
+        this.button_back.setAlpha(0);
+        this.codeButton.removeInteractive();
+        this.button_create.removeInteractive();
+        this.button_back.removeInteractive();
+    }
+
+    onRoomFull() {
+        //Gets called if the room is full
+        this.showCancelInterface('Couldn\'t connect: Room is full');
+    }
+
+    onRoomStarted() {
+        //Gets called if the game has already started in that room
+        this.showCancelInterface('Couldn\'t connect: Game has already started');
+    }
+
+    onRoomGone() {
+        //Gets called if the room doesn't exist
+        this.showCancelInterface('Couldn\'t connect: Room doesn\'t exist');
+    }
+
+    showCancelInterface(text) {
+        //Change previous text with new text
+        this.popupText.text = text;
+        //show cancel button
+        this.popupCancel.setAlpha(1);
+        this.popupCancel.setInteractive({cursor: 'pointer'});
+    }
+
+    cancelConnection() {
+        //Hide popup, text and cancel button
+        this.popupBg.setAlpha(0);
+        this.popupText.setAlpha(0);
+        this.popupText.text = '';
+        this.popupCancel.setAlpha(0);
+        this.popupCancel.removeInteractive();
+        //Set interactive on all main buttons
+        this.codeButton.setAlpha(1);
+        this.button_create.setAlpha(1);
+        this.button_back.setAlpha(1);
+        this.codeButton.setInteractive({cursor: 'pointer'});
+        this.button_create.setInteractive({cursor: 'pointer'});
+        this.button_back.setInteractive({cursor: 'pointer'});
     }
 
     joinRoom(roomCode)
