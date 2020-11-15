@@ -23,9 +23,6 @@ class InGame extends Phaser.Scene {
         this.button_clear = this.add.image(game.canvas.width * 3 / 4, game.canvas.height / 4, 'Corona').setInteractive({cursor: 'pointer'});
         //this.fakerPeekButton.setScale(0.2, 0.2);
 
-        this.scaler();
-
-
         this.maxRounds = data.maxRounds;
         this.curRound = 0;
         this.players = data.players;
@@ -119,10 +116,10 @@ class InGame extends Phaser.Scene {
         this.canvas.hideCanvas();
 
         this.word = this.add.text(game.canvas.width/2 ,game.canvas.height/2, '', {fontSize: '50px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#000000', stroke: '#000000' });
-        this.gameMode = this.add.text(game.canvas.width/4 ,game.canvas.height/6, '', { fontSize: '50px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#000000', stroke: '#000000' });
-        this.timer = this.add.text(game.canvas.width/8 ,game.canvas.height/8, '', { fontSize: '50px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#000000', stroke: '#000000' });
-        this.inGameWord = this.add.text(game.canvas.width/2 ,game.canvas.height/10, '', { fontSize: '50px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#000000', stroke: '#000000' });
-        this.roundText = this.add.text(game.canvas.width*6/8 ,game.canvas.height/10, '0/'+this.maxRounds, { fontSize: '50px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#000000', stroke: '#000000' });
+        this.gameMode = this.add.text(game.canvas.width/4 ,game.canvas.height/8, '', { fontSize: '50px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#000000', stroke: '#000000' });
+        this.timer = this.add.text(game.canvas.width/10 ,game.canvas.height/8, '', { fontSize: '50px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#000000', stroke: '#000000' });
+        this.inGameWord = this.add.text(game.canvas.width/2 ,game.canvas.height/12, '', { fontSize: '50px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#000000', stroke: '#000000' });
+        this.roundText = this.add.text(game.canvas.width*6/8 ,game.canvas.height/12, '0/'+this.maxRounds, { fontSize: '50px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#000000', stroke: '#000000' });
 
     	
         this.button_clear.on('pointerdown', function (pointer){
@@ -133,6 +130,8 @@ class InGame extends Phaser.Scene {
         let msg2 = new Object();
         msg2.event = 'GAME_LOADED';
         game.global.socketDir.send(JSON.stringify(msg2));
+
+        this.scaler();
     }
 
     update() {
@@ -159,10 +158,26 @@ class InGame extends Phaser.Scene {
         this.fakerPeekButton.x = game.canvas.width / 4;
         this.fakerPeekButton.y = game.canvas.height / 2;
         this.fakerPeekButton.setScale(this.sY);
+
+        this.word.x = game.canvas.width / 2;
+        this.word.y = game.canvas.height / 2;
+        this.word.setScale(this.sY);
+
+        this.gameMode.x = game.canvas.width / 4;
+        this.gameMode.y = game.canvas.height / 8;
+        this.gameMode.setScale(this.sY);
         
-        this.button_clear.x = game.canvas.width * 3 / 4;
-        this.button_clear.y = game.canvas.height / 4;
-        this.button_clear.setScale(0.2);
+        this.timer.x = game.canvas.width / 10;
+        this.timer.y = game.canvas.height / 8;
+        this.timer.setScale(this.sY);
+
+        this.inGameWord.x = game.canvas.width / 2;
+        this.inGameWord.y = game.canvas.height / 12;
+        this.inGameWord.setScale(this.sY);
+
+        this.roundText.x = game.canvas.width * 6 / 8;
+        this.roundText.y = game.canvas.height / 12;
+        this.roundText.setScale(this.sY);
 
         //Background
         this.bg.x = game.canvas.width / 2;
