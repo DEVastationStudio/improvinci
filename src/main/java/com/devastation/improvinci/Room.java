@@ -48,8 +48,8 @@ public class Room {
 	private boolean isEnglish = false;
 	private LinkedList<String> words = new LinkedList<String>();
 	private String fakerId;
-	private final String[] modes = {"default","limit","one","blind","figures","growing"};
-	private boolean[] modeInUse = {true, true, true, true, false, true};
+	private final String[] modes = {"default","blind","limit","one","growing"};
+	private boolean[] modeInUse = {true, true, true, true, true};
 	private LinkedList<String> availableModes;
 	private int peekTimeout = -1;
 	private boolean peekedThisRound = false;
@@ -96,6 +96,94 @@ public class Room {
 		return false;
 	}
 	
+	public void modeConfigurer(String type, Boolean isAvailable)
+	{
+		switch (type) {
+			case "Default":
+				modeInUse[0] = isAvailable;
+				break;
+			case "Blind":
+				modeInUse[1] = isAvailable;
+				break;
+			case "Limit":
+				modeInUse[2] = isAvailable;
+				break;
+			case "One":
+				modeInUse[3] = isAvailable;
+				break;
+			case "Growing":
+				modeInUse[4] = isAvailable;
+				break;
+			default:
+				break;
+		}
+	}
+
+	public void sendInfo(Player player)
+	{
+		try{
+			ObjectNode msg = mapper.createObjectNode();
+			msg.put("event", "GET_CONFIG_ROOM_RETURN");
+			msg.put("default",modeInUse[0]);
+			msg.put("blind",modeInUse[1]);
+			msg.put("limit",modeInUse[2]);
+			msg.put("one",modeInUse[3]);
+			msg.put("growing",modeInUse[4]);
+			msg.put("numRounds", rounds);
+			msg.put("voteTime", voteTime);
+			msg.put("roundTime", drawTime);
+			synchronized( player.WSSession() ){ player.WSSession().sendMessage(new TextMessage(msg.toString())); }
+		}catch(Exception ex){ ex.printStackTrace(); }
+	}
+
+	public void setRounds(Player player, Boolean isPlus)
+	{
+		if(rounds<9 && isPlus)
+			rounds++;
+		else
+			if(rounds>1 && !isPlus)
+				rounds--;
+		try{
+			ObjectNode msg = mapper.createObjectNode();
+			msg.put("event", "PLUSCONFIG_RETURN");
+			msg.put("type", "numRounds");
+			msg.put("amount", rounds);
+			synchronized( player.WSSession() ){ player.WSSession().sendMessage(new TextMessage(msg.toString())); }
+		}catch(Exception ex){ ex.printStackTrace(); }
+	}
+
+	public void setTimeRound(Player player, Boolean isPlus)
+	{
+		if(drawTime<90 && isPlus)
+			drawTime+=15;
+		else
+			if(drawTime>15 && !isPlus)
+				drawTime-=15;
+		try{
+			ObjectNode msg = mapper.createObjectNode();
+			msg.put("event", "PLUSCONFIG_RETURN");
+			msg.put("type", "roundTime");
+			msg.put("amount", drawTime);
+			synchronized( player.WSSession() ){ player.WSSession().sendMessage(new TextMessage(msg.toString())); }
+		}catch(Exception ex){ ex.printStackTrace(); }
+	}
+
+	public void setTimeVote(Player player, Boolean isPlus)
+	{
+		if(voteTime<90 && isPlus)
+			voteTime+=15;
+		else
+			if(voteTime>15 && !isPlus)
+				voteTime-=15;
+		try{
+			ObjectNode msg = mapper.createObjectNode();
+			msg.put("event", "PLUSCONFIG_RETURN");
+			msg.put("type", "voteTime");
+			msg.put("amount", voteTime);
+			synchronized( player.WSSession() ){ player.WSSession().sendMessage(new TextMessage(msg.toString())); }
+		}catch(Exception ex){ ex.printStackTrace(); }
+	}
+
 	public void tryleaveRoom(Player player) 
 	{
 		synchronized (this) {

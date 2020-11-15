@@ -8,11 +8,6 @@ class Preloader extends Phaser.Scene {
     }
     preload() {
     	this.load.image('Menu', 'assets/backgrounds/Menu.png');
-    	this.load.image('KeyBoardBg', 'assets/backgrounds/KeyBoardBg.png');
-		this.load.image('ConfirmarCod', 'assets/backgrounds/Confirmar.png');
-    	this.load.image('SalirCod', 'assets/backgrounds/Salir.png');
-    	this.load.image('BarraCod', 'assets/backgrounds/BarraCodigo.png');
-    	this.load.image('BorrarCod', 'assets/backgrounds/Borrar.png');
 		this.load.image('Gameplay', 'assets/backgrounds/Gameplay.png');
     	this.load.image('Caballete_gameplay', 'assets/interface/Caballete_gameplay.png');
     	this.load.image('Ready_es', 'assets/interface/Ready_es.png');
@@ -26,7 +21,12 @@ class Preloader extends Phaser.Scene {
     	this.load.image('Marco2', 'assets/interface/Marco2.png');
     	this.load.image('Marco3', 'assets/interface/Marco3.png');
 		this.load.image('Marco4', 'assets/interface/Marco4.png');
-		//letras teclado
+		
+		//keyboard
+		this.load.image('ConfirmarCod', 'assets/backgrounds/Confirmar.png');
+    	this.load.image('SalirCod', 'assets/backgrounds/Salir.png');
+    	this.load.image('BarraCod', 'assets/backgrounds/BarraCodigo.png');
+    	this.load.image('BorrarCod', 'assets/backgrounds/Borrar.png');
     	this.load.image('Letra_A', 'assets/backgrounds/letras/A.png');
     	this.load.image('Letra_B', 'assets/backgrounds/letras/B.png');
     	this.load.image('Letra_C', 'assets/backgrounds/letras/C.png');
@@ -43,6 +43,26 @@ class Preloader extends Phaser.Scene {
     	this.load.image('Letra_N', 'assets/backgrounds/letras/N.png');
     	this.load.image('Letra_O', 'assets/backgrounds/letras/O.png');
 		this.load.image('Letra_P', 'assets/backgrounds/letras/P.png');
+
+		//menu Configuración
+		this.load.image('Blind', 'assets/backgrounds/Configuracion/Blind.png');
+		this.load.image('Default', 'assets/backgrounds/Configuracion/Default.png');
+		this.load.image('Dificil', 'assets/backgrounds/Configuracion/Dificil.png');
+		this.load.image('Facil', 'assets/backgrounds/Configuracion/Facil.png');
+		this.load.image('Growing', 'assets/backgrounds/Configuracion/Growing.png');
+		this.load.image('Limit', 'assets/backgrounds/Configuracion/Limit.png');
+		this.load.image('Modos', 'assets/backgrounds/Configuracion/Modos.png');
+		this.load.image('NumRondas', 'assets/backgrounds/Configuracion/NumRondas.png');
+		this.load.image('One', 'assets/backgrounds/Configuracion/One.png');
+		this.load.image('Ronda', 'assets/backgrounds/Configuracion/Ronda.png');
+		this.load.image('Tiempos', 'assets/backgrounds/Configuracion/Tiempos.png');
+		this.load.image('Votacion', 'assets/backgrounds/Configuracion/Votacion.png');
+		this.load.image('Mas', 'assets/backgrounds/Configuracion/Mas.png');
+		this.load.image('Menos', 'assets/backgrounds/Configuracion/Menos.png');
+		this.load.image('TickNoCheck', 'assets/backgrounds/Configuracion/TickNoCheck.png');
+		this.load.image('TickCheck', 'assets/backgrounds/Configuracion/TickCheck.png');
+
+
     }
 
     create() {

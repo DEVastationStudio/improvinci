@@ -125,6 +125,18 @@ class PreLobby extends Phaser.Scene {
                         this.scene.get('InGame').peekReturn(msg.image);
                     }
                 break;
+                case 'CHECK_RETURN':
+                    this.scene.get('Lobby').check(msg.type, msg.isChecked);
+                break;
+                case 'NOCHECK_RETURN':
+                    this.scene.get('Lobby').check(msg.type, msg.isChecked)
+                break;
+                case 'GET_CONFIG_ROOM_RETURN':
+                    this.scene.get('Lobby').setInfo(msg.default, msg.blind, msg.limit, msg.one, msg.growing, msg.numRounds, msg.roundTime, msg.voteTime);
+                break;
+                case 'PLUSCONFIG_RETURN':
+                    this.scene.get('Lobby').plusControls(msg.type, msg.amount);
+                break;
                 default :
                     break;
             }

@@ -313,6 +313,32 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 					r.returnPeek(node.get("image").asText());
 				}
 				break;
+			case "CHECK":
+				msg.put("event", "CHECK_RETURN");
+				msg.put("type", node.get("type").asText());
+				msg.put("isChecked", true);
+				rooms.get(player.getRoomCode()).modeConfigurer(node.get("type").asText(), true);
+				player.WSSession().sendMessage(new TextMessage(msg.toString()));
+				break;
+			case "NOCHECK":
+				msg.put("event", "NOCHECK_RETURN");
+				msg.put("type", node.get("type").asText());
+				msg.put("isChecked", false);
+				rooms.get(player.getRoomCode()).modeConfigurer(node.get("type").asText(), false);
+				player.WSSession().sendMessage(new TextMessage(msg.toString()));
+				break;
+			case "GET_CONFIG_ROOM":
+				rooms.get(player.getRoomCode()).sendInfo(player);
+				break;
+			case "NUMRONDAS":
+				rooms.get(player.getRoomCode()).setRounds(player, node.get("type").asBoolean());
+				break;
+			case "ROUNDTIME":
+				rooms.get(player.getRoomCode()).setTimeRound(player, node.get("type").asBoolean());
+				break;
+			case "VOTETIME":
+				rooms.get(player.getRoomCode()).setTimeVote(player, node.get("type").asBoolean());
+				break;
 			default:
 				break;
 			}
