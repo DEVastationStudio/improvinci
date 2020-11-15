@@ -20,7 +20,8 @@ class Lobby extends Phaser.Scene {
         this.button_start = this.add.image(0,0, 'Ready_host_es');
         this.button_start.setAlpha(0.5);
         this.button_back = this.add.image(0,0, '').setInteractive({cursor: 'pointer'});
-        this.button_Options = this.add.image(0,0, 'Ready_host_es').setInteractive({cursor: 'pointer'});
+        this.button_Options = this.add.image(0,0, 'Ready_host_es');
+        this.button_Options.setAlpha(0);
 
         //if (data.leader) {
         let msg = new Object();
@@ -337,9 +338,13 @@ class Lobby extends Phaser.Scene {
                 this.button_start.removeInteractive();
                 this.button_start.setAlpha(0.5);
             }
+            this.button_Options.setInteractive({cursor: 'pointer'})
+            this.button_Options.setAlpha(1)
         } else {
             this.button_start.removeInteractive();
             this.button_start.setAlpha(0);
+            this.button_Options.removeInteractive()
+            this.button_Options.setAlpha(0)
         }
     }
     
