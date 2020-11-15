@@ -374,7 +374,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 			}
 		}
 		
-		rooms.put(roomCode,new Room(numberPeople, roomCode));
+		rooms.put(roomCode,new Room(numberPeople, roomCode, rooms));
 		return roomCode;
 	}
 

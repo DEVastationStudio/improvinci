@@ -11,6 +11,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Random;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -53,16 +54,18 @@ public class Room {
 	private int peekTimeout = -1;
 	private boolean peekedThisRound = false;
 	private int votesLeft = 8;
+	private ConcurrentHashMap<String, Room> rooms;
 
 	
-	public Room(int numMaxPlayers, String rCode) 
+	public Room(int numMaxPlayers, String rCode, ConcurrentHashMap<String, Room> rooms) 
 	{
 		this.maxPlayers = numMaxPlayers;
 		this.roomCode = rCode;
-		rounds = 3;
+		rounds = 9;
 		curRound = 0;
 		drawTime = 30;
 		voteTime = 30;
+		this.rooms = rooms;
 	}
 	
 	public LinkedList<Player> getPlayers() 
@@ -103,6 +106,10 @@ public class Room {
 				if (numeroJugadores > 0) {
 					leader = players.getFirst();
 				}
+			}
+			if (players.size() == 0) {
+				stopGame();
+				rooms.remove(roomCode);
 			}
 		}
 		player.setInRoom(false);
@@ -177,10 +184,13 @@ public class Room {
 		if (scheduler != null) {
 			scheduler.shutdown();
 		}
-		for (Player p : players) {
-			if (!leader.equals(p))
-				p.setInLobby(false);
+		synchronized(this) {
+			for (Player p : players) {
+				if (!leader.equals(p))
+					p.setInLobby(false);
+			}
 		}
+		System.out.println("Room " + roomCode + " closed.");
 	}
 
 	private void tick() {
