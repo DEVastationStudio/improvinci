@@ -21,6 +21,14 @@ class Preloader extends Phaser.Scene {
     	this.load.image('Marco2', 'assets/interface/Marco2.png');
     	this.load.image('Marco3', 'assets/interface/Marco3.png');
 		this.load.image('Marco4', 'assets/interface/Marco4.png');
+		this.load.image('CriticoLejos', 'assets/character/critico_lejos.png');
+
+		//GameMode Icons
+		//this.load.image('iconoDefault', 'assets/gamemodes/.png');
+		this.load.image('iconoBlind', 'assets/gamemodes/iconoBlind.png');
+		this.load.image('iconoLimit', 'assets/gamemodes/iconoLimit.png');
+		this.load.image('iconoOne', 'assets/gamemodes/iconoOne.png');
+		this.load.image('iconoGrowing', 'assets/gamemodes/iconoGrowing.png');
 		
 		//keyboard
 		this.load.image('ConfirmarCod', 'assets/backgrounds/Confirmar.png');
