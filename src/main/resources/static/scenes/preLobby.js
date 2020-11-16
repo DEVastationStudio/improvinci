@@ -139,6 +139,9 @@ class PreLobby extends Phaser.Scene {
                 case 'PLUSCONFIG_RETURN':
                     this.scene.get('Lobby').plusControls(msg.type, msg.amount);
                 break;
+                case 'PLAYER_LEFT':
+                    this.scene.get('InGame').playerLeft(msg.image);
+                break;
                 default :
                     break;
             }
