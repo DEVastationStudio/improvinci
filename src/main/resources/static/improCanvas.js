@@ -18,7 +18,7 @@ class improCanvas {
         this.maxTrazos = 10;
         this.inPainting = false;
         this.backgroundColour = 0x000000;
-        this.fadeFactor = 0x040404;
+        this.fadeFactor = 0x02;
         this.fadeStatus = -1;
 
         this.curScene.input.on('pointermove', function (pointer) {this.scene.canvas.onPointer(pointer, 0)});
@@ -36,15 +36,17 @@ class improCanvas {
         this.pointer_mode = this.modes.DEFAULT;
     }
 
-    backGroundFadeOut()
+    backGroundFadeOut(time)
     {   
-        this.backgroundColour = Math.max(this.backgroundColour - this.fadeFactor, 0x000000);
+        let delta = time/8;
+        this.backgroundColour = Math.max(this.backgroundColour - (Math.round(delta*this.fadeFactor) + Math.round(delta*this.fadeFactor)*256 + Math.round(delta*this.fadeFactor)*65536), 0x000000);
         if(this.backgroundColour === 0x000000) this.fadeStatus = -2;
     }
 
-    backGroundFadeIn()
+    backGroundFadeIn(time)
     {
-        this.backgroundColour = Math.min(this.backgroundColour + this.fadeFactor, 0xFFFFFF);
+        let delta = time/8;
+        this.backgroundColour = Math.min(this.backgroundColour + (Math.round(delta*this.fadeFactor) + Math.round(delta*this.fadeFactor)*256 + Math.round(delta*this.fadeFactor)*65536), 0xFFFFFF);
         if(this.backgroundColour === 0xFFFFFF) this.fadeStatus = 1;
     }
 
@@ -116,15 +118,15 @@ class improCanvas {
             }
     }
 
-    onUpdate() {
+    onUpdate(time) {
         if (this.hidden) return;
         if(this.pointer_mode === this.modes.BLIND)
         {
             //console.log("Estoy ciego");
             if(this.fadeStatus === 0)
-                this.backGroundFadeIn();
+                this.backGroundFadeIn(time);
             if(this.fadeStatus === 1)
-                this.backGroundFadeOut();
+                this.backGroundFadeOut(time);
         }
         //if middle position is different, update it
         if (this.x !== game.canvas.width / 2) this.x = game.canvas.width / 2;
