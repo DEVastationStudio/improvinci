@@ -152,7 +152,7 @@ class InGame extends Phaser.Scene {
         this.canvas = new improCanvas(this, 256);
         this.canvas.hideCanvas();
 
-        this.word = this.add.text(game.canvas.width/2 ,game.canvas.height/2, '', {fontSize: '50px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#000000', stroke: '#000000' });
+        this.word = this.add.text(game.canvas.width/2 ,game.canvas.height/2, 'Waiting for other players...', {fontSize: '50px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#000000', stroke: '#000000' });
         this.gameMode = this.add.text(game.canvas.width/4 ,game.canvas.height/8, '', { fontSize: '50px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#000000', stroke: '#000000' });
         this.timer = this.add.text(game.canvas.width/10 ,game.canvas.height/8, '', { fontSize: '50px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#000000', stroke: '#000000' });
         this.inGameWord = this.add.text(game.canvas.width/2 ,game.canvas.height/12, '', { fontSize: '50px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#000000', stroke: '#000000' });
