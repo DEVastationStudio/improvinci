@@ -319,6 +319,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 				msg.put("isChecked", true);
 				rooms.get(player.getRoomCode()).modeConfigurer(node.get("type").asText(), true);
 				player.WSSession().sendMessage(new TextMessage(msg.toString()));
+				rooms.get(player.getRoomCode()).informPlayers();
 				break;
 			case "NOCHECK":
 				msg.put("event", "NOCHECK_RETURN");
@@ -326,6 +327,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 				msg.put("isChecked", false);
 				rooms.get(player.getRoomCode()).modeConfigurer(node.get("type").asText(), false);
 				player.WSSession().sendMessage(new TextMessage(msg.toString()));
+				rooms.get(player.getRoomCode()).informPlayers();
 				break;
 			case "GET_CONFIG_ROOM":
 				rooms.get(player.getRoomCode()).sendInfo(player);
@@ -347,6 +349,12 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 				break;
 			case "DAILYMODE":
 				rooms.get(player.getRoomCode()).dailyMode(player);
+				break;
+			case "GET_INIT_INFO":
+				rooms.get(player.getRoomCode()).informPlayers();
+				break;
+			case "LANGUAGE_CHANGE":
+				rooms.get(player.getRoomCode()).languageChange(player, node.get("type").asBoolean());
 				break;
 			default:
 				break;

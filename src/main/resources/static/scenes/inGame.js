@@ -385,13 +385,13 @@ class InGame extends Phaser.Scene {
         }
     }
 
-    drawStart(time, round) {
+    drawStart(time, round, vocals) {
         this.roundState = 1;
         this.criticoScaler();
         if (!this.roundFaker) {
             this.inGameWord.text = this.roundWord;
         } else {
-            this.manageWord(time);
+            this.manageWord(time, vocals);
         }
         this.word.text = '';
         this.CriticoLejosImg.setAlpha(0);
@@ -452,7 +452,7 @@ class InGame extends Phaser.Scene {
         this.fakerFrame.setAlpha(1);
     }
 
-    manageWord(maxTime) {
+    manageWord(maxTime, vocals) {
         let size = this.roundWord.length;
         this.wordBoolArray = new Array(size);
         this.wordPositionArray = [];
@@ -464,6 +464,10 @@ class InGame extends Phaser.Scene {
 
                 if (this.roundWord[i].toUpperCase() !== 'A' && this.roundWord[i].toUpperCase() !== 'E' && this.roundWord[i].toUpperCase() !== 'I' && this.roundWord[i].toUpperCase() !== 'O' && this.roundWord[i].toUpperCase() !== 'U' && this.roundWord[i].toUpperCase() !== 'Á' && this.roundWord[i].toUpperCase() !== 'É' && this.roundWord[i].toUpperCase() !== 'Í' && this.roundWord[i].toUpperCase() !== 'Ó' && this.roundWord[i].toUpperCase() !== 'Ú' && this.roundWord[i].toUpperCase() !== 'Ü') {
                     this.wordPositionArray.push(i)
+                }else
+                {
+                    if(vocals)
+                        this.wordPositionArray.push(i)
                 }
             }
         }

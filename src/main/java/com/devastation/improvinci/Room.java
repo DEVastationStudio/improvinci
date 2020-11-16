@@ -46,7 +46,7 @@ public class Room {
 	private int voteTime;
 	private int gameTimer;
 	private String word;
-	private boolean isEnglish = false;
+	private boolean isEnglish = true;
 	private LinkedList<String> words = new LinkedList<String>();
 	private String fakerId;
 	private final String[] modes = {"default","blind","limit","one","growing"};
@@ -57,6 +57,7 @@ public class Room {
 	private int votesLeft = 8;
 	private ConcurrentHashMap<String, Room> rooms;
 	private boolean gameStarted;
+	private boolean vowels;
 
 	
 	public Room(int numMaxPlayers, String rCode, ConcurrentHashMap<String, Room> rooms) 
@@ -68,6 +69,7 @@ public class Room {
 		drawTime = 30;
 		voteTime = 30;
 		this.rooms = rooms;
+		vowels = false;
 	}
 	
 	public LinkedList<Player> getPlayers() 
@@ -115,6 +117,9 @@ public class Room {
 			case "Growing":
 				modeInUse[4] = isAvailable;
 				break;
+			case "Vowels":
+				vowels = isAvailable;
+				break;
 			default:
 				break;
 		}
@@ -130,7 +135,9 @@ public class Room {
 		rounds = 5;
 		drawTime = 45;
 		voteTime = 30;
+		vowels = true;
 		sendInfo(player);
+		informPlayers();
 	}
 
 	public void difficultMode(Player player)
@@ -143,7 +150,9 @@ public class Room {
 		rounds = 9;
 		drawTime = 15;
 		voteTime = 15;
+		vowels = false;
 		sendInfo(player);
+		informPlayers();
 	}
 
 	public void dailyMode(Player player)
@@ -156,7 +165,38 @@ public class Room {
 		rounds = 2;
 		drawTime = 15;
 		voteTime = 15;
+		vowels = false;
 		sendInfo(player);
+		informPlayers();
+	}
+
+	public void languageChange(Player player, Boolean isENG)
+	{
+		isEnglish = isENG;
+		sendInfo(player);
+		informPlayers();
+	}
+
+	public void informPlayers()
+	{
+		for(int i = 0; i<players.size(); i++)
+		{
+			try{
+				ObjectNode msg = mapper.createObjectNode();
+				msg.put("event", "ROOM_INFO_RETURN");
+				msg.put("default",modeInUse[0]);
+				msg.put("blind",modeInUse[1]);
+				msg.put("limit",modeInUse[2]);
+				msg.put("one",modeInUse[3]);
+				msg.put("growing",modeInUse[4]);
+				msg.put("numRounds", rounds);
+				msg.put("voteTime", voteTime);
+				msg.put("roundTime", drawTime);
+				msg.put("vowels", vowels);
+				msg.put("isEnglish", isEnglish);
+				synchronized( players.get(i).WSSession() ){ players.get(i).WSSession().sendMessage(new TextMessage(msg.toString())); }
+			}catch(Exception ex){ ex.printStackTrace(); }
+		}
 	}
 
 	public void sendInfo(Player player)
@@ -172,6 +212,8 @@ public class Room {
 			msg.put("numRounds", rounds);
 			msg.put("voteTime", voteTime);
 			msg.put("roundTime", drawTime);
+			msg.put("vowels", vowels);
+			msg.put("isEnglish", isEnglish);
 			synchronized( player.WSSession() ){ player.WSSession().sendMessage(new TextMessage(msg.toString())); }
 		}catch(Exception ex){ ex.printStackTrace(); }
 	}
@@ -190,6 +232,7 @@ public class Room {
 			msg.put("amount", rounds);
 			synchronized( player.WSSession() ){ player.WSSession().sendMessage(new TextMessage(msg.toString())); }
 		}catch(Exception ex){ ex.printStackTrace(); }
+		informPlayers();
 	}
 
 	public void setTimeRound(Player player, Boolean isPlus)
@@ -206,6 +249,7 @@ public class Room {
 			msg.put("amount", drawTime);
 			synchronized( player.WSSession() ){ player.WSSession().sendMessage(new TextMessage(msg.toString())); }
 		}catch(Exception ex){ ex.printStackTrace(); }
+		informPlayers();
 	}
 
 	public void setTimeVote(Player player, Boolean isPlus)
@@ -222,6 +266,7 @@ public class Room {
 			msg.put("amount", voteTime);
 			synchronized( player.WSSession() ){ player.WSSession().sendMessage(new TextMessage(msg.toString())); }
 		}catch(Exception ex){ ex.printStackTrace(); }
+		informPlayers();
 	}
 
 	public void tryleaveRoom(Player player) 
@@ -375,6 +420,7 @@ public class Room {
 					msg.put("event", "DRAW_START");
 					msg.put("time", drawTime);
 					msg.put("round", curRound);
+					msg.put("vowels", vowels);
 					//Game mode over here
 					for (Player p : players) {
 						synchronized(p.WSSession()) {

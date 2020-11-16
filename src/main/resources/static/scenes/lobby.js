@@ -50,6 +50,8 @@ class Lobby extends Phaser.Scene {
             let msg = new Object();
             msg.event = 'GET_CONFIG_ROOM';
             game.global.socketDir.send(JSON.stringify(msg)); 
+            this.button_Options.setAlpha(false);
+            this.button_start.setAlpha(false);
         }, this);
         
         this.add.text(game.canvas.width/2, 10, data.code, { fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' });
@@ -61,7 +63,6 @@ class Lobby extends Phaser.Scene {
                     if (this.textures.exists(data.players[i+j*3].playerId)) {
                         this.textures.get(data.players[i+j*3].playerId).destroy();
                     }
-
                     improCanvas.makeTexture(data.players[i+j*3].playerId, data.players[i+j*3].picture, this, 128);
                     this.avatars[i+j*3] = this.add.image(game.canvas.width/2 + (140*(i-1)),  game.canvas.height/2 + (140*(j-1)),data.players[i+j*3].playerId); 
                 } else {
@@ -70,22 +71,29 @@ class Lobby extends Phaser.Scene {
             }
         }
 
+         //Lobby info
+         this.roomInfo = this.add.text(0, 0, '', { fontSize: '40px',color: '#FFFFFF',fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' });
+
          //Options
-         this.keyBoardBg = this.add.image(0,0,'Gameplay');
+         this.keyBoardBg = this.add.image(0,0,'Gameplay').setInteractive();
          this.DailyImg = this.add.image(0,0,'Daily').setInteractive({cursor: 'pointer'});
-         this.BlindImg = this.add.image(0,0,'Blind').setInteractive({cursor: 'pointer'});
-         this.DefaultImg = this.add.image(0,0,'Default').setInteractive({cursor: 'pointer'});
+         this.BlindImg = this.add.image(0,0,'Blind').setInteractive();
+         this.DefaultImg = this.add.image(0,0,'Default').setInteractive();
          this.DificilImg = this.add.image(0,0,'Dificil').setInteractive({cursor: 'pointer'});
          this.FacilImg = this.add.image(0,0,'Facil').setInteractive({cursor: 'pointer'});
-         this.GrowingImg = this.add.image(0,0,'Growing').setInteractive({cursor: 'pointer'});
-         this.LimitImg = this.add.image(0,0,'Limit').setInteractive({cursor: 'pointer'});
-         this.ModosImg = this.add.image(0,0,'Modos').setInteractive({cursor: 'pointer'});
-         this.NumRondasImg = this.add.image(0,0,'NumRondas').setInteractive({cursor: 'pointer'});
-         this.OneImg = this.add.image(0,0,'One').setInteractive({cursor: 'pointer'});
-         this.RondaImg = this.add.image(0,0,'Ronda').setInteractive({cursor: 'pointer'});
-         this.TiemposImg = this.add.image(0,0,'Tiempos').setInteractive({cursor: 'pointer'});
-         this.VotacionImg = this.add.image(0,0,'Votacion').setInteractive({cursor: 'pointer'});
+         this.GrowingImg = this.add.image(0,0,'Growing').setInteractive();
+         this.LimitImg = this.add.image(0,0,'Limit').setInteractive();
+         this.ModosImg = this.add.image(0,0,'Modos').setInteractive();
+         this.NumRondasImg = this.add.image(0,0,'NumRondas').setInteractive();
+         this.OneImg = this.add.image(0,0,'One').setInteractive();
+         this.RondaImg = this.add.image(0,0,'Ronda').setInteractive();
+         this.TiemposImg = this.add.image(0,0,'Tiempos').setInteractive();
+         this.VotacionImg = this.add.image(0,0,'Votacion').setInteractive();
          this.SalirCod = this.add.image(0,0,'SalirCod').setInteractive({cursor: 'pointer'});
+         this.spainFlag = this.add.image(0,0,'spainFlag').setInteractive({cursor: 'pointer'});
+         this.ukFlag = this.add.image(0,0,'ukFlag').setInteractive({cursor: 'pointer'});
+         this.languageImg = this.add.image(0,0,'language').setInteractive();
+         this.vowelsImg = this.add.image(0,0,'vowels').setInteractive();
 
          //Checks modos
          //----NoChecks
@@ -94,12 +102,14 @@ class Lobby extends Phaser.Scene {
          this.LimitTickNoCheck = this.add.image(0,0,'TickNoCheck').setInteractive({cursor: 'pointer'});
          this.OneTickNoCheck = this.add.image(0,0,'TickNoCheck').setInteractive({cursor: 'pointer'});
          this.GrowingTickNoCheck = this.add.image(0,0,'TickNoCheck').setInteractive({cursor: 'pointer'});
+         this.VowelsTickNoCheck = this.add.image(0,0,'TickNoCheck').setInteractive({cursor: 'pointer'});
          //----Checks
          this.DefaultTickCheck = this.add.image(0,0,'TickCheck').setInteractive({cursor: 'pointer'});
          this.BlindTickCheck = this.add.image(0,0,'TickCheck').setInteractive({cursor: 'pointer'});
          this.LimitTickCheck = this.add.image(0,0,'TickCheck').setInteractive({cursor: 'pointer'});
          this.OneTickCheck = this.add.image(0,0,'TickCheck').setInteractive({cursor: 'pointer'});
          this.GrowingTickCheck = this.add.image(0,0,'TickCheck').setInteractive({cursor: 'pointer'});
+         this.VowelsTickCheck = this.add.image(0,0,'TickCheck').setInteractive({cursor: 'pointer'});
 
          //MasMenos Configuracion Ronda
          this.NumRondasMas = this.add.image(0,0,'Mas').setInteractive({cursor: 'pointer'});
@@ -114,10 +124,17 @@ class Lobby extends Phaser.Scene {
          //this.Mas = this.add.image(0,0,'Mas').setInteractive();
          //this.Menos = this.add.image(0,0,'Menos').setInteractive();
 
+
          this.invisible(false);
          this.scaler();
 
          //Config Actions
+         this.bg.on('pointerdown', function (pointer){
+            this.scene.get('Lobby').invisible(false);
+            this.button_Options.setAlpha(true);
+            this.button_start.setAlpha(true);
+        }, this);
+
          this.FacilImg.on('pointerdown', function (pointer){
             let msg = new Object();
             msg.event = 'EASYMODE';
@@ -138,7 +155,27 @@ class Lobby extends Phaser.Scene {
 
          this.SalirCod.on('pointerdown', function (pointer){
             this.scene.get('Lobby').invisible(false);
+            this.button_Options.setAlpha(true);
+            this.button_start.setAlpha(true);
         }, this);
+
+        //Language
+        this.ukFlag.on('pointerdown', function (pointer){
+            let msg = new Object();
+            msg.event = 'LANGUAGE_CHANGE';
+            msg.type = true;
+            game.global.socketDir.send(JSON.stringify(msg));
+            this.scene.get('Lobby').check('English',true);
+        }, this);
+
+        this.spainFlag.on('pointerdown', function (pointer){
+            let msg = new Object();
+            msg.event = 'LANGUAGE_CHANGE';
+            msg.type = false;
+            game.global.socketDir.send(JSON.stringify(msg));
+            this.scene.get('Lobby').check('English',false);
+        }, this);
+
          //---DefaultChecks
          this.DefaultTickCheck.on('pointerdown', function (pointer){
             let msg = new Object();
@@ -208,6 +245,19 @@ class Lobby extends Phaser.Scene {
             msg.type = 'Growing';
             game.global.socketDir.send(JSON.stringify(msg));
         }, this);
+
+        this.VowelsTickCheck.on('pointerdown', function (pointer){
+            let msg = new Object();
+            msg.event = 'NOCHECK';
+            msg.type = 'Vowels';
+            game.global.socketDir.send(JSON.stringify(msg));
+        }, this);
+        this.VowelsTickNoCheck.on('pointerdown', function (pointer){
+            let msg = new Object();
+            msg.event = 'CHECK';
+            msg.type = 'Vowels';
+            game.global.socketDir.send(JSON.stringify(msg));
+        }, this);
         
         //MasMenosOptions
         //---NumRondas
@@ -251,6 +301,10 @@ class Lobby extends Phaser.Scene {
             msg.type = true;
             game.global.socketDir.send(JSON.stringify(msg));
         }, this);
+
+        let msg2 = new Object();
+        msg2.event = 'GET_INIT_INFO';
+        game.global.socketDir.send(JSON.stringify(msg2));
     }
 
     plusControls(type, info)
@@ -348,6 +402,32 @@ class Lobby extends Phaser.Scene {
                     this.GrowingTickNoCheck.setInteractive({cursor: 'pointer'})
                 }
                 break;
+            case 'Vowels':
+                if(isChecked)
+                {
+                    this.VowelsTickCheck.setAlpha(isChecked)
+                    this.VowelsTickCheck.setInteractive({cursor: 'pointer'})
+                    this.VowelsTickNoCheck.setAlpha(!isChecked)
+                    this.VowelsTickNoCheck.removeInteractive();
+                }else
+                {
+                    this.VowelsTickCheck.setAlpha(0)
+                    this.VowelsTickCheck.removeInteractive();
+                    this.VowelsTickNoCheck.setAlpha(1)
+                    this.VowelsTickNoCheck.setInteractive({cursor: 'pointer'})
+                }
+                break;
+            case 'English':
+                if(isChecked)
+                {
+                    this.ukFlag.setAlpha(1);
+                    this.spainFlag.setAlpha(0.2);
+                }else
+                {
+                    this.ukFlag.setAlpha(0.2);
+                    this.spainFlag.setAlpha(1);
+                }
+                break;
         }
     }
 
@@ -374,6 +454,33 @@ class Lobby extends Phaser.Scene {
         }
     }
     
+    showLobbyInfo(defaultM, blindM, limitM, oneM, growingM, vowelsM, isEnglish, numRoundsM, roundTimeM, voteTimeM)
+    {
+        this.roomInfo.text='ROUND INFO: \n';
+        this.roomInfo.text+='Rounds: '+numRoundsM+'\n';
+        this.roomInfo.text+='Round time: '+roundTimeM+'\n';
+        this.roomInfo.text+='Voting time: '+voteTimeM+'\n';
+        if(isEnglish)
+            this.roomInfo.text+='Word bank language: English\n';
+        else
+            this.roomInfo.text+='Word bank language: Spanish\n';
+        if(vowelsM)
+            this.roomInfo.text+='Faker sees vowels: Yes\n \n';
+        else
+            this.roomInfo.text+='Faker sees vowels: No\n \n';
+        this.roomInfo.text+='GAMEMODES IN USE: \n';
+        if(defaultM)
+            this.roomInfo.text+='Default \n';
+        if(blindM)
+            this.roomInfo.text+='Blind mode \n';
+        if(limitM)
+            this.roomInfo.text+='Limit mode \n';
+        if(oneM)
+            this.roomInfo.text+='One Mode \n';
+        if(growingM)
+            this.roomInfo.text+='Growing Mode\n';
+    }
+
     update() { 
         if(this.sX != game.canvas.width/game.global.WIDTH || this.sY != game.canvas.height/game.global.HEIGHT)
 		{
@@ -383,13 +490,16 @@ class Lobby extends Phaser.Scene {
 		}
     }
 
-    setInfo(defaultM, blindM, limitM, oneM, growingM, numRoundsM, roundTimeM, voteTimeM)
+    setInfo(defaultM, blindM, limitM, oneM, growingM, vowelsM, isEnglish, numRoundsM, roundTimeM, voteTimeM)
     {
         this.check('Default', defaultM);
         this.check('Blind', blindM);
         this.check('Limit',limitM);
         this.check('One',oneM);
         this.check('Growing',growingM);
+        this.check('Vowels', vowelsM);
+        this.check('English', isEnglish);
+        
         this.NumRondasText.text = numRoundsM;
         this.TiempoRondasText.text = roundTimeM;
         this.TiempoVotacionText.text = voteTimeM;
@@ -404,12 +514,14 @@ class Lobby extends Phaser.Scene {
         this.LimitTickNoCheck.setAlpha(isVisible);
         this.OneTickNoCheck.setAlpha(isVisible);
         this.GrowingTickNoCheck.setAlpha(isVisible);
+        this.VowelsTickNoCheck.setAlpha(isVisible);
         //----Checks
         this.DefaultTickCheck.setAlpha(isVisible);
         this.BlindTickCheck.setAlpha(isVisible);
         this.LimitTickCheck.setAlpha(isVisible);
         this.OneTickCheck.setAlpha(isVisible);
         this.GrowingTickCheck.setAlpha(isVisible);
+        this.VowelsTickCheck.setAlpha(isVisible);
 
         this.keyBoardBg.setAlpha(isVisible);
         this.DailyImg.setAlpha(isVisible);
@@ -426,6 +538,11 @@ class Lobby extends Phaser.Scene {
         this.TiemposImg.setAlpha(isVisible);
         this.VotacionImg.setAlpha(isVisible);
         this.SalirCod.setAlpha(isVisible);
+        this.vowelsImg.setAlpha(isVisible);
+        this.languageImg.setAlpha(isVisible);
+        this.ukFlag.setAlpha(isVisible);
+        this.spainFlag.setAlpha(isVisible);
+        
 
          
          //Checks modos
@@ -474,6 +591,11 @@ class Lobby extends Phaser.Scene {
         this.bg.x = game.canvas.width / 2;
 		this.bg.y = game.canvas.height / 2;
         this.bg.setScale(this.sX);
+
+        //Room info
+        this.roomInfo.x = game.canvas.width / 40;
+		this.roomInfo.y = game.canvas.height *3 / 40;
+        this.roomInfo.setScale(this.sY);
 
         //--------------------------Options PopUp--------------------------//
         this.keyBoardBg.x = game.canvas.width / 2;
@@ -616,9 +738,30 @@ class Lobby extends Phaser.Scene {
         this.TiempoVotacionMas.setScale(this.keyBoardBg.scale*2);
 
         //---Aparicion de letras
-        /*this.TiemposImg.x = kbLTCornerX+columnPos*12;
-        this.TiemposImg.y = kbLTCornerY+rowPos*10;
-        this.TiemposImg.setScale(this.keyBoardBg.scale);*/
+        this.vowelsImg.x = kbLTCornerX+columnPos*12;
+        this.vowelsImg.y = kbLTCornerY+rowPos*10;
+        this.vowelsImg.setScale(this.keyBoardBg.scale);
+
+        this.VowelsTickNoCheck.x = kbLTCornerX+columnPos*15.7;
+        this.VowelsTickNoCheck.y = kbLTCornerY+rowPos*10;
+        this.VowelsTickNoCheck.setScale(this.keyBoardBg.scale*2);
+
+        this.VowelsTickCheck.x = kbLTCornerX+columnPos*15.7;
+        this.VowelsTickCheck.y = kbLTCornerY+rowPos*10;
+        this.VowelsTickCheck.setScale(this.keyBoardBg.scale*2);
+
+        //Language
+        this.languageImg.x = kbLTCornerX+columnPos*12;
+        this.languageImg.y = kbLTCornerY+rowPos*12;
+        this.languageImg.setScale(this.keyBoardBg.scale);
+        
+        this.spainFlag.x = kbLTCornerX+columnPos*14.7;
+        this.spainFlag.y = kbLTCornerY+rowPos*12;
+        this.spainFlag.setScale(this.keyBoardBg.scale);
+
+        this.ukFlag.x = kbLTCornerX+columnPos*16.7;
+        this.ukFlag.y = kbLTCornerY+rowPos*12;
+        this.ukFlag.setScale(this.keyBoardBg.scale);
 
         //Presets
         this.FacilImg.x = kbLTCornerX+columnPos*6;

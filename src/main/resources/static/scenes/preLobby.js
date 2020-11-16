@@ -96,7 +96,7 @@ class PreLobby extends Phaser.Scene {
                     this.scene.get('InGame').showWord(msg.word, msg.faker, msg.drawMode);
                     break;
                 case 'DRAW_START':
-                    this.scene.get('InGame').drawStart(msg.time, msg.round);
+                    this.scene.get('InGame').drawStart(msg.time, msg.round, msg.vowels);
                     break;
                 case 'TIME_UPDATE':
                     this.scene.get('InGame').updateTime(msg.time);
@@ -134,11 +134,14 @@ class PreLobby extends Phaser.Scene {
                     this.scene.get('Lobby').check(msg.type, msg.isChecked)
                 break;
                 case 'GET_CONFIG_ROOM_RETURN':
-                    this.scene.get('Lobby').setInfo(msg.default, msg.blind, msg.limit, msg.one, msg.growing, msg.numRounds, msg.roundTime, msg.voteTime);
+                    this.scene.get('Lobby').setInfo(msg.default, msg.blind, msg.limit, msg.one, msg.growing, msg.vowels, msg.isEnglish, msg.numRounds, msg.roundTime, msg.voteTime);
                 break;
                 case 'PLUSCONFIG_RETURN':
                     this.scene.get('Lobby').plusControls(msg.type, msg.amount);
                 break;
+                case 'ROOM_INFO_RETURN':
+                    this.scene.get('Lobby').showLobbyInfo(msg.default, msg.blind, msg.limit, msg.one, msg.growing, msg.vowels, msg.isEnglish, msg.numRounds, msg.roundTime, msg.voteTime);
+                    break;
                 case 'PLAYER_LEFT':
                     this.scene.get('InGame').playerLeft(msg.image);
                 break;
@@ -146,7 +149,6 @@ class PreLobby extends Phaser.Scene {
                     break;
             }
         }
-
         //Heartbeat manager
         var heartbeat;
         var isAlive;
