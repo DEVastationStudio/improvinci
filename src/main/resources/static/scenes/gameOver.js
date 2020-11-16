@@ -48,6 +48,8 @@ class GameOver extends Phaser.Scene {
             this.scene.start('Menu');
             this.playAgain_bt.removeInteractive();
             this.quit_bt.removeInteractive();
+            game.global.socketDir.close();
+            game.global.socketDir = undefined;
         }, this);
     }
     
@@ -68,8 +70,8 @@ class GameOver extends Phaser.Scene {
 
     	this.playAgain_bt.x = game.canvas.width / 2;
 		this.playAgain_bt.y = game.canvas.height * 3/ 5;
-		this.playAgain_bt.setScale(this.sY);
-		
+        this.playAgain_bt.setScale(this.sY);
+        		
 		//Background
 		this.bg.x = game.canvas.width / 2;
 		this.bg.y = game.canvas.height / 2;
