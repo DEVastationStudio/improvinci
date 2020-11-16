@@ -289,6 +289,33 @@ public class Room {
 		synchronized (this) {
 			//IF THIS PLAYER IS THE FAKER AND THE GAME IS RUNNING, RESTART THIS ROUND.
 			//IF IT'S NOT, JUST NOTIFY EVERYONE
+
+			System.out.println(player.getPlayerId());
+			System.out.println(fakerId);
+			if (player.getPlayerId().equals(fakerId)) {
+
+				gameState = State.VOTING;
+				gameTimer = 2;
+
+				ObjectNode msg = mapper.createObjectNode();
+				msg.put("event", "ROUND_OVER");
+
+				//Clearing all votes before sending the messages just in case they vote someone before their votes are cleared
+				synchronized(this) {
+					votesLeft = players.size()-1;
+					for (Player p : players) {
+						p.clearVotes();
+					} 
+
+					for (Player p : players) {
+						synchronized(p.WSSession()) {
+							if (p.WSSession().isOpen())
+								try { p.WSSession().sendMessage(new TextMessage(msg.toString())); } catch (Exception e){ e.printStackTrace(); }
+						}
+					} 
+				}
+			}
+
 			players.remove(players.indexOf(player));
 			numeroJugadores--;
 			if (player == leader) {
@@ -587,16 +614,16 @@ public class Room {
 		synchronized (this) {
 			votesLeft--;
 			for (Player player : players) {
-				if (player.getPlayerId().equals(id)) {
-					player.addVote();
-					if (id.equals(fakerId)) {
-						votingPlayer.addScore(1);
-						//?
-					} else {
-						votingPlayer.addScore(-1);
-						//?
+				if (player != null) {
+					if (player.getPlayerId().equals(id)) {
+						player.addVote();
+						if (id.equals(fakerId)) {
+							votingPlayer.addScore(1);
+						} else {
+							player.addScore(1);
+						}
+						break;
 					}
-					break;
 				}
 			}
 			if (votesLeft == 0 && gameTimer > 3 && gameState == State.VOTING) {
