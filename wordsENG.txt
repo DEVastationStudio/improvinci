@@ -148,3 +148,103 @@ Metal detector
 Microscope
 Tunnel boring machine
 Drill
+Airplane
+Car
+Boat
+Motorcycle
+Bicycle
+Motorhome
+Eiffel Tower
+Pyramids
+Big Ben
+Taj Mahal
+Statue of Liberty
+Great Chinese Wall
+Coliseum
+Waterfall
+Desert
+Forest
+Beach
+Mountain
+Jungle
+North Pole
+South Pole
+North America
+South America
+Europe
+Africa
+Asia
+Oceania
+Towel
+Airport
+Deodorant
+Toothpaste
+Toothbrush
+Sunscreen
+Comb
+First Aid Kit
+Canteen
+Swimming pool
+Hotel
+Tent
+Sleeping bag
+Flashlight
+Snorkel
+Passport
+Van
+Hammock
+Luggage
+Purse
+Flag
+Lake
+Bus
+Dog
+Wolf
+Cat
+Tiger
+Lion
+Panther
+Elephant
+Bear
+Frog
+Eagle
+Lizard
+Scorpion
+Crocodile
+Mosquito
+Dragonfly
+Bat
+Mouse
+Deer
+Sheep
+Cow
+Chicken
+Goose
+Giraffe
+Shark
+Eel
+Jellyfish
+Beetle
+Ant
+Snail
+Octopus
+Whale
+Dolphin
+Horse
+Spider
+Toucan
+Monkey
+Anteater
+Sloth
+Alpaca
+Ostrich
+Kangaroo
+Panda Bear
+Snake
+Tortoise
+Hamster
+Rabbit
+Donkey
+Worm
+Starfish
+Crab

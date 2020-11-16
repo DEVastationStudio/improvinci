@@ -148,3 +148,103 @@ Detector de metales
 Microscopio
 Tuneladora
 Taladro
+Avión
+Coche
+Barco
+Moto
+Bicicleta
+Autocaravana
+Torre Eiffel
+Pirámides
+Big Ben
+Taj Mahal
+Estatua de la Libertad
+Gran Muralla China
+Coliseo
+Catarata
+Desierto
+Bosque
+Playa
+Montaña
+Selva
+Polo Norte
+Polo Sur
+América del Norte
+América del Sur
+Europa
+África
+Asia
+Oceanía
+Toalla
+Aeropuerto
+Desodorante
+Pasta de dientes
+Cepillo de dientes
+Crema solar
+Peine
+Botiquín
+Cantimplora
+Piscina
+Hotel
+Tienda de campaña
+Saco de dormir
+Linterna
+Esnorquel
+Pasaporte
+Furgoneta
+Hamaca
+Equipaje
+Monedero
+Bandera
+Lago
+Autobús
+Perro
+Lobo
+Gato
+Tigre
+León
+Pantera
+Elefante
+Oso
+Rana
+Águila
+Lagarto
+Escorpión
+Cocodrilo
+Mosquito
+Libélula
+Murciélago
+Ratón
+Ciervo
+Oveja
+Vaca
+Pollo
+Oca
+Jirafa
+Tiburón
+Anguila
+Medusa
+Escarabajo
+Hormiga
+Caracol
+Pulpo
+Ballena
+Delfín
+Caballo
+Araña
+Tucán
+Mono
+Oso Hormiguero
+Perezoso
+Alpaca
+Avestruz
+Canguro
+Oso Panda
+Serpiente
+Tortuga
+Hamster
+Conejo
+Burro
+Gusano
+Estrella de Mar
+Cangrejo
