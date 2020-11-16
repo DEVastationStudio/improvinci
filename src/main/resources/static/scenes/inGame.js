@@ -22,7 +22,13 @@ class InGame extends Phaser.Scene {
         this.fakerPeekButton.setAlpha(0);
         this.button_clear = this.add.image(game.canvas.width * 3 / 4, game.canvas.height / 4, 'Corona').setInteractive({cursor: 'pointer'});
         //this.fakerPeekButton.setScale(0.2, 0.2);
-
+        this.button_back = this.add.image(0,0, '').setInteractive({cursor: 'pointer'});
+        this.button_back.on('pointerdown', function (pointer){
+            this.button_back.removeInteractive();
+            game.global.socketDir.close();
+            game.global.socketDir = undefined;
+            this.scene.start('DrawAvatar');
+        }, this);
         this.maxRounds = data.maxRounds;
         this.curRound = 0;
         this.players = data.players;
@@ -178,6 +184,10 @@ class InGame extends Phaser.Scene {
         this.roundText.x = game.canvas.width * 6 / 8;
         this.roundText.y = game.canvas.height / 12;
         this.roundText.setScale(this.sY);
+
+        this.button_back.x = game.canvas.width / 4;
+        this.button_back.y = game.canvas.height * 3 / 4;
+        this.button_back.setScale(this.sY);
 
         //Background
         this.bg.x = game.canvas.width / 2;

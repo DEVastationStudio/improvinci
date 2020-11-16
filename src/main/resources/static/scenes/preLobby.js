@@ -19,6 +19,8 @@ class PreLobby extends Phaser.Scene {
             if (game.global.DEBUG_MODE) {
                 console.log('[DEBUG] WebSocket connection closed.')
             }
+            heartMonitor(false);
+            clearInterval(isAlive);
         }
         game.global.socketDir.onmessage = (message) => {
             var msg = JSON.parse(message.data);
@@ -165,6 +167,20 @@ class PreLobby extends Phaser.Scene {
             {
                 clearInterval(heartbeat);
                 console.log('[heartMonitor] Heart died');
+                //If socket is undefined, the client stopped it willingly
+                if (game.global.socketDir !== undefined) {
+                    game.global.socketDir = undefined;
+                    //open disconnectoverlay scene I guess
+                    if (game.scene.keys.PreLobby.scene.isActive()) {
+                        game.scene.keys.PreLobby.scene.start('DisconnectOverlay');
+                    } else if (game.scene.keys.Lobby.scene.isActive()) {
+                        game.scene.keys.Lobby.scene.start('DisconnectOverlay');
+                    } else if (game.scene.keys.InGame.scene.isActive()) {
+                        game.scene.keys.InGame.scene.start('DisconnectOverlay');
+                    } else if (game.scene.keys.GameOver.scene.isActive()) {
+                        game.scene.keys.GameOver.scene.start('DisconnectOverlay');
+                    }
+                }
             }
         }
 
@@ -238,7 +254,15 @@ class PreLobby extends Phaser.Scene {
 
         this.input.keyboard.addKey(8);
         this.codeFocus = false;
-    	
+        
+        this.button_back.on('pointerdown', function (pointer){
+            this.button_create.removeInteractive();
+            this.button_back.removeInteractive();
+            game.global.socketDir.close();
+            game.global.socketDir = undefined;
+            this.scene.start('DrawAvatar');
+        }, this);
+
 		this.button_create.on('pointerdown', function (pointer){
             let msg = new Object();
             msg.event = 'CREATE_ROOM';

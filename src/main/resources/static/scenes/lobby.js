@@ -22,6 +22,7 @@ class Lobby extends Phaser.Scene {
         this.button_back = this.add.image(0,0, '').setInteractive({cursor: 'pointer'});
         this.button_Options = this.add.image(0,0, 'Ready_host_es');
         this.button_Options.setAlpha(0);
+        
 
         //if (data.leader) {
         let msg = new Object();
@@ -29,7 +30,13 @@ class Lobby extends Phaser.Scene {
         game.global.socketDir.send(JSON.stringify(msg));
         //}
 
-        
+        this.button_back.on('pointerdown', function (pointer){
+            this.button_start.removeInteractive();
+            this.button_Options.removeInteractive();
+            game.global.socketDir.close();
+            game.global.socketDir = undefined;
+            this.scene.start('DrawAvatar');
+        }, this);
         
 		this.button_start.on('pointerdown', function (pointer){
             let msg2 = new Object();
@@ -458,6 +465,10 @@ class Lobby extends Phaser.Scene {
         this.button_Options.x = game.canvas.width * 3 / 4;
         this.button_Options.y = game.canvas.height* 3 / 4;
         this.button_Options.setScale(this.sY);
+
+        this.button_back.x = game.canvas.width / 4;
+        this.button_back.y = game.canvas.height * 3 / 4;
+        this.button_back.setScale(this.sY);
 
         //Background
         this.bg.x = game.canvas.width / 2;
