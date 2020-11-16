@@ -27,7 +27,7 @@ class InGame extends Phaser.Scene {
             this.button_back.removeInteractive();
             game.global.socketDir.close();
             game.global.socketDir = undefined;
-            this.scene.start('DrawAvatar');
+            this.scene.start('DisconnectOverlay', {message: 'You left the game.'});
         }, this);
 
         //Critico
