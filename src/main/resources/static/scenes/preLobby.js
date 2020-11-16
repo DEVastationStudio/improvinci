@@ -134,13 +134,13 @@ class PreLobby extends Phaser.Scene {
                     this.scene.get('Lobby').check(msg.type, msg.isChecked)
                 break;
                 case 'GET_CONFIG_ROOM_RETURN':
-                    this.scene.get('Lobby').setInfo(msg.default, msg.blind, msg.limit, msg.one, msg.growing, msg.vowels, msg.isEnglish, msg.numRounds, msg.roundTime, msg.voteTime);
+                    this.scene.get('Lobby').setInfo(msg.default, msg.blind, msg.limit, msg.one, msg.growing, msg.vowels, msg.isEnglish, msg.numRounds, msg.roundTime, msg.voteTime, msg.numActiveGamemodes);
                 break;
                 case 'PLUSCONFIG_RETURN':
                     this.scene.get('Lobby').plusControls(msg.type, msg.amount);
                 break;
                 case 'ROOM_INFO_RETURN':
-                    this.scene.get('Lobby').showLobbyInfo(msg.default, msg.blind, msg.limit, msg.one, msg.growing, msg.vowels, msg.isEnglish, msg.numRounds, msg.roundTime, msg.voteTime);
+                    this.scene.get('Lobby').showLobbyInfo(msg.default, msg.blind, msg.limit, msg.one, msg.growing, msg.vowels, msg.isEnglish, msg.numRounds, msg.roundTime, msg.voteTime, msg.numActiveGamemodes);
                     break;
                 case 'PLAYER_LEFT':
                     this.scene.get('InGame').playerLeft(msg.image);

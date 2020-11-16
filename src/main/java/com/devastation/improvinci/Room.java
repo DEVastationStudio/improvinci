@@ -58,6 +58,7 @@ public class Room {
 	private ConcurrentHashMap<String, Room> rooms;
 	private boolean gameStarted;
 	private boolean vowels;
+	private int numActGamemodes = 0;
 
 	
 	public Room(int numMaxPlayers, String rCode, ConcurrentHashMap<String, Room> rooms) 
@@ -70,6 +71,7 @@ public class Room {
 		voteTime = 30;
 		this.rooms = rooms;
 		vowels = false;
+		numActGamemodes = 5;
 	}
 	
 	public LinkedList<Player> getPlayers() 
@@ -177,6 +179,17 @@ public class Room {
 		informPlayers();
 	}
 
+	public int numActiveGamemodes()
+	{
+		numActGamemodes = 0;
+		for(int i = 0; i<modeInUse.length; i++)
+		{
+			if(modeInUse[i])
+				numActGamemodes++;
+		}
+		return numActGamemodes;
+	}
+
 	public void informPlayers()
 	{
 		for(int i = 0; i<players.size(); i++)
@@ -194,6 +207,7 @@ public class Room {
 				msg.put("roundTime", drawTime);
 				msg.put("vowels", vowels);
 				msg.put("isEnglish", isEnglish);
+				msg.put("numActiveGamemodes", numActiveGamemodes());
 				synchronized( players.get(i).WSSession() ){ players.get(i).WSSession().sendMessage(new TextMessage(msg.toString())); }
 			}catch(Exception ex){ ex.printStackTrace(); }
 		}
@@ -214,6 +228,7 @@ public class Room {
 			msg.put("roundTime", drawTime);
 			msg.put("vowels", vowels);
 			msg.put("isEnglish", isEnglish);
+			msg.put("numActiveGamemodes", numActiveGamemodes());
 			synchronized( player.WSSession() ){ player.WSSession().sendMessage(new TextMessage(msg.toString())); }
 		}catch(Exception ex){ ex.printStackTrace(); }
 	}
