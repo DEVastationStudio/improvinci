@@ -70,8 +70,10 @@ class Preloader extends Phaser.Scene {
 		this.load.image('Menos', 'assets/backgrounds/Configuracion/Menos.png');
 		this.load.image('TickNoCheck', 'assets/backgrounds/Configuracion/TickNoCheck.png');
 		this.load.image('TickCheck', 'assets/backgrounds/Configuracion/TickCheck.png');
-
-
+		this.load.image('ukFlag', 'assets/backgrounds/Configuracion/ukFlag.png');
+		this.load.image('spainFlag', 'assets/backgrounds/Configuracion/spainFlag.png');
+		this.load.image('language', 'assets/backgrounds/Configuracion/language.png');
+		this.load.image('vowels', 'assets/backgrounds/Configuracion/vowels.png');
     }
 
     create() {
