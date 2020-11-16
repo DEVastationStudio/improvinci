@@ -51,7 +51,7 @@ class Lobby extends Phaser.Scene {
             msg.event = 'GET_CONFIG_ROOM';
             game.global.socketDir.send(JSON.stringify(msg)); 
             this.button_Options.setAlpha(false);
-            this.button_start.setAlpha(false);
+            this.button_start.visible = false;
         }, this);
         
         this.add.text(game.canvas.width/2, 10, data.code, { fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' });
@@ -132,7 +132,7 @@ class Lobby extends Phaser.Scene {
          this.bg.on('pointerdown', function (pointer){
             this.scene.get('Lobby').invisible(false);
             this.button_Options.setAlpha(true);
-            this.button_start.setAlpha(true);
+            this.button_start.visible = true;
         }, this);
 
          this.FacilImg.on('pointerdown', function (pointer){
@@ -156,7 +156,7 @@ class Lobby extends Phaser.Scene {
          this.SalirCod.on('pointerdown', function (pointer){
             this.scene.get('Lobby').invisible(false);
             this.button_Options.setAlpha(true);
-            this.button_start.setAlpha(true);
+            this.button_start.visible = true;
         }, this);
 
         //Language
@@ -431,13 +431,15 @@ class Lobby extends Phaser.Scene {
         }
     }
 
-    /*showHideStart(leader) {
-        (leader)?this.button_start.setInteractive({cursor: 'pointer'}):this.button_start.removeInteractive();
-        this.button_start.visible = leader;
-    }*/
     showHideStart(leader, players) {
+        let count = 0;
+        console.log(players);
+        for (let p in players) {
+            if (players[p].inLobby) count++;
+        }
+
         if (leader) {
-            if (players >= 3) {
+            if (count >= 3) {
                 this.button_start.setInteractive({cursor: 'pointer'});
                 this.button_start.setAlpha(1);
             } else {
@@ -778,7 +780,7 @@ class Lobby extends Phaser.Scene {
     }
 
     updateAvatars(data) {
-        this.showHideStart(data.leader, data.players.length);
+        this.showHideStart(data.leader, data.players);
         for (let i = 0; i < 3; i++) {
             for (let j = 0; j < 3; j++) {
                 if (data.players[i+j*3] !== undefined) {
