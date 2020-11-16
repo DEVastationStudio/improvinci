@@ -128,6 +128,8 @@ class Lobby extends Phaser.Scene {
          this.invisible(false);
          this.scaler();
 
+         this.activeGamemodes = 0;   
+
          //Config Actions
          this.bg.on('pointerdown', function (pointer){
             this.scene.get('Lobby').invisible(false);
@@ -178,10 +180,10 @@ class Lobby extends Phaser.Scene {
 
          //---DefaultChecks
          this.DefaultTickCheck.on('pointerdown', function (pointer){
-            let msg = new Object();
-            msg.event = 'NOCHECK';
-            msg.type = 'Default';
-            game.global.socketDir.send(JSON.stringify(msg));
+                let msg = new Object();
+                msg.event = 'NOCHECK';
+                msg.type = 'Default';
+                game.global.socketDir.send(JSON.stringify(msg));
         }, this);
         this.DefaultTickNoCheck.on('pointerdown', function (pointer){
             let msg = new Object();
@@ -456,8 +458,9 @@ class Lobby extends Phaser.Scene {
         }
     }
     
-    showLobbyInfo(defaultM, blindM, limitM, oneM, growingM, vowelsM, isEnglish, numRoundsM, roundTimeM, voteTimeM)
+    showLobbyInfo(defaultM, blindM, limitM, oneM, growingM, vowelsM, isEnglish, numRoundsM, roundTimeM, voteTimeM, numActGamemodes)
     {
+        this.activeGamemodes = numActGamemodes;
         this.roomInfo.text='ROUND INFO: \n';
         this.roomInfo.text+='Rounds: '+numRoundsM+'\n';
         this.roomInfo.text+='Round time: '+roundTimeM+'\n';
@@ -492,7 +495,7 @@ class Lobby extends Phaser.Scene {
 		}
     }
 
-    setInfo(defaultM, blindM, limitM, oneM, growingM, vowelsM, isEnglish, numRoundsM, roundTimeM, voteTimeM)
+    setInfo(defaultM, blindM, limitM, oneM, growingM, vowelsM, isEnglish, numRoundsM, roundTimeM, voteTimeM, numActGamemodes)
     {
         this.check('Default', defaultM);
         this.check('Blind', blindM);
@@ -501,7 +504,7 @@ class Lobby extends Phaser.Scene {
         this.check('Growing',growingM);
         this.check('Vowels', vowelsM);
         this.check('English', isEnglish);
-        
+        this.activeGamemodes = numActGamemodes;
         this.NumRondasText.text = numRoundsM;
         this.TiempoRondasText.text = roundTimeM;
         this.TiempoVotacionText.text = voteTimeM;
