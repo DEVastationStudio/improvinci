@@ -27,7 +27,7 @@ class InGame extends Phaser.Scene {
             this.button_back.removeInteractive();
             game.global.socketDir.close();
             game.global.socketDir = undefined;
-            this.scene.start('DrawAvatar');
+            this.scene.start('DisconnectOverlay', {message: 'You left the game.'});
         }, this);
 
         //Critico
@@ -95,8 +95,26 @@ class InGame extends Phaser.Scene {
         this.bigFrame.setScale(game.canvas.height/460.8,game.canvas.height/460.8);
         this.bigFrame.setAlpha(0);
 
+        this.dcImage = this.add.image(game.canvas.width/4, game.canvas.height*7/8,''); 
+        this.dcImage.setScale(game.canvas.height/921.6,game.canvas.height/921.6);
+        this.dcImage.setAlpha(0);
+        this.dcFrame = this.add.image(game.canvas.width/4, game.canvas.height*7/8,this.frameImages[Math.floor(Math.random()*this.frameImages.length)]); 
+        this.dcFrame.setScale(game.canvas.height/1843.2,game.canvas.height/1843.2);
+        this.dcFrame.setAlpha(0);
+        this.dcText = this.add.text(this.dcFrame.x + this.dcFrame.displayWidth/2, game.canvas.height*7/8, 'A player left the game.', { fontSize: '40px',fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#ff6600', stroke: '#000000'});
+        this.dcText.setAlpha(0);
+        this.dcFadeTween = this.tweens.add({
+            targets: [this.dcImage, this.dcFrame, this.dcText],
+            alpha: {from: 0, to: 1},
+            duration: 2000,
+            ease: 'Quad.easeOut',
+            paused: true,
+            yoyo: true
+        });
+
         this.confirmVoteButton.setAlpha(0);
         this.cancelVoteButton.setAlpha(0);
+        
 
         this.confirmVoteButton.on('pointerdown', function (pointer){
             let msg = new Object();
@@ -294,6 +312,17 @@ class InGame extends Phaser.Scene {
                 this.votes[i+j*3].setScale(this.sY);
             }
         }
+
+        //Disconnecting player
+        this.dcImage.x = game.canvas.width/4;
+        this.dcImage.y = game.canvas.height*7/8;
+        this.dcImage.setScale(game.canvas.height/921.6,game.canvas.height/921.6);
+        this.dcFrame.x = game.canvas.width/4;
+        this.dcFrame.y = game.canvas.height*7/8
+        this.dcFrame.setScale(game.canvas.height/1843.2,game.canvas.height/1843.2);
+        this.dcText.x = this.dcFrame.x + this.dcFrame.displayWidth/2;
+        this.dcText.y = game.canvas.height*7/8;
+        this.dcText.setScale(this.sY);
     }
 
     enhanceImage(id) {
@@ -559,6 +588,18 @@ class InGame extends Phaser.Scene {
             }
         }
 
+    }
+
+    playerLeft(image) {
+        if (this.textures.exists('playerDc')) {
+            this.textures.get('playerDc').destroy();
+        }
+        improCanvas.makeTexture('playerDc', image, this, 128);
+
+        this.dcImage.setTexture('playerDc'); 
+        
+        this.dcFadeTween.restart();
+        this.dcFadeTween.play();
     }
 
     writeRoomCode(roomCode)

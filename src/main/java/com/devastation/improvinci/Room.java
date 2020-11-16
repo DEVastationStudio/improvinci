@@ -281,6 +281,12 @@ public class Room {
 					leader = players.getFirst();
 				}
 			}
+			for (Player p : players) {
+				ObjectNode msg = mapper.createObjectNode();
+				msg.put("event", "PLAYER_LEFT");
+				msg.put("image", player.getPicture());
+				synchronized( p.WSSession() ){ try { p.WSSession().sendMessage(new TextMessage(msg.toString())); } catch (Exception e) { e.printStackTrace(); } }
+			}
 			if (players.isEmpty()) {
 				stopGame();
 				rooms.remove(roomCode);
@@ -291,6 +297,7 @@ public class Room {
 		}
 		player.setInRoom(false);
 		player.setRoomCode("X");
+		
 	}
 
 	public String getRoomCode() 
