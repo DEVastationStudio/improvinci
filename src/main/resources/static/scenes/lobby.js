@@ -50,7 +50,7 @@ class Lobby extends Phaser.Scene {
             let msg = new Object();
             msg.event = 'GET_CONFIG_ROOM';
             game.global.socketDir.send(JSON.stringify(msg)); 
-            this.button_Options.setAlpha(false);
+            this.button_Options.visible = false;
             this.button_start.visible = false;
         }, this);
         
@@ -133,7 +133,7 @@ class Lobby extends Phaser.Scene {
          //Config Actions
          this.bg.on('pointerdown', function (pointer){
             this.scene.get('Lobby').invisible(false);
-            this.button_Options.setAlpha(true);
+            this.button_Options.visible = true;
             this.button_start.visible = true;
         }, this);
 
@@ -157,7 +157,7 @@ class Lobby extends Phaser.Scene {
 
          this.SalirCod.on('pointerdown', function (pointer){
             this.scene.get('Lobby').invisible(false);
-            this.button_Options.setAlpha(true);
+            this.button_Options.visible = true;
             this.button_start.visible = true;
         }, this);
 
