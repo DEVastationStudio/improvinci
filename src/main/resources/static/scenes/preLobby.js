@@ -369,8 +369,6 @@ class PreLobby extends Phaser.Scene {
 
 		this.input.keyboard.on('keydown', 
             function (event) { 
-                //console.log(this.scene.scene);
-                //console.log(event.keyCode);
                 console.log(event);
                 if (event.keyCode >= 65 && event.keyCode <= 90) {
                     if (!this.scene.scene.codeFocus) return;
@@ -384,14 +382,12 @@ class PreLobby extends Phaser.Scene {
                     this.scene.showConnectingInterface();
                     //enter
                 }
-                /*switch (event.keyCode) {
-            
-                }*/
             }
         );
     }
     
     updateText(text) {
+        if (this.codeText.text.length >= 9) return;
         this.codeText.text += text.toUpperCase();
     }
 
