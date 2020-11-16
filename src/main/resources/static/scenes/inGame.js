@@ -170,14 +170,14 @@ class InGame extends Phaser.Scene {
         this.scaler();
     }
 
-    update() {
+    update(time, delta) {
         if(this.sX != game.canvas.width/game.global.WIDTH || this.sY != game.canvas.height/game.global.HEIGHT)
 		{
 			this.sX = game.canvas.width/game.global.WIDTH;
 			this.sY = game.canvas.height/game.global.HEIGHT;
 			this.scaler();
 		}
-        this.canvas.onUpdate();
+        this.canvas.onUpdate(delta);
     }
 
     gamemodeIcon(type, x, y, scale)
