@@ -113,7 +113,8 @@ class PreLobby extends Phaser.Scene {
                     break;
                 case 'POINTS':
                     if (this.scene.get('InGame').scene.isActive()) {
-                        this.scene.get('InGame').scene.start('GameOver', {code: msg.roomCode, players: msg.playerArray, leader: msg.leader});
+                        console.log(msg);
+                        this.scene.get('InGame').scene.start('GameOver', {code: msg.roomCode, players: msg.playerArray, leader: msg.leader, yourScore: msg.yourScore});
                     }
                     break;
                 case 'ALL_READY_RETURN':

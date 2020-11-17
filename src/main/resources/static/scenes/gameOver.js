@@ -91,6 +91,25 @@ class GameOver extends Phaser.Scene {
         }, this);
         
         this.scaler();
+        if (typeof(Storage) !== 'undefined') {
+            this.usesLocalStorage = true;
+        } else {
+            this.usesLocalStorage = false;
+        }
+        if (this.usesLocalStorage) {
+            let arr;
+            if (localStorage.getItem('score') === null) {
+                arr = [];
+            } else {
+                arr = JSON.parse(localStorage.getItem('score'));
+            }
+            arr.push(data.yourScore);
+            console.log("Added score " + data.yourScore);
+            arr.sort((a, b) => b - a);
+            arr = arr.slice(0,10)
+            localStorage.setItem('score', JSON.stringify(arr));
+            console.dir(arr);
+        }
     }
     
     update() { 

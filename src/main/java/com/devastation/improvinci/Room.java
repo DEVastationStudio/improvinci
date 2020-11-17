@@ -572,6 +572,7 @@ public class Room {
 		for (Player p : players) {
 			synchronized(p.WSSession()) {
 				msg.put("leader", p == leader);
+				msg.put("yourScore", p.getScore());
 				p.WSSession().sendMessage(new TextMessage(msg.toString()));
 			}
 		} 
