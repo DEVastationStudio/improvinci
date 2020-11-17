@@ -13,8 +13,26 @@ class Options extends Phaser.Scene {
     	
     	this.return_options_bt.on('pointerdown', function (pointer){
 			this.scene.start('Menu');
-		}, this);
-    	
+        }, this);
+        
+    	if (typeof(Storage) !== 'undefined') {
+        this.usesLocalStorage = true;
+        } else {
+        this.usesLocalStorage = false;
+        }
+
+        this.canvas = new improCanvas(this, 128);
+
+        this.topScores = this.add.text(game.canvas.width/2, 10, 'Top Scores:\n', { fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' });
+    
+        if (this.usesLocalStorage) {
+            if (localStorage.getItem('score') !== null) {
+                let arr = JSON.parse(localStorage.getItem('score'));
+                for (let i = 0; i < arr.length; i++) {
+                    this.topScores.text += arr[i] + "\n";
+                }
+            }
+        }
     }
     
     update() { 
