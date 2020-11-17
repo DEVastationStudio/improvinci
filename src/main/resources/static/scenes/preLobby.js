@@ -184,13 +184,13 @@ class PreLobby extends Phaser.Scene {
                     game.global.socketDir = undefined;
                     //open disconnectoverlay scene
                     if (game.scene.keys.PreLobby.scene.isActive()) {
-                        game.scene.keys.PreLobby.scene.start('DisconnectOverlay', {message: 'Connection lost.'});
+                        game.scene.keys.PreLobby.scene.start('DisconnectOverlay', {message: 'Connection lost.', toPrelobby: false});
                     } else if (game.scene.keys.Lobby.scene.isActive()) {
-                        game.scene.keys.Lobby.scene.start('DisconnectOverlay', {message: 'Connection lost.'});
+                        game.scene.keys.Lobby.scene.start('DisconnectOverlay', {message: 'Connection lost.', toPrelobby: false});
                     } else if (game.scene.keys.InGame.scene.isActive()) {
-                        game.scene.keys.InGame.scene.start('DisconnectOverlay', {message: 'Connection lost.'});
+                        game.scene.keys.InGame.scene.start('DisconnectOverlay', {message: 'Connection lost.', toPrelobby: false});
                     } else if (game.scene.keys.GameOver.scene.isActive()) {
-                        game.scene.keys.GameOver.scene.start('DisconnectOverlay', {message: 'Connection lost.'});
+                        game.scene.keys.GameOver.scene.start('DisconnectOverlay', {message: 'Connection lost.', toPrelobby: false});
                     }
                 }
             }

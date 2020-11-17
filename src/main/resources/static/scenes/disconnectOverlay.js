@@ -18,7 +18,8 @@ class DisconnectOverlay extends Phaser.Scene {
 
         this.disconnectButton.setInteractive({cursor: 'pointer'});
         this.disconnectButton.on('pointerdown', function (event) {
-            this.scene.start('Menu');
+            console.log(data);
+            this.scene.start(data.toPrelobby?'PreLobby':'Menu');
         }, this);
 
         this.scaler();

@@ -182,7 +182,7 @@ class InGame extends Phaser.Scene {
         this.DobleConfirmYES.on('pointerdown', function (pointer){
             game.global.socketDir.close();
             game.global.socketDir = undefined;
-            this.scene.start('DisconnectOverlay', {message: 'You left the game.'});
+            this.scene.start('DisconnectOverlay', {message: 'You left the game.', toPrelobby: false});
         }, this);
 
         this.DobleConfirmNO.on('pointerdown', function (pointer){
