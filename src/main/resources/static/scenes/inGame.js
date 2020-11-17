@@ -78,8 +78,8 @@ class InGame extends Phaser.Scene {
                 this.frames[i+j*3].setScale(game.canvas.height/1177.6,game.canvas.height/1177.6);
                 this.frames[i+j*3].setAlpha(0);
                 this.votes[i+j*3] = this.add.text(game.canvas.width/2 + ((0.3*game.canvas.height)*(i-1)), game.canvas.height/2 + ((0.3*game.canvas.height)*(j-1)) + (0.15*game.canvas.height), '', { fontSize: '40px',fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#ff6600', stroke: '#000000', align: 'center'}).setOrigin(0.5, 0.5);
-                this.votedIndicators[i+j*3] = this.add.image(game.canvas.width/2 + ((0.3*game.canvas.height)*(i-1)), game.canvas.height/2 + ((0.3*game.canvas.height)*(j-1)),'Corona'); 
-                this.votedIndicators[i+j*3].setScale(game.canvas.height/1177.6,game.canvas.height/1177.6);
+                this.votedIndicators[i+j*3] = this.add.image(this.drawings[i+j*3].x + this.drawings[i+j*3].displayWidth/2, this.drawings[i+j*3].y - this.drawings[i+j*3].displayHeight/2,'Corona'); 
+                this.votedIndicators[i+j*3].setScale(this.sY);
                 this.votedIndicators[i+j*3].setAlpha(0);
 
                 this.drawings[i+j*3].on('pointerdown', function (pointer){
@@ -304,7 +304,7 @@ class InGame extends Phaser.Scene {
         {
             if(this.roundState == 2)
             {
-
+                this.gamemodeIcon(this.roundGamemode, game.canvas.width / 4, game.canvas.height / 8, this.sY);
             }else
             {
                 this.TimeAnim.setAlpha(0);
@@ -408,6 +408,14 @@ class InGame extends Phaser.Scene {
                 this.votedIndicators[i+j*3].setScale(this.sY);
             }
         }
+
+        this.bigImage.x = game.canvas.width/2; 
+        this.bigImage.y = game.canvas.height/2; 
+        this.bigImage.setScale(game.canvas.height/460.8,game.canvas.height/460.8);
+
+        this.bigFrame.x = game.canvas.width/2; 
+        this.bigFrame.y = game.canvas.height/2; 
+        this.bigFrame.setScale(game.canvas.height/460.8,game.canvas.height/460.8);
 
         //Disconnecting player
         this.dcImage.x = game.canvas.width/4;
@@ -660,6 +668,9 @@ class InGame extends Phaser.Scene {
                         
                         this.drawings[i+j*3].setAlpha(1);
                         this.frames[i+j*3].setAlpha(1);
+
+                        this.votedIndicators[i+j*3].x = this.drawings[i+j*3].x + this.drawings[i+j*3].displayWidth/2;
+                        this.votedIndicators[i+j*3].y = this.drawings[i+j*3].y - this.drawings[i+j*3].displayHeight/2;
 
                         if (!isSelf) {
                             this.drawings[i+j*3].setInteractive({cursor: 'pointer'});
