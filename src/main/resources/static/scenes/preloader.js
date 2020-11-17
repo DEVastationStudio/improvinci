@@ -27,7 +27,12 @@ class Preloader extends Phaser.Scene {
 		}, this);
 
 		this.load.on('fileprogress', function (file) {
-			this.loadingText.setText('Loading complete. Please click to continue.');
+			this.loadingText.setText('Loading ' + file.key + '...');
+		}, this);
+
+		this.load.on('complete', function (file) {
+			this.loadingText.setText('Loading complete.');
+			this.scene.start('Menu');
 		}, this);
 
 
@@ -126,9 +131,9 @@ class Preloader extends Phaser.Scene {
     }
 
     create() {
-        this.input.on('pointerdown', function(pointer){
+        /*this.input.on('pointerdown', function(pointer){
             this.scene.scene.start('Menu');
-        });
+        });*/
     }
     
     update() { 

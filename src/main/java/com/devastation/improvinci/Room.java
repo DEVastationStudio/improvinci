@@ -563,7 +563,7 @@ public class Room {
 		msg.put("event", "POINTS");
 		msg.put("roomCode",roomCode);
 		LinkedList<Player> sortedPlayers = (LinkedList<Player>)players.clone();
-		Collections.sort(sortedPlayers, (a, b) -> Integer.compare(a.getScore(), b.getScore()));
+		Collections.sort(sortedPlayers, (b, a) -> Integer.compare(a.getScore(), b.getScore()));
 		ArrayNode arrNode = mapper.valueToTree(sortedPlayers);
 		msg.putArray("playerArray").addAll(arrNode);
 		for (Player p : players) {
