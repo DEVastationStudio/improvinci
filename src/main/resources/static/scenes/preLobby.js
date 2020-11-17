@@ -171,7 +171,8 @@ class PreLobby extends Phaser.Scene {
                 heartbeat = window.setInterval(function(){
                     let msg = new Object();
                     msg.event = 'HEARTBEAT';
-                    game.global.socketDir.send(JSON.stringify(msg));
+                    if (game.global.socketDir !== undefined)
+                        game.global.socketDir.send(JSON.stringify(msg));
                 }, heartRate);
                 console.log('[heartMonitor] Heart is beating');
             }else
@@ -384,6 +385,7 @@ class PreLobby extends Phaser.Scene {
                     this.scene.trimText();
                     event.stopImmediatePropagation();
                 } else if (event.keyCode == 13) {
+                    if (!this.scene.scene.codeFocus) return;
                     this.scene.tryJoin();
                     this.scene.showConnectingInterface();
                     //enter
