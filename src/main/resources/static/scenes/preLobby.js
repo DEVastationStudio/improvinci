@@ -584,6 +584,7 @@ class PreLobby extends Phaser.Scene {
     showConnectingInterface() {
         //Show popup
         this.popupBg.setAlpha(1);
+        this.bg.removeInteractive();
         //Show text that reads 'connecting...'
         this.popupText.setAlpha(1);
         this.popupText.text = 'Connecting...';
@@ -623,6 +624,7 @@ class PreLobby extends Phaser.Scene {
     cancelConnection() {
         //Hide popup, text and cancel button
         this.popupBg.setAlpha(0);
+        this.bg.setInteractive();
         this.popupText.setAlpha(0);
         this.popupText.text = '';
         this.popupCancel.setAlpha(0);

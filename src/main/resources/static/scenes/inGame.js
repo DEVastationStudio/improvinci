@@ -59,16 +59,6 @@ class InGame extends Phaser.Scene {
         this.wordPositionArray = [];
         this.wordTimeArray = [];
         
-    	//this.return_options_bt = this.add.image(game.canvas.width*4/5 ,game.canvas.height*1/5,'Ronda_es').setInteractive({cursor: 'pointer'});
-    	//this.caballete_gameplay = this.add.image(game.canvas.width/2 ,game.canvas.height/2,'Caballete_gameplay');
-    	//this.caballete_gameplay.scaleX = game.canvas.width/5250;
-    	//this.caballete_gameplay.scaleY = game.canvas.width/5250;
-    	//this.return_options_bt = this.add.image(game.canvas.width*4/5 ,game.canvas.height*1/5,'Ronda_es').setInteractive({cursor: 'pointer'});
-    	
-    	/*this.return_options_bt.on('pointerdown', function (pointer){
-			this.scene.start('Menu');
-		}, this);*/
-        
         this.maxTime = 0;
         this.drawings = [];
         this.frames = [];
@@ -76,6 +66,7 @@ class InGame extends Phaser.Scene {
         this.frameImages = ['Marco1', 'Marco2', 'Marco3', 'Marco4'];
         this.votedPlayerId = -1;
         this.selfPlayer = '';
+        this.votedIndicators = [];
         this.inVotingPhase = false;
 
         for (let i = 0; i < 3; i++) {
@@ -87,7 +78,10 @@ class InGame extends Phaser.Scene {
                 this.frames[i+j*3].setScale(game.canvas.height/1177.6,game.canvas.height/1177.6);
                 this.frames[i+j*3].setAlpha(0);
                 this.votes[i+j*3] = this.add.text(game.canvas.width/2 + ((0.3*game.canvas.height)*(i-1)), game.canvas.height/2 + ((0.3*game.canvas.height)*(j-1)) + (0.15*game.canvas.height), '', { fontSize: '40px',fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#ff6600', stroke: '#000000', align: 'center'}).setOrigin(0.5, 0.5);
-            
+                this.votedIndicators[i+j*3] = this.add.image(game.canvas.width/2 + ((0.3*game.canvas.height)*(i-1)), game.canvas.height/2 + ((0.3*game.canvas.height)*(j-1)),'Corona'); 
+                this.votedIndicators[i+j*3].setScale(game.canvas.height/1177.6,game.canvas.height/1177.6);
+                this.votedIndicators[i+j*3].setAlpha(0);
+
                 this.drawings[i+j*3].on('pointerdown', function (pointer){
                     this.scene.get('InGame').enhanceImage(i+j*3);
                 }, this);
@@ -126,6 +120,7 @@ class InGame extends Phaser.Scene {
             let msg = new Object();
             msg.event = 'VOTE';
             msg.playerVoted = this.players[this.scene.get('InGame').votedPlayerId].playerId;
+            this.scene.get('InGame').votedIndicators[this.scene.get('InGame').votedPlayerId].setAlpha(1);
             game.global.socketDir.send(JSON.stringify(msg));
             this.scene.get('InGame').disableDrawings();
             this.scene.get('InGame').hideVoteButtons();
@@ -408,6 +403,9 @@ class InGame extends Phaser.Scene {
                 this.votes[i+j*3].x = game.canvas.width/2 + ((0.3*game.canvas.height)*(i-1));
                 this.votes[i+j*3].y = game.canvas.height/2 + ((0.3*game.canvas.height)*(j-1)) + (0.15*game.canvas.height);
                 this.votes[i+j*3].setScale(this.sY);
+                this.votedIndicators[i+j*3].x = this.drawings[i+j*3].x + this.drawings[i+j*3].displayWidth/2;
+                this.votedIndicators[i+j*3].y = this.drawings[i+j*3].y - this.drawings[i+j*3].displayHeight/2;
+                this.votedIndicators[i+j*3].setScale(this.sY);
             }
         }
 
@@ -514,6 +512,16 @@ class InGame extends Phaser.Scene {
     }
 
     roundOver() {
+        //shuffle players array using Fisher-Yates
+        let m = this.players.length;
+        let t;
+        let i;
+        while (m) {
+            i = Math.floor(Math.random() * m--);
+            t = this.players[m];
+            this.players[m] = this.players[i];
+            this.players[i] = t;
+        }
         this.roundState = 2;
         this.criticoScaler();
         this.inGameWord.text = this.roundWord;
@@ -613,6 +621,7 @@ class InGame extends Phaser.Scene {
                     this.drawings[i+j*3].setAlpha(0);
                     this.frames[i+j*3].setAlpha(0);
                     this.votes[i+j*3].text = '';
+                    this.votedIndicators[i+j*3].setAlpha(0);
                 }
             }
         }
