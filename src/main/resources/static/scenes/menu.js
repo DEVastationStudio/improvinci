@@ -21,6 +21,7 @@ class Menu extends Phaser.Scene {
     	this.ready_bt = this.add.image(0,0,'Ready_es').setInteractive({cursor: 'pointer'});
     	this.options_bt = this.add.image(0,0,'Ready_host_es').setInteractive({cursor: 'pointer'});
 		this.credits_bt = this.add.image(0,0,'Ronda_es').setInteractive({cursor: 'pointer'});
+
 		this.scaler();
 
 
