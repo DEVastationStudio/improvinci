@@ -42,6 +42,8 @@ class GameOver extends Phaser.Scene {
         this.frames = [];
         this.scores = [];
         this.frameImages = ['Marco1', 'Marco2', 'Marco3', 'Marco4'];
+        this.topScore = data.players[0].score;
+        this.crowns = [];
 
         for (let i = 0; i < 4; i++) {
             for (let j = 0; j < 2; j++) {
@@ -59,6 +61,8 @@ class GameOver extends Phaser.Scene {
                 this.frames[i+j*4].setScale(game.canvas.height/2355.2,game.canvas.height/2355.2);
 
                 this.scores[i+j*4] = this.add.text(game.canvas.width*11/16 + ((0.2*game.canvas.height)*(i-1.5)), game.canvas.height*5/16 + ((0.2*game.canvas.height)*(j-0.5)) + (0.1*game.canvas.height), data.players[1+i+j*4].score, { fontSize: '40px',fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#ff6600', stroke: '#000000', align: 'center'}).setOrigin(0.5, 0.5);
+                if (data.players[1+i+j*4].score === this.topScore)
+                    this.crowns[i+j*4] = this.add.image(this.frames[i+j*4].x - this.frames[i+j*4].displayWidth/2, this.frames[i+j*4].y - this.frames[i+j*4].displayHeight/2,'Corona'); 
             }
         }
         
@@ -114,11 +118,11 @@ class GameOver extends Phaser.Scene {
         this.bg.setScale(this.sX);
         
         //Scores
-        this.winnerDrawing.x = game.canvas.width*5/16;
+        this.winnerDrawing.x = game.canvas.width*1/4;
         this.winnerDrawing.y = game.canvas.height*7/16;
         this.winnerDrawing.setScale(game.canvas.height/230.4,game.canvas.height/230.4);
         
-        this.winnerFrame.x = game.canvas.width*5/16; 
+        this.winnerFrame.x = game.canvas.width*1/4; 
         this.winnerFrame.y = game.canvas.height*7/16; 
         this.winnerFrame.setScale(game.canvas.height/460.8,game.canvas.height/460.8);
 
@@ -126,13 +130,13 @@ class GameOver extends Phaser.Scene {
         this.crown.y = this.winnerFrame.y - this.winnerFrame.displayHeight/2; 
         this.crown.setScale(this.sY/2);
 
-        this.winnerScore.x = game.canvas.width*5/16;
+        this.winnerScore.x = game.canvas.width*1/4;
         this.winnerScore.y = game.canvas.height*7/16 + this.winnerFrame.displayHeight/2;
         this.winnerScore.setScale(this.sY);
 
         for (let i = 0; i < 4; i++) {
             for (let j = 0; j < 2; j++) {
-                if (this.drawings[1+i+j*4] === undefined) continue;
+                if (this.drawings[i+j*4] === undefined) continue;
                 this.drawings[i+j*4].x = game.canvas.width*11/16 + ((0.2*game.canvas.height)*(i-1.5)); 
                 this.drawings[i+j*4].y = game.canvas.height*5/16 + ((0.2*game.canvas.height)*(j-0.5)); 
                 this.drawings[i+j*4].setScale(game.canvas.height/1177.6,game.canvas.height/1177.6);
@@ -144,6 +148,12 @@ class GameOver extends Phaser.Scene {
                 this.scores[i+j*4].x = game.canvas.width*11/16 + ((0.2*game.canvas.height)*(i-1.5));
                 this.scores[i+j*4].y = game.canvas.height*5/16 + ((0.2*game.canvas.height)*(j-0.5)) + (0.1*game.canvas.height);
                 this.scores[i+j*4].setScale(this.sY);
+
+                if (this.crowns[i+j*4] !== undefined) {
+                    this.crowns[i+j*4].x = this.frames[i+j*4].x - this.frames[i+j*4].displayWidth/2; 
+                    this.crowns[i+j*4].y =this.frames[i+j*4].y - this.frames[i+j*4].displayHeight/2; 
+                    this.crowns[i+j*4].setScale(this.sY/4);
+                }
             }
         }
 	}
