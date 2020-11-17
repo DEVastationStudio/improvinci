@@ -187,7 +187,7 @@ class improCanvas {
     }
     clear() {
         this.drawing = Array(this.imageSize).fill(0).map(x => Array(this.imageSize).fill(0));
-        this.fadeStatus = -1;
+        //this.fadeStatus = -1;
     }
 
     showCanvas() {

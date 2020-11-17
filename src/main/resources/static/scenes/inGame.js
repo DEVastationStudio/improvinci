@@ -35,7 +35,7 @@ class InGame extends Phaser.Scene {
 
         //Gamemodes
         this.iconoDefaultImg = this.add.image(0,0,'ModoNormal_en');
-        this.iconoBlindImg = this.add.image(0,0,'ModoACiegas_en');
+        this.iconoBlindImg = this.add.image(0,0,'Blind_en');
         this.iconoLimitImg = this.add.image(0,0,'ModoTrazosLim_en');
         this.iconoOneImg = this.add.image(0,0,'ModoUnSoloTrazo_en');
         this.iconoGrowingImg = this.add.image(0,0,'ModoBrochaIncremental_en');
@@ -400,6 +400,7 @@ class InGame extends Phaser.Scene {
         this.curRound = round;
         this.roundText.text = this.curRound+'/'+this.maxRounds;
         this.canvas.clear();
+        this.canvas.fadeStatus = -1;
         this.canvas.showCanvas();
     }
 
