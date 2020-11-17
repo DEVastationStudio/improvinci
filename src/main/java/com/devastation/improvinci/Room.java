@@ -223,7 +223,7 @@ public class Room {
 				modeInUse[4] = false;
 				rounds = 2;
 				drawTime = 30;
-				voteTime = 5;
+				voteTime = 10;
 				vowels = true;
 				sendInfo(player);
 				informPlayers();
