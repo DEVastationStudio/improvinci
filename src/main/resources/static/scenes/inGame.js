@@ -487,6 +487,16 @@ class InGame extends Phaser.Scene {
     }
 
     roundOver() {
+        //shuffle players array using Fisher-Yates
+        let m = this.players.length;
+        let t;
+        let i;
+        while (m) {
+            i = Math.floor(Math.random() * m--);
+            t = this.players[m];
+            this.players[m] = this.players[i];
+            this.players[i] = t;
+        }
         this.roundState = 2;
         this.criticoScaler();
         this.inGameWord.text = this.roundWord;
