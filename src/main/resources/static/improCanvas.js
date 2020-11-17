@@ -23,7 +23,12 @@ class improCanvas {
 
         this.curScene.input.on('pointermove', function (pointer) {this.scene.canvas.onPointer(pointer, 0)});
         this.curScene.input.on('pointerdown', function (pointer) {this.scene.canvas.onPointer(pointer, 1)});
-        this.curScene.input.on('pointerup', function (pointer) {if(this.scene.canvas.inPainting){this.scene.canvas.maxTrazos--; this.scene.canvas.inPainting = false}});
+        this.curScene.input.on('pointerup', function (pointer) {if(this.scene.canvas.inPainting)
+            {
+                this.scene.canvas.maxTrazos--; 
+                this.scene.canvas.inPainting = false;
+                this.scene.scene.get('InGame').limitPaintingStrokes( this.scene.canvas.maxTrazos);
+            }});
 
         this.modes = {
             DEFAULT: 'default',
@@ -87,7 +92,10 @@ class improCanvas {
         switch (this.pointer_mode) {
             case this.modes.LIMIT:
             case this.modes.ONE:
-                if(this.maxTrazos>0) this.defaultPainting(x, y, 2);
+                if(this.maxTrazos>0)
+                {
+                    this.defaultPainting(x, y, 2);
+                }
             break;
             case this.modes.GROWING:
                 if(pointer.getDuration()<(this.pointerChangeSizeTime*this.maxPointerSize))
@@ -218,6 +226,7 @@ class improCanvas {
             this.maxTrazos = 10;
         if(this.pointer_mode === this.modes.ONE)
             this.maxTrazos = 1;
+        this.curScene.scene.get('InGame').limitPaintingStrokes(this.maxTrazos);
     }
 
     static makeTexture(name, img, scene, size) {

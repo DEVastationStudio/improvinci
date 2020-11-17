@@ -143,6 +143,7 @@ class InGame extends Phaser.Scene {
 
         this.sent = false;
         this.randomize = true;
+        this.maxTrazos = -1;
         this.canvas = new improCanvas(this, 256);
         this.canvas.hideCanvas();
 
@@ -151,7 +152,8 @@ class InGame extends Phaser.Scene {
         this.timer = this.add.text(game.canvas.width/10 ,game.canvas.height/8, '', { fontSize: '50px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#000000', stroke: '#000000' });
         this.inGameWord = this.add.text(game.canvas.width/2 ,game.canvas.height/12, '', { fontSize: '50px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#000000', stroke: '#000000' });
         this.roundText = this.add.text(game.canvas.width*6/8 ,game.canvas.height/12, '0/'+this.maxRounds, { fontSize: '50px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#000000', stroke: '#000000' });
-
+        this.strokesLeft = this.add.text(0 ,0, '', {fontSize: '30px', fontFamily: 'comic sans ms', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff' });
+        
         this.button_clear.on('pointerdown', function (pointer){
             this.canvas.clear();
             this.canvas.resetStrokes();
@@ -169,7 +171,6 @@ class InGame extends Phaser.Scene {
 		this.DobleConfirmNO = this.add.image(0,0,'SalirCod').setInteractive({cursor: 'pointer'});
         this.DobleConfirmNO.setAlpha(0);
 
-        this.scaler();
 
         this.DobleConfirmYES.on('pointerdown', function (pointer){
             game.global.socketDir.close();
@@ -184,6 +185,9 @@ class InGame extends Phaser.Scene {
         this.button_back.on('pointerdown', function (pointer){
             this.scene.get('InGame').doubleConfirmationController(0);
         }, this);
+
+        
+        this.scaler();
 
     }
 
@@ -216,6 +220,12 @@ class InGame extends Phaser.Scene {
         }
     }
 
+    limitPaintingStrokes(num)
+    {
+        this.maxTrazos = num;
+        this.strokesLeft.text = 'Strokes left: '+this.maxTrazos;
+    }
+
     gamemodeIcon(type, x, y, scale)
     {
         this.iconoDefaultImg.setAlpha(false);
@@ -241,6 +251,13 @@ class InGame extends Phaser.Scene {
                 this.iconoLimitImg.y = y;
                 this.iconoLimitImg.setScale(scale);
                 this.iconoLimitImg.setAlpha(true);
+                if(this.roundState)
+                {
+                    this.strokesLeft.x = x*0.70;
+                    this.strokesLeft.y = y*2.1;
+                    this.strokesLeft.setAlpha(1);
+                    this.strokesLeft.text = 'Strokes left: '+this.maxTrazos;
+                }
                 break;
             case 'one':
                 this.iconoOneImg.x = x;
@@ -414,6 +431,7 @@ class InGame extends Phaser.Scene {
     }
 
     showWord(word, faker, drawMode) {
+        this.strokesLeft.setAlpha(0);
         this.roundState = 0;
         this.roundGamemode = drawMode;
         this.criticoScaler();
