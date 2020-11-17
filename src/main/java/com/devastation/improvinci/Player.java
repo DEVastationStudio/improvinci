@@ -99,6 +99,7 @@ public class Player {
 	}
 
 	public void addScore(int score) {
+		if(score+this.score<0) return;
 		this.score += score;
 	}
 

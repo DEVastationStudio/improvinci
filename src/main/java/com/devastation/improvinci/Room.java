@@ -9,6 +9,7 @@ import java.io.InputStreamReader;
 import java.io.LineNumberReader;
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Random;
@@ -60,7 +61,7 @@ public class Room {
 	private boolean vowels;
 	private int numActGamemodes = 0;
 	private int wrongVotes = 0;
-
+	private Calendar calendar = Calendar.getInstance();
 	
 	public Room(int numMaxPlayers, String rCode, ConcurrentHashMap<String, Room> rooms) 
 	{
@@ -160,17 +161,100 @@ public class Room {
 
 	public void dailyMode(Player player)
 	{
-		modeInUse[0] = false;
-		modeInUse[1] = true;
-		modeInUse[2] = false;
-		modeInUse[3] = true;
-		modeInUse[4] = false;
-		rounds = 2;
-		drawTime = 15;
-		voteTime = 15;
-		vowels = false;
-		sendInfo(player);
-		informPlayers();
+		switch(calendar.get(Calendar.DAY_OF_WEEK))
+		{
+			case 1:
+				modeInUse[0] = true;
+				modeInUse[1] = false;
+				modeInUse[2] = true;
+				modeInUse[3] = false;
+				modeInUse[4] = true;
+				rounds = 6;
+				drawTime = 10;
+				voteTime = 15;
+				vowels = true;
+				sendInfo(player);
+				informPlayers();
+				break;
+			case 2:
+				modeInUse[0] = false;
+				modeInUse[1] = true;
+				modeInUse[2] = false;
+				modeInUse[3] = true;
+				modeInUse[4] = false;
+				rounds = 2;
+				drawTime = 20;
+				voteTime = 20;
+				vowels = false;
+				sendInfo(player);
+				informPlayers();
+				break;
+			case 3:
+				modeInUse[0] = true;
+				modeInUse[1] = false;
+				modeInUse[2] = true;
+				modeInUse[3] = false;
+				modeInUse[4] = true;
+				rounds = 2;
+				drawTime = 20;
+				voteTime = 10;
+				vowels = true;
+				sendInfo(player);
+				informPlayers();
+				break;
+			case 4:
+				modeInUse[0] = false;
+				modeInUse[1] = false;
+				modeInUse[2] = true;
+				modeInUse[3] = true;
+				modeInUse[4] = false;
+				rounds = 2;
+				drawTime = 30;
+				voteTime = 15;
+				vowels = false;
+				sendInfo(player);
+				informPlayers();
+				break;
+			case 5:
+				modeInUse[0] = false;
+				modeInUse[1] = true;
+				modeInUse[2] = false;
+				modeInUse[3] = false;
+				modeInUse[4] = false;
+				rounds = 2;
+				drawTime = 30;
+				voteTime = 5;
+				vowels = true;
+				sendInfo(player);
+				informPlayers();
+				break;
+			case 6:
+				modeInUse[0] = false;
+				modeInUse[1] = true;
+				modeInUse[2] = false;
+				modeInUse[3] = true;
+				modeInUse[4] = false;
+				rounds = 2;
+				drawTime = 15;
+				voteTime = 15;
+				vowels = false;
+				sendInfo(player);
+				informPlayers();
+				break;
+			case 7:
+				modeInUse[0] = false;
+				modeInUse[1] = true;
+				modeInUse[2] = false;
+				modeInUse[3] = true;
+				modeInUse[4] = true;
+				rounds = 2;
+				drawTime = 5;
+				voteTime = 20;
+				vowels = true;
+				sendInfo(player);
+				informPlayers();
+				break;
+		}
 	}
 
 	public void languageChange(Player player, Boolean isENG)
