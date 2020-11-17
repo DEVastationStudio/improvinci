@@ -327,7 +327,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 				msg.put("isChecked", false);
 				synchronized(rooms.get(player.getRoomCode()))
 				{
-					if(rooms.get(player.getRoomCode()).numActiveGamemodes()<=1) break; 
+					if(rooms.get(player.getRoomCode()).numActiveGamemodes()<=1 && !node.get("type").asText().equals("Vowels") ) break; 
 					rooms.get(player.getRoomCode()).modeConfigurer(node.get("type").asText(), false);player.WSSession().sendMessage(new TextMessage(msg.toString()));
 				}
 				rooms.get(player.getRoomCode()).informPlayers();
