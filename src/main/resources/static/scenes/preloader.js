@@ -35,7 +35,11 @@ class Preloader extends Phaser.Scene {
 			this.scene.start('Menu');
 		}, this);
 
-
+		this.load.spritesheet('TimeAnim', 'assets/interface/Tiempo.png',
+		{
+			frameWidth: 332,
+			frameHeight: 303
+		});
 		this.load.image('Menu', 'assets/backgrounds/Menu.png');
 		this.load.image('cartelImprovinci', 'assets/interface/Pancarta.png');
 		this.load.image('Gameplay', 'assets/backgrounds/Gameplay.png');

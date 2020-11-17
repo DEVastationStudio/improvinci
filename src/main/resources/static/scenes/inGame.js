@@ -33,6 +33,17 @@ class InGame extends Phaser.Scene {
         this.iconoLimitImg = this.add.image(0,0,'ModoTrazosLim_en');
         this.iconoOneImg = this.add.image(0,0,'ModoUnSoloTrazo_en');
         this.iconoGrowingImg = this.add.image(0,0,'ModoBrochaIncremental_en');
+
+        //timerText
+        this.TimeAnim = this.add.sprite(0,0, 'TimeAnim');
+		this.anims.create(
+		{
+			key: 'Clock_Anim',
+			frames: this.anims.generateFrameNumbers('TimeAnim'),
+			frameRate: 12,
+			repeat: -1
+        });
+        this.timerText = this.add.text(0 ,0, '', {fontSize: '50px', fontFamily: 'comic sans ms', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff' });
         
         //Data
         this.maxRounds = data.maxRounds;
@@ -56,6 +67,7 @@ class InGame extends Phaser.Scene {
         this.votedPlayerId = -1;
         this.selfPlayer = '';
         this.votedIndicators = [];
+        this.inVotingPhase = false;
 
         for (let i = 0; i < 3; i++) {
             for (let j = 0; j < 3; j++) {
@@ -144,7 +156,7 @@ class InGame extends Phaser.Scene {
 
         this.word = this.add.text(game.canvas.width/2 ,game.canvas.height/2, 'Waiting for other players...', {fontSize: '50px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#000000', stroke: '#000000' });
         this.gameMode = this.add.text(game.canvas.width/4 ,game.canvas.height/8, '', { fontSize: '50px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#000000', stroke: '#000000' });
-        this.timer = this.add.text(game.canvas.width/10 ,game.canvas.height/8, '', { fontSize: '50px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#000000', stroke: '#000000' });
+        //this.timerText = this.add.text(game.canvas.width/10 ,game.canvas.height/8, '', { fontSize: '50px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#000000', stroke: '#000000' });
         this.inGameWord = this.add.text(game.canvas.width/2 ,game.canvas.height/12, '', { fontSize: '50px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#000000', stroke: '#000000' });
         this.roundText = this.add.text(game.canvas.width*6/8 ,game.canvas.height/12, '0/'+this.maxRounds, { fontSize: '50px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#000000', stroke: '#000000' });
         this.strokesLeft = this.add.text(0 ,0, '', {fontSize: '30px', fontFamily: 'comic sans ms', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff' });
@@ -269,23 +281,34 @@ class InGame extends Phaser.Scene {
         }
     }
 
+    clockAnimControl(i)
+    {
+        console.log(!this.inVotingPhase +' - '+ i);
+        if(!this.inVotingPhase && i)
+        {
+            this.TimeAnim.anims.play('Clock_Anim', true);
+            this.inVotingPhase = true;
+        }
+    }
+
     criticoScaler()
     {
         if(this.roundState == 1)
         {
             this.gamemodeIcon(this.roundGamemode, game.canvas.width / 4, game.canvas.height / 8, this.sY);
+            this.TimeAnim.setAlpha(1);
+            this.timerText.setAlpha(1);
+            this.TimeAnim.anims.play('Clock_Anim', true);
+            this.inVotingPhase = false;
         }else
         {
             if(this.roundState == 2)
             {
-                /*
-                this.CriticoLejosImg.x = game.canvas.width * 1 / 8;
-                this.CriticoLejosImg.y = game.canvas.height * 6/8;
-                this.CriticoLejosImg.setScale(this.sY);
-                this.CriticoLejosImg.setAlpha(true);
-                */
+
             }else
             {
+                this.TimeAnim.setAlpha(0);
+                this.timerText.setAlpha(0);
                 this.CriticoLejosImg.x = game.canvas.width * 3/ 8;
                 this.CriticoLejosImg.y = game.canvas.height * 6/8;
                 this.CriticoLejosImg.setScale(this.sY);
@@ -325,9 +348,13 @@ class InGame extends Phaser.Scene {
 
         this.criticoScaler();
         
-        this.timer.x = game.canvas.width / 10;
-        this.timer.y = game.canvas.height / 8;
-        this.timer.setScale(this.sY);
+        this.TimeAnim.x = game.canvas.width * 3 / 40;
+        this.TimeAnim.y = game.canvas.height * 5 / 40;
+        this.TimeAnim.setScale(this.sY);
+
+        this.timerText.x = game.canvas.width * 2.5 / 40;
+        this.timerText.y = game.canvas.height * 8.7 / 40;
+        this.timerText.setScale(this.sY);
 
         this.inGameWord.x = game.canvas.width / 2;
         this.inGameWord.y = game.canvas.height / 12;
@@ -465,7 +492,7 @@ class InGame extends Phaser.Scene {
         }
         this.word.text = '';
         this.CriticoLejosImg.setAlpha(0);
-        this.timer.text = time;
+        this.timerText.text = time;
         this.maxTime = time;
         this.curRound = round;
         this.roundText.text = this.curRound+'/'+this.maxRounds;
@@ -475,7 +502,7 @@ class InGame extends Phaser.Scene {
     }
 
     updateTime(time) {
-        this.timer.text = time;
+        this.timerText.text = time;
         if(time/this.maxTime < 0.5 && this.canvas.fadeStatus === -1) this.canvas.fadeStatus = 0;
         this.updateWord(time);
         if (time === Math.floor(this.maxTime/2) && this.roundFaker && !this.canvas.hidden) {
@@ -649,6 +676,7 @@ class InGame extends Phaser.Scene {
     }
     
     updateVoteResults(msg) {
+        this.TimeAnim.anims.stopOnRepeat();
         this.denhanceImage();
         this.disableDrawings();
         let playerVotes = new Array(msg.players);
