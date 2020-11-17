@@ -23,12 +23,6 @@ class InGame extends Phaser.Scene {
         this.button_clear = this.add.image(game.canvas.width * 3 / 4, game.canvas.height / 4, 'Corona').setInteractive({cursor: 'pointer'});
         //this.fakerPeekButton.setScale(0.2, 0.2);
         this.button_back = this.add.image(0,0, 'salirBoton_en').setInteractive({cursor: 'pointer'});
-        this.button_back.on('pointerdown', function (pointer){
-            this.button_back.removeInteractive();
-            game.global.socketDir.close();
-            game.global.socketDir = undefined;
-            this.scene.start('DisconnectOverlay', {message: 'You left the game.'});
-        }, this);
 
         //Critico
         this.CriticoLejosImg = this.add.image(0,0,'CriticoLejos');
@@ -167,7 +161,30 @@ class InGame extends Phaser.Scene {
         msg2.event = 'GAME_LOADED';
         game.global.socketDir.send(JSON.stringify(msg2));
 
+        //Doble confirmacion
+        this.DobleConfirmImg = this.add.image(0,0,'DobleConfirm').setInteractive();
+        this.DobleConfirmImg.setAlpha(0);
+        this.DobleConfirmYES = this.add.image(0,0,'ConfirmarCod').setInteractive({cursor: 'pointer'});
+        this.DobleConfirmYES.setAlpha(0);
+		this.DobleConfirmNO = this.add.image(0,0,'SalirCod').setInteractive({cursor: 'pointer'});
+        this.DobleConfirmNO.setAlpha(0);
+
         this.scaler();
+
+        this.DobleConfirmYES.on('pointerdown', function (pointer){
+            game.global.socketDir.close();
+            game.global.socketDir = undefined;
+            this.scene.start('DisconnectOverlay', {message: 'You left the game.'});
+        }, this);
+
+        this.DobleConfirmNO.on('pointerdown', function (pointer){
+            this.scene.get('InGame').doubleConfirmationController(1);
+        }, this);
+
+        this.button_back.on('pointerdown', function (pointer){
+            this.scene.get('InGame').doubleConfirmationController(0);
+        }, this);
+
     }
 
     update(time, delta) {
@@ -178,6 +195,25 @@ class InGame extends Phaser.Scene {
 			this.scaler();
 		}
         this.canvas.onUpdate(delta);
+    }
+
+    doubleConfirmationController(t)
+    {
+        switch(t)
+        {
+            case 0:
+                this.DobleConfirmImg.setAlpha(1);
+                this.DobleConfirmYES.setAlpha(1);
+                this.DobleConfirmNO.setAlpha(1);
+                this.button_back.setAlpha(0);
+                break;
+            case 1:
+                this.DobleConfirmImg.setAlpha(0);
+                this.DobleConfirmYES.setAlpha(0);
+                this.DobleConfirmNO.setAlpha(0);
+                this.button_back.setAlpha(1);
+                break;
+        }
     }
 
     gamemodeIcon(type, x, y, scale)
@@ -292,6 +328,24 @@ class InGame extends Phaser.Scene {
         this.button_back.x = game.canvas.width / 4;
         this.button_back.y = game.canvas.height * 3 / 4;
         this.button_back.setScale(this.sY);
+
+        //Doble confirmacion
+        this.DobleConfirmImg.x = game.canvas.width / 2;
+        this.DobleConfirmImg.y = game.canvas.height / 2;
+        this.DobleConfirmImg.setScale(this.sY);
+
+        let kbLTCornerX = (this.DobleConfirmImg.x-(this.DobleConfirmImg.width*this.DobleConfirmImg.scaleX)/2)+0;
+        let kbLTCornerY = (this.DobleConfirmImg.y-(this.DobleConfirmImg.height*this.DobleConfirmImg.scaleY)/2)+0;
+        let columnPos = this.DobleConfirmImg.width*this.DobleConfirmImg.scaleX/20;
+        let rowPos = this.DobleConfirmImg.height*this.DobleConfirmImg.scaleY/20;
+
+        this.DobleConfirmYES.x = kbLTCornerX+columnPos*5;
+        this.DobleConfirmYES.y = kbLTCornerY+rowPos*15;
+        this.DobleConfirmYES.setScale(this.sY);
+
+        this.DobleConfirmNO.x = kbLTCornerX+columnPos*15;
+        this.DobleConfirmNO.y = kbLTCornerY+rowPos*15;
+        this.DobleConfirmNO.setScale(this.sY);
 
         //Background
         this.bg.x = game.canvas.width / 2;

@@ -66,10 +66,10 @@ public class Room {
 	{
 		this.maxPlayers = numMaxPlayers;
 		this.roomCode = rCode;
-		rounds = 9;
+		rounds = 5;
 		curRound = 0;
-		drawTime = 30;
-		voteTime = 30;
+		drawTime = 15;
+		voteTime = 20;
 		this.rooms = rooms;
 		vowels = false;
 		numActGamemodes = 5;
@@ -136,8 +136,8 @@ public class Room {
 		modeInUse[3] = false;
 		modeInUse[4] = false;
 		rounds = 5;
-		drawTime = 45;
-		voteTime = 30;
+		drawTime = 20;
+		voteTime = 20;
 		vowels = true;
 		sendInfo(player);
 		informPlayers();
@@ -151,7 +151,7 @@ public class Room {
 		modeInUse[3] = true;
 		modeInUse[4] = true;
 		rounds = 9;
-		drawTime = 15;
+		drawTime = 10;
 		voteTime = 15;
 		vowels = false;
 		sendInfo(player);
@@ -253,11 +253,11 @@ public class Room {
 
 	public void setTimeRound(Player player, Boolean isPlus)
 	{
-		if(drawTime<90 && isPlus)
-			drawTime+=15;
+		if(drawTime<30 && isPlus)
+			drawTime+=5;
 		else
-			if(drawTime>15 && !isPlus)
-				drawTime-=15;
+			if(drawTime>5 && !isPlus)
+				drawTime-=5;
 		try{
 			ObjectNode msg = mapper.createObjectNode();
 			msg.put("event", "PLUSCONFIG_RETURN");
@@ -270,11 +270,11 @@ public class Room {
 
 	public void setTimeVote(Player player, Boolean isPlus)
 	{
-		if(voteTime<90 && isPlus)
-			voteTime+=15;
+		if(voteTime<40 && isPlus)
+			voteTime+=5;
 		else
-			if(voteTime>15 && !isPlus)
-				voteTime-=15;
+			if(voteTime>10 && !isPlus)
+				voteTime-=5;
 		try{
 			ObjectNode msg = mapper.createObjectNode();
 			msg.put("event", "PLUSCONFIG_RETURN");
