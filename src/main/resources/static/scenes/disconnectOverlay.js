@@ -6,16 +6,43 @@ class DisconnectOverlay extends Phaser.Scene {
     }
 
     create(data) {
+        //Scale factors
+    	this.sX = game.canvas.width/game.global.WIDTH;
+        this.sY = game.canvas.height/game.global.HEIGHT;
+
+        //backgrounds
+        this.bg = this.add.image(0,0,'Desco_en').setInteractive();
+
         this.textInfo = this.add.text(400, 150, data.message, {fontSize: '30px', fontFamily: 'Bookman', color: '#ff6600', stroke: '#000000', strokeThickness: 2, align: 'center'}).setOrigin(0.5, 0.5);
-        this.disconnectButton = this.add.sprite(0,0,'');
+        this.disconnectButton = this.add.sprite(0,0,'salirBoton_en');
 
         this.disconnectButton.setInteractive({cursor: 'pointer'});
         this.disconnectButton.on('pointerdown', function (event) {
             this.scene.start('Menu');
         }, this);
+
+        this.scaler();
     }
     
     update() { 
+        if(this.sX != game.canvas.width/game.global.WIDTH || this.sY != game.canvas.height/game.global.HEIGHT)
+		{
+			this.sX = game.canvas.width/game.global.WIDTH;
+			this.sY = game.canvas.height/game.global.HEIGHT;
+			this.scaler();
+		}
+    }
 
+    scaler()
+    {
+        //Buttons
+        this.disconnectButton.x = game.canvas.width * 3/ 10;
+		this.disconnectButton.y = game.canvas.height * 8 / 10;
+		this.disconnectButton.setScale(this.sY);
+        
+        //Background
+		this.bg.x = game.canvas.width/2;
+		this.bg.y = game.canvas.height/2;
+		this.bg.setScale(this.sY);
     }
 }
