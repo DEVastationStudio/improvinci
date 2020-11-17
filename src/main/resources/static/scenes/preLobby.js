@@ -143,7 +143,8 @@ class PreLobby extends Phaser.Scene {
                     this.scene.get('Lobby').showLobbyInfo(msg.default, msg.blind, msg.limit, msg.one, msg.growing, msg.vowels, msg.isEnglish, msg.numRounds, msg.roundTime, msg.voteTime, msg.numActiveGamemodes);
                     break;
                 case 'PLAYER_LEFT':
-                    this.scene.get('InGame').playerLeft(msg.image);
+                    if (this.scene.get('InGame').scene.isActive())
+                        this.scene.get('InGame').playerLeft(msg.image);
                 break;
                 default :
                     break;

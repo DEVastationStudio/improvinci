@@ -59,6 +59,7 @@ public class Room {
 	private boolean gameStarted;
 	private boolean vowels;
 	private int numActGamemodes = 0;
+	private int wrongVotes = 0;
 
 	
 	public Room(int numMaxPlayers, String rCode, ConcurrentHashMap<String, Room> rooms) 
@@ -306,6 +307,7 @@ public class Room {
 					for (Player p : players) {
 						p.clearVotes();
 					} 
+					wrongVotes = 0;
 
 					for (Player p : players) {
 						synchronized(p.WSSession()) {
@@ -524,6 +526,10 @@ public class Room {
 						msg.put("event", "ROUND_VOTES");
 						msg.put("players",players.size());
 						for (int i = 0; i < players.size(); i++) {
+							if (players.get(i).getPlayerId().equals(fakerId)) {
+								players.get(i).addScore(wrongVotes);
+								if (wrongVotes == 0) players.get(i).addScore(-1);
+							}
 							msg.put("id_"+i,players.get(i).getPlayerId());
 							msg.put("votes_"+i,players.get(i).getVotes());
 						}
@@ -557,7 +563,7 @@ public class Room {
 		msg.put("event", "POINTS");
 		msg.put("roomCode",roomCode);
 		LinkedList<Player> sortedPlayers = (LinkedList<Player>)players.clone();
-		Collections.sort(sortedPlayers, (a, b) -> Integer.compare(a.getScore(), b.getScore()));
+		Collections.sort(sortedPlayers, (b, a) -> Integer.compare(a.getScore(), b.getScore()));
 		ArrayNode arrNode = mapper.valueToTree(sortedPlayers);
 		msg.putArray("playerArray").addAll(arrNode);
 		for (Player p : players) {
@@ -618,9 +624,10 @@ public class Room {
 					if (player.getPlayerId().equals(id)) {
 						player.addVote();
 						if (id.equals(fakerId)) {
-							votingPlayer.addScore(1);
+							votingPlayer.addScore(2);
 						} else {
-							player.addScore(1);
+							player.addScore(-1);
+							wrongVotes++;
 						}
 						break;
 					}
