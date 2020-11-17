@@ -68,6 +68,7 @@ class InGame extends Phaser.Scene {
         this.selfPlayer = '';
         this.votedIndicators = [];
         this.inVotingPhase = false;
+        this.pictures = [];
 
         for (let i = 0; i < 3; i++) {
             for (let j = 0; j < 3; j++) {
@@ -81,6 +82,9 @@ class InGame extends Phaser.Scene {
                 this.votedIndicators[i+j*3] = this.add.image(this.drawings[i+j*3].x + this.drawings[i+j*3].displayWidth/2, this.drawings[i+j*3].y - this.drawings[i+j*3].displayHeight/2,'Corona'); 
                 this.votedIndicators[i+j*3].setScale(this.sY);
                 this.votedIndicators[i+j*3].setAlpha(0);
+                this.pictures[i+j*3] = this.add.image(this.drawings[i+j*3].x, this.drawings[i+j*3].y, '');
+                this.pictures[i+j*3].setScale(this.drawings[i+j*3].scaleX*2, this.drawings[i+j*3].scaleY*2);
+                this.pictures[i+j*3].setAlpha(0);
 
                 this.drawings[i+j*3].on('pointerdown', function (pointer){
                     this.scene.get('InGame').enhanceImage(i+j*3);
@@ -406,6 +410,10 @@ class InGame extends Phaser.Scene {
                 this.votedIndicators[i+j*3].x = this.drawings[i+j*3].x + this.drawings[i+j*3].displayWidth/2;
                 this.votedIndicators[i+j*3].y = this.drawings[i+j*3].y - this.drawings[i+j*3].displayHeight/2;
                 this.votedIndicators[i+j*3].setScale(this.sY);
+                
+                this.pictures[i+j*3].x = this.drawings[i+j*3].x;
+                this.pictures[i+j*3].y = this.drawings[i+j*3].y;
+                this.pictures[i+j*3].setScale(this.drawings[i+j*3].scaleX*2, this.drawings[i+j*3].scaleY*2);
             }
         }
 
@@ -627,6 +635,7 @@ class InGame extends Phaser.Scene {
                     this.drawings[i+j*3].setTexture('');
                     this.drawings[i+j*3].removeInteractive();
                     this.drawings[i+j*3].setAlpha(0);
+                    this.pictures[i+j*3].setAlpha(0);
                     this.frames[i+j*3].setAlpha(0);
                     this.votes[i+j*3].text = '';
                     this.votedIndicators[i+j*3].setAlpha(0);
@@ -721,6 +730,23 @@ class InGame extends Phaser.Scene {
         
         this.dcFadeTween.restart();
         this.dcFadeTween.play();
+    }
+
+    showPlayerScores(playerArray) {
+        for (let i = 0; i < 3; i++) {
+            for (let j = 0; j < 3; j++) {
+                if (this.players[i+j*3] !== undefined) {
+                    //generate profile pic textures and replace them
+                    this.pictures[i+j*3].setTexture(this.players[i+j*3].playerId); 
+                    this.drawings[i+j*3].setAlpha(0);
+                    this.pictures[i+j*3].setAlpha(1);
+                    //replace text with score stuff
+                    let diff = playerArray[i+j*3].score - playerArray[i+j*3].oldScore;
+                    this.votes[i+j*3].text = playerArray[i+j*3].score + ' (' + ((diff < 0)?('-'):('+')) + Math.abs(diff) + ')';
+                    
+                }
+            }
+        }
     }
 
     writeRoomCode(roomCode)

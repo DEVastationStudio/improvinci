@@ -151,6 +151,11 @@ class PreLobby extends Phaser.Scene {
                     if (this.scene.get('InGame').scene.isActive())
                         this.scene.get('InGame').playerLeft(msg.image);
                 break;
+                case 'ROUND_SCORES':
+                    if (this.scene.get('InGame').scene.isActive()) {
+                        this.scene.get('InGame').showPlayerScores(msg.playerArray);
+                    }
+                    break;
                 default :
                     break;
             }

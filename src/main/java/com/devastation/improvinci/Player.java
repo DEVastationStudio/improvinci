@@ -14,6 +14,7 @@ public class Player {
 	//private boolean faker;
 	private int votes;
 	private int score;
+	private int oldScore;
 	private boolean inLobby;
 	
 	public Player(String playerId, WebSocketSession session) {
@@ -21,6 +22,8 @@ public class Player {
 		this.session= session;
 		this.inRoom = false;
 		this.roomCode = "X";
+		this.score = 0;
+		this.oldScore = 0;
 	}
 
 	public String getPlayerId() {
@@ -69,6 +72,10 @@ public class Player {
 		inGame = b;
 	}
 
+	public int getOldScore() {
+		return oldScore;
+	}
+
 	/*public boolean isFaker() {
 		return faker;
 	}*/
@@ -80,6 +87,7 @@ public class Player {
 
 	public void clearVotes() {
 		votes = 0;
+		oldScore = score;
 	}
 
 	public int getVotes() {

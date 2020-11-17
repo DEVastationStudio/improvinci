@@ -27,7 +27,8 @@ class improCanvas {
             {
                 this.scene.canvas.maxTrazos--; 
                 this.scene.canvas.inPainting = false;
-                this.scene.scene.get('InGame').limitPaintingStrokes( this.scene.canvas.maxTrazos);
+                if (this.scene.scene.get('InGame').scene.isActive())
+                    this.scene.scene.get('InGame').limitPaintingStrokes( this.scene.canvas.maxTrazos);
             }});
 
         this.modes = {
@@ -226,7 +227,8 @@ class improCanvas {
             this.maxTrazos = 10;
         if(this.pointer_mode === this.modes.ONE)
             this.maxTrazos = 1;
-        this.curScene.scene.get('InGame').limitPaintingStrokes(this.maxTrazos);
+        if (this.curScene.scene.get('InGame').scene.isActive())
+            this.curScene.scene.get('InGame').limitPaintingStrokes(this.maxTrazos);
     }
 
     static makeTexture(name, img, scene, size) {

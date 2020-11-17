@@ -26,11 +26,11 @@ import org.springframework.web.socket.TextMessage;
 
 public class Room {
 	
-	private enum State { JOINING, WORD, DRAWING, VOTING, RESULTS, ENDING }
+	private enum State { JOINING, WORD, DRAWING, VOTING, RESULTS, SCORES, ENDING }
 
 	private final static int TICK_DELAY = 1000;
 	private final static int WORD_TIME = 3;
-	private final static int RESULTS_TIME = 6;
+	private final static int RESULTS_TIME = 4;
 	private ScheduledExecutorService scheduler;
 	private State gameState;
 	private ObjectMapper mapper = new ObjectMapper();
@@ -631,6 +631,23 @@ public class Room {
 					}
 				break;
 				case RESULTS:
+					if (gameTimer > 0) {
+						gameTimer--;
+					} else {
+						msg.put("event", "ROUND_SCORES");
+						ArrayNode arrNode = mapper.valueToTree(getPlayers());
+						msg.putArray("playerArray").addAll(arrNode);
+						
+						for (Player p : players) {
+							synchronized(p.WSSession()) {
+								p.WSSession().sendMessage(new TextMessage(msg.toString()));
+							}
+						} 
+						gameState = State.SCORES;
+						gameTimer = RESULTS_TIME;
+					}
+				break;
+				case SCORES:
 					if (gameTimer > 0) {
 						gameTimer--;
 					} else {
