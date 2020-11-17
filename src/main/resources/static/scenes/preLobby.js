@@ -100,12 +100,16 @@ class PreLobby extends Phaser.Scene {
                     break;
                 case 'TIME_UPDATE':
                     this.scene.get('InGame').updateTime(msg.time);
+                    if(msg.votingPhase)
+                        this.scene.get('InGame').clockAnimControl(true);
                     break;
                 case 'ROUND_OVER':
                     this.scene.get('InGame').roundOver();
                     break;
                 case 'ROUND_VOTES':
                     this.scene.get('InGame').updateVoteResults(msg);
+                    if(msg.stopAnim)
+                        this.scene.get('InGame').TimeAnim.anims.stopOnRepeat();
                     break;
                 case 'POINTS':
                     if (this.scene.get('InGame').scene.isActive()) {

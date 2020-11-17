@@ -478,6 +478,7 @@ public class Room {
 						gameTimer--;
 						msg.put("event", "TIME_UPDATE");
 						msg.put("time", gameTimer);
+						msg.put("votingPhase", false);
 						for (Player p : players) {
 							synchronized(p.WSSession()) {
 								p.WSSession().sendMessage(new TextMessage(msg.toString()));
@@ -516,6 +517,7 @@ public class Room {
 						gameTimer--;
 						msg.put("event", "TIME_UPDATE");
 						msg.put("time", gameTimer);
+						msg.put("votingPhase", true);
 						for (Player p : players) {
 							synchronized(p.WSSession()) {
 								p.WSSession().sendMessage(new TextMessage(msg.toString()));
@@ -533,6 +535,7 @@ public class Room {
 							msg.put("id_"+i,players.get(i).getPlayerId());
 							msg.put("votes_"+i,players.get(i).getVotes());
 						}
+						msg.put("stopAnim", true);
 						msg.put("faker", fakerId);
 						for (Player p : players) {
 							synchronized(p.WSSession()) {
