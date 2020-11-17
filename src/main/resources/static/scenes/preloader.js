@@ -88,27 +88,27 @@ class Preloader extends Phaser.Scene {
 		this.load.image('Letra_P', 'assets/backgrounds/letras/P.png');
 
 		//menu Configuración
-		this.load.image('Daily', 'assets/backgrounds/Configuracion/Daily.png');
-		this.load.image('Blind', 'assets/backgrounds/Configuracion/Blind.png');
+		this.load.image('Daily', 'assets/backgrounds/Configuracion/Daily_en.png');
+		this.load.image('Blind', 'assets/backgrounds/Configuracion/Blind_en.png');
 		this.load.image('Default', 'assets/backgrounds/Configuracion/Default.png');
-		this.load.image('Dificil', 'assets/backgrounds/Configuracion/Dificil.png');
-		this.load.image('Facil', 'assets/backgrounds/Configuracion/Facil.png');
+		this.load.image('Dificil', 'assets/backgrounds/Configuracion/Dificil_en.png');
+		this.load.image('Facil', 'assets/backgrounds/Configuracion/Facil_en.png');
 		this.load.image('Growing', 'assets/backgrounds/Configuracion/Growing.png');
-		this.load.image('Limit', 'assets/backgrounds/Configuracion/Limit.png');
-		this.load.image('Modos', 'assets/backgrounds/Configuracion/Modos.png');
-		this.load.image('NumRondas', 'assets/backgrounds/Configuracion/NumRondas.png');
-		this.load.image('One', 'assets/backgrounds/Configuracion/One.png');
-		this.load.image('Ronda', 'assets/backgrounds/Configuracion/Ronda.png');
-		this.load.image('Tiempos', 'assets/backgrounds/Configuracion/Tiempos.png');
-		this.load.image('Votacion', 'assets/backgrounds/Configuracion/Votacion.png');
+		this.load.image('Limit', 'assets/backgrounds/Configuracion/Limit_en.png');
+		this.load.image('Modos', 'assets/backgrounds/Configuracion/Modos_en.png');
+		this.load.image('NumRondas', 'assets/backgrounds/Configuracion/NumRondas_en.png');
+		this.load.image('One', 'assets/backgrounds/Configuracion/One_en.png');
+		this.load.image('Ronda', 'assets/backgrounds/Configuracion/Ronda_en.png');
+		this.load.image('Tiempos', 'assets/backgrounds/Configuracion/Tiempos_en.png');
+		this.load.image('Votacion', 'assets/backgrounds/Configuracion/Votacion_en.png');
 		this.load.image('Mas', 'assets/backgrounds/Configuracion/Mas.png');
 		this.load.image('Menos', 'assets/backgrounds/Configuracion/Menos.png');
 		this.load.image('TickNoCheck', 'assets/backgrounds/Configuracion/TickNoCheck.png');
 		this.load.image('TickCheck', 'assets/backgrounds/Configuracion/TickCheck.png');
 		this.load.image('ukFlag', 'assets/backgrounds/Configuracion/ukFlag.png');
 		this.load.image('spainFlag', 'assets/backgrounds/Configuracion/spainFlag.png');
-		this.load.image('language', 'assets/backgrounds/Configuracion/Language.png');
-		this.load.image('vowels', 'assets/backgrounds/Configuracion/vowels.png');
+		this.load.image('language', 'assets/backgrounds/Configuracion/Language_en.png');
+		this.load.image('vowels', 'assets/backgrounds/Configuracion/vowels_en.png');
 
 		//Developers
 		this.load.image('RetratoBelen', 'assets/retratos_creditos/RetratoBelenCubismoSinLetra.png');

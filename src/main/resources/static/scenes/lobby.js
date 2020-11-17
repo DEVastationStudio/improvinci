@@ -35,7 +35,7 @@ class Lobby extends Phaser.Scene {
             this.button_Options.removeInteractive();
             game.global.socketDir.close();
             game.global.socketDir = undefined;
-            this.scene.start('DisconnectOverlay', {message: 'You left the lobby.',toPrelobby: true});
+            this.scene.start('DisconnectOverlay', {message: 'You left the lobby.', toPrelobby: true});
         }, this);
         
 		this.button_start.on('pointerdown', function (pointer){
