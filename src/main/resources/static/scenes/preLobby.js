@@ -216,7 +216,7 @@ class PreLobby extends Phaser.Scene {
         //buttons
         this.button_create = this.add.image(0,0, 'Ready_es').setInteractive({cursor: 'pointer'});
         this.codeButton = this.add.image(0,0, 'Ready_host_es').setInteractive({cursor: 'pointer'});
-        this.button_back = this.add.image(0,0, '').setInteractive({cursor: 'pointer'});
+        this.button_back = this.add.image(0,0, 'salirBoton_en').setInteractive({cursor: 'pointer'});
 
         //keyboard
         this.keyBoardBg = this.add.image(0,0,'Gameplay').setInteractive();

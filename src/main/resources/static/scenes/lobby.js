@@ -19,7 +19,7 @@ class Lobby extends Phaser.Scene {
         //Buttons
         this.button_start = this.add.image(0,0, 'Ready_host_es');
         this.button_start.setAlpha(0.5);
-        this.button_back = this.add.image(0,0, '').setInteractive({cursor: 'pointer'});
+        this.button_back = this.add.image(0,0, 'salirBoton_en').setInteractive({cursor: 'pointer'});
         this.button_Options = this.add.image(0,0, 'Ready_host_es');
         this.button_Options.setAlpha(0);
         

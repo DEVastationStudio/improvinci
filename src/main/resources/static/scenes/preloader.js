@@ -31,8 +31,11 @@ class Preloader extends Phaser.Scene {
 		}, this);
 
 
-    	this.load.image('Menu', 'assets/backgrounds/Menu.png');
+		this.load.image('Menu', 'assets/backgrounds/Menu.png');
+		this.load.image('cartelImprovinci', 'assets/interface/Pancarta.png');
 		this.load.image('Gameplay', 'assets/backgrounds/Gameplay.png');
+		this.load.image('credsFondoO', 'assets/backgrounds/credsFondoO.png');
+		this.load.image('finFondoO', 'assets/backgrounds/finFondoO.png');
     	this.load.image('Caballete_gameplay', 'assets/interface/Caballete_gameplay.png');
     	this.load.image('Ready_es', 'assets/interface/Ready_es.png');
     	this.load.image('Ready_en', 'assets/interface/Ready_en.png');
@@ -46,13 +49,8 @@ class Preloader extends Phaser.Scene {
     	this.load.image('Marco3', 'assets/interface/Marco3.png');
 		this.load.image('Marco4', 'assets/interface/Marco4.png');
 		this.load.image('CriticoLejos', 'assets/character/critico_lejos.png');
-
-		//GameMode Icons
-		//this.load.image('iconoDefault', 'assets/gamemodes/.png');
-		this.load.image('iconoBlind', 'assets/gamemodes/iconoBlind.png');
-		this.load.image('iconoLimit', 'assets/gamemodes/iconoLimit.png');
-		this.load.image('iconoOne', 'assets/gamemodes/iconoOne.png');
-		this.load.image('iconoGrowing', 'assets/gamemodes/iconoGrowing.png');
+		this.load.image('salirBoton_es', 'assets/interface/salirBoton_es.png');
+		this.load.image('salirBoton_en', 'assets/interface/salirBoton_en.png');
 		
 		//keyboard
 		this.load.image('ConfirmarCod', 'assets/backgrounds/Confirmar.png');
@@ -98,6 +96,31 @@ class Preloader extends Phaser.Scene {
 		this.load.image('spainFlag', 'assets/backgrounds/Configuracion/spainFlag.png');
 		this.load.image('language', 'assets/backgrounds/Configuracion/language.png');
 		this.load.image('vowels', 'assets/backgrounds/Configuracion/vowels.png');
+
+		//Developers
+		this.load.image('RetratoBelen', 'assets/retratos_creditos/RetratoBelenCubismoSinLetra.png');
+		this.load.image('RetratoImanol', 'assets/retratos_creditos/RetratoImanolFovismoSinLetra.png');
+		this.load.image('RetratoMaria', 'assets/retratos_creditos/RetratoMariaAsiaticoSinLetra.png');
+		this.load.image('RetratoPablo', 'assets/retratos_creditos/RetratoPabloMedievoSinLetra.png');
+		this.load.image('RetratoTomas', 'assets/retratos_creditos/RetratoTomasEgipcioSinLetra.png');
+
+		//Spanish
+		//---Iconos
+		this.load.image('Blind_es', 'assets/gamemodes/ModoACiegas_es.png');
+		this.load.image('ModoBrochaIncremental', 'assets/gamemodes/ModoBrochaIncremental_es.png');
+		this.load.image('ModoNormal_es', 'assets/gamemodes/ModoNormal_es.png');
+		this.load.image('ModoTrazosLim_es', 'assets/gamemodes/ModoTrazosLim_es.png');
+		this.load.image('ModoUnSoloTrazo_es', 'assets/gamemodes/ModoUnSoloTrazo_es.png');
+		
+		//English
+		//---Icons
+		this.load.image('Blind_en', 'assets/gamemodes/ModoACiegas_en.png');
+		this.load.image('ModoBrochaIncremental_en', 'assets/gamemodes/ModoBrochaIncremental_en.png');
+		this.load.image('ModoNormal_en', 'assets/gamemodes/ModoNormal_en.png');
+		this.load.image('ModoTrazosLim_en', 'assets/gamemodes/ModoTrazosLim_en.png');
+		this.load.image('ModoUnSoloTrazo_en', 'assets/gamemodes/ModoUnSoloTrazo_en.png');
+
+
     }
 
     create() {

@@ -22,7 +22,7 @@ class InGame extends Phaser.Scene {
         this.fakerPeekButton.setAlpha(0);
         this.button_clear = this.add.image(game.canvas.width * 3 / 4, game.canvas.height / 4, 'Corona').setInteractive({cursor: 'pointer'});
         //this.fakerPeekButton.setScale(0.2, 0.2);
-        this.button_back = this.add.image(0,0, '').setInteractive({cursor: 'pointer'});
+        this.button_back = this.add.image(0,0, 'salirBoton_en').setInteractive({cursor: 'pointer'});
         this.button_back.on('pointerdown', function (pointer){
             this.button_back.removeInteractive();
             game.global.socketDir.close();
@@ -34,11 +34,11 @@ class InGame extends Phaser.Scene {
         this.CriticoLejosImg = this.add.image(0,0,'CriticoLejos');
 
         //Gamemodes
-        this.iconoDefaultImg = this.add.image(0,0,'iconoDefault');
-        this.iconoBlindImg = this.add.image(0,0,'iconoBlind');
-        this.iconoLimitImg = this.add.image(0,0,'iconoLimit');
-        this.iconoOneImg = this.add.image(0,0,'iconoOne');
-        this.iconoGrowingImg = this.add.image(0,0,'iconoGrowing');
+        this.iconoDefaultImg = this.add.image(0,0,'ModoNormal_en');
+        this.iconoBlindImg = this.add.image(0,0,'ModoACiegas_en');
+        this.iconoLimitImg = this.add.image(0,0,'ModoTrazosLim_en');
+        this.iconoOneImg = this.add.image(0,0,'ModoUnSoloTrazo_en');
+        this.iconoGrowingImg = this.add.image(0,0,'ModoBrochaIncremental_en');
         
         //Data
         this.maxRounds = data.maxRounds;
