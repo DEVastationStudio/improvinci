@@ -51,6 +51,8 @@ class Preloader extends Phaser.Scene {
 		this.load.image('CriticoLejos', 'assets/character/critico_lejos.png');
 		this.load.image('salirBoton_es', 'assets/interface/salirBoton_es.png');
 		this.load.image('salirBoton_en', 'assets/interface/salirBoton_en.png');
+		this.load.image('Desco_en', 'assets/interface/Desco_en.png');
+		this.load.image('Desco_es', 'assets/interface/Desco_es.png');
 		
 		//keyboard
 		this.load.image('ConfirmarCod', 'assets/backgrounds/Confirmar.png');
