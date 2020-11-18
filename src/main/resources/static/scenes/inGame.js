@@ -69,6 +69,7 @@ class InGame extends Phaser.Scene {
         this.votedIndicators = [];
         this.inVotingPhase = false;
         this.pictures = [];
+        this.crowns = [];
 
         for (let i = 0; i < 3; i++) {
             for (let j = 0; j < 3; j++) {
@@ -78,13 +79,17 @@ class InGame extends Phaser.Scene {
                 this.frames[i+j*3] = this.add.image(game.canvas.width/2 + ((0.3*game.canvas.height)*(i-1)), game.canvas.height/2 + ((0.3*game.canvas.height)*(j-1)), this.frameImages[Math.floor(Math.random()*this.frameImages.length)]); 
                 this.frames[i+j*3].setScale(game.canvas.height/1177.6,game.canvas.height/1177.6);
                 this.frames[i+j*3].setAlpha(0);
+                this.pictures[i+j*3] = this.add.image(this.drawings[i+j*3].x, this.drawings[i+j*3].y, '');
+                this.pictures[i+j*3].setScale(this.drawings[i+j*3].scaleX*2, this.drawings[i+j*3].scaleY*2);
+                this.pictures[i+j*3].setAlpha(0);
                 this.votes[i+j*3] = this.add.text(game.canvas.width/2 + ((0.3*game.canvas.height)*(i-1)), game.canvas.height/2 + ((0.3*game.canvas.height)*(j-1)) + (0.15*game.canvas.height), '', { fontSize: '30px', fontFamily: 'comic sans ms', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff', align: 'center'}).setOrigin(0.5, 0.5);
                 this.votedIndicators[i+j*3] = this.add.image(this.drawings[i+j*3].x + this.drawings[i+j*3].displayWidth/2, this.drawings[i+j*3].y - this.drawings[i+j*3].displayHeight/2,'Corona'); 
                 this.votedIndicators[i+j*3].setScale(this.sY);
                 this.votedIndicators[i+j*3].setAlpha(0);
-                this.pictures[i+j*3] = this.add.image(this.drawings[i+j*3].x, this.drawings[i+j*3].y, '');
-                this.pictures[i+j*3].setScale(this.drawings[i+j*3].scaleX*2, this.drawings[i+j*3].scaleY*2);
-                this.pictures[i+j*3].setAlpha(0);
+
+                this.crowns[i+j*3] = this.add.image(this.frames[i+j*3].x - this.frames[i+j*3].displayWidth/2, this.frames[i+j*3].y - this.frames[i+j*3].displayHeight/2,'Corona'); 
+                this.crowns[i+j*3].setScale(this.sY/4);
+                this.crowns[i+j*3].setAlpha(0);
 
                 this.drawings[i+j*3].on('pointerdown', function (pointer){
                     this.scene.get('InGame').enhanceImage(i+j*3);
@@ -417,6 +422,10 @@ class InGame extends Phaser.Scene {
                 this.pictures[i+j*3].x = this.drawings[i+j*3].x;
                 this.pictures[i+j*3].y = this.drawings[i+j*3].y;
                 this.pictures[i+j*3].setScale(this.drawings[i+j*3].scaleX*2, this.drawings[i+j*3].scaleY*2);
+
+                this.crowns[i+j*3].x = this.frames[i+j*3].x - this.frames[i+j*3].displayWidth/2; 
+                this.crowns[i+j*3].y =this.frames[i+j*3].y - this.frames[i+j*3].displayHeight/2; 
+                this.crowns[i+j*3].setScale(this.sY/3);
             }
         }
 
@@ -639,6 +648,7 @@ class InGame extends Phaser.Scene {
                     this.drawings[i+j*3].removeInteractive();
                     this.drawings[i+j*3].setAlpha(0);
                     this.pictures[i+j*3].setAlpha(0);
+                    this.crowns[i+j*3].setAlpha(0);
                     this.frames[i+j*3].setAlpha(0);
                     this.votes[i+j*3].text = '';
                     this.votedIndicators[i+j*3].setAlpha(0);
@@ -736,6 +746,10 @@ class InGame extends Phaser.Scene {
     }
 
     showPlayerScores(playerArray) {
+        let topScore = 0;
+        for (let p in playerArray) {
+            if (playerArray[p].score > topScore) topScore = playerArray[p].score;
+        }
         for (let i = 0; i < 3; i++) {
             for (let j = 0; j < 3; j++) {
                 if (this.players[i+j*3] !== undefined && playerArray[i+j*3] !== undefined) {
@@ -746,6 +760,10 @@ class InGame extends Phaser.Scene {
                     //replace text with score stuff
                     let diff = playerArray[i+j*3].score - playerArray[i+j*3].oldScore;
                     this.votes[i+j*3].text = playerArray[i+j*3].score + ' (' + ((diff < 0)?('-'):('+')) + Math.abs(diff) + ')';
+
+                    if (playerArray[i+j*3].score === topScore) {
+                        this.crowns[i+j*3].setAlpha(1);
+                    }
                     
                 }
             }

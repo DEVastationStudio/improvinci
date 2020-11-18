@@ -618,6 +618,7 @@ class PreLobby extends Phaser.Scene {
     }
 
     showConnectingInterface() {
+        this.scene.get('PreLobby').scene.codeFocus = false;
         //Show popup
         this.popupBg.setAlpha(1);
         this.bg.removeInteractive();
