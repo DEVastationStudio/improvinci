@@ -509,8 +509,10 @@ public class Room {
 		}
 		synchronized(this) {
 			for (Player p : players) {
-				if (!leader.equals(p))
+				if (!leader.equals(p)) {
 					p.setInLobby(false);
+					p.setInGame(false);
+				}
 			}
 		}
 		gameStarted = false;
