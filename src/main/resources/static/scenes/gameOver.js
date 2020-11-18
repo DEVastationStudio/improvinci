@@ -144,32 +144,32 @@ class GameOver extends Phaser.Scene {
         //Scores
         this.winnerDrawing.x = game.canvas.width*1/4;
         this.winnerDrawing.y = game.canvas.height*7/16;
-        this.winnerDrawing.setScale(game.canvas.height/230.4,game.canvas.height/230.4);
+        this.winnerDrawing.setScale(0.75*game.canvas.height/230.4);
         
         this.winnerFrame.x = game.canvas.width*1/4; 
         this.winnerFrame.y = game.canvas.height*7/16; 
-        this.winnerFrame.setScale(game.canvas.height/460.8,game.canvas.height/460.8);
+        this.winnerFrame.setScale(0.75*game.canvas.height/460.8);
 
         this.crown.x = this.winnerFrame.x - this.winnerFrame.displayWidth/2; 
         this.crown.y = this.winnerFrame.y - this.winnerFrame.displayHeight/2; 
-        this.crown.setScale(this.sY/2);
+        this.crown.setScale(this.sY/3);
 
         this.winnerScore.x = game.canvas.width*1/4;
         this.winnerScore.y = game.canvas.height*7/16 + this.winnerFrame.displayHeight/2;
-        this.winnerScore.setScale(this.sY);
+        this.winnerScore.setScale(this.sY*0.75);
 
         for (let i = 0; i < 4; i++) {
             for (let j = 0; j < 2; j++) {
                 if (this.drawings[i+j*4] === undefined) continue;
-                this.drawings[i+j*4].x = game.canvas.width*11/16 + ((0.2*game.canvas.height)*(i-1.5)); 
+                this.drawings[i+j*4].x = game.canvas.width*12/16 + ((0.2*game.canvas.height)*(i-1.5)); 
                 this.drawings[i+j*4].y = game.canvas.height*5/16 + ((0.2*game.canvas.height)*(j-0.5)); 
                 this.drawings[i+j*4].setScale(game.canvas.height/1177.6,game.canvas.height/1177.6);
                 
-                this.frames[i+j*4].x = game.canvas.width*11/16 + ((0.2*game.canvas.height)*(i-1.5)); 
+                this.frames[i+j*4].x = game.canvas.width*12/16 + ((0.2*game.canvas.height)*(i-1.5)); 
                 this.frames[i+j*4].y = game.canvas.height*5/16 + ((0.2*game.canvas.height)*(j-0.5)); 
                 this.frames[i+j*4].setScale(game.canvas.height/2355.2,game.canvas.height/2355.2);
 
-                this.scores[i+j*4].x = game.canvas.width*11/16 + ((0.2*game.canvas.height)*(i-1.5));
+                this.scores[i+j*4].x = game.canvas.width*12/16 + ((0.2*game.canvas.height)*(i-1.5));
                 this.scores[i+j*4].y = game.canvas.height*5/16 + ((0.2*game.canvas.height)*(j-0.5)) + (0.1*game.canvas.height);
                 this.scores[i+j*4].setScale(this.sY);
 

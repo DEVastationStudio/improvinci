@@ -161,7 +161,9 @@ class InGame extends Phaser.Scene {
         this.randomize = true;
         this.maxTrazos = -1;
         this.canvas = new improCanvas(this, 256);
+        this.frame = this.add.image(0, 0,'Marco1'); 
         this.canvas.hideCanvas();
+        this.frame.setAlpha(0);
 
         this.word = this.add.text(game.canvas.width/2 ,game.canvas.height/2, 'Waiting for other players...', {fontSize: '40px', fontFamily: 'comic sans ms', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff'});
         this.gameMode = this.add.text(game.canvas.width/4 ,game.canvas.height/8, '', { fontSize: '40px', fontFamily: 'comic sans ms', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff'});
@@ -450,6 +452,10 @@ class InGame extends Phaser.Scene {
         this.dcText.x = this.dcFrame.x + this.dcFrame.displayWidth/2;
         this.dcText.y = game.canvas.height*7/8;
         this.dcText.setScale(this.sY);
+
+        this.frame.x = game.canvas.width/2;
+        this.frame.y = game.canvas.height/2;
+        this.frame.setScale(1);
     }
 
     enhanceImage(id) {
@@ -530,6 +536,7 @@ class InGame extends Phaser.Scene {
         this.canvas.clear();
         this.canvas.fadeStatus = -1;
         this.canvas.showCanvas();
+        this.frame.setAlpha(1);
     }
 
     updateTime(time) {
@@ -557,6 +564,7 @@ class InGame extends Phaser.Scene {
         this.criticoScaler();
         this.inGameWord.text = this.roundWord;
         this.canvas.hideCanvas();
+        this.frame.setAlpha(0);
         this.fakerFrame.setAlpha(0);
         this.fakerImage.setAlpha(0);
         this.fakerPeekButton.setAlpha(0);

@@ -645,7 +645,7 @@ class Lobby extends Phaser.Scene {
         //--------------------------Options PopUp--------------------------//
         this.keyBoardBg.x = game.canvas.width / 2;
 		this.keyBoardBg.y = game.canvas.height / 2;
-        this.keyBoardBg.setScale(this.sY*3/4);
+        this.keyBoardBg.setScale(this.sY*7/8);
 
         let kbLTCornerX = (this.keyBoardBg.x-(this.keyBoardBg.width*this.keyBoardBg.scaleX)/2)+0;
         let kbLTCornerY = (this.keyBoardBg.y-(this.keyBoardBg.height*this.keyBoardBg.scaleY)*13/32)+0;
@@ -742,7 +742,7 @@ class Lobby extends Phaser.Scene {
         
         this.NumRondasText.x = kbLTCornerX+columnPos*15.5;
         this.NumRondasText.y = kbLTCornerY+rowPos*3.4;
-        this.NumRondasText.setScale(this.keyBoardBg.scale*0.8);
+        this.NumRondasText.setScale(this.keyBoardBg.scale*1.2);
         
         this.NumRondasMas.x = kbLTCornerX+columnPos*17;
         this.NumRondasMas.y = kbLTCornerY+rowPos*4;
@@ -759,7 +759,7 @@ class Lobby extends Phaser.Scene {
 
         this.TiempoRondasText.x = kbLTCornerX+columnPos*15.5;
         this.TiempoRondasText.y = kbLTCornerY+rowPos*5.4;
-        this.TiempoRondasText.setScale(this.keyBoardBg.scale*0.8);
+        this.TiempoRondasText.setScale(this.keyBoardBg.scale*1.2);
 
         this.TiempoRondasMas.x = kbLTCornerX+columnPos*17;
         this.TiempoRondasMas.y = kbLTCornerY+rowPos*6;
@@ -776,7 +776,7 @@ class Lobby extends Phaser.Scene {
         
         this.TiempoVotacionText.x = kbLTCornerX+columnPos*15.5;
         this.TiempoVotacionText.y = kbLTCornerY+rowPos*7.4;
-        this.TiempoVotacionText.setScale(this.keyBoardBg.scale*0.8);
+        this.TiempoVotacionText.setScale(this.keyBoardBg.scale*1.2);
         
         this.TiempoVotacionMas.x = kbLTCornerX+columnPos*17;
         this.TiempoVotacionMas.y = kbLTCornerY+rowPos*8;
