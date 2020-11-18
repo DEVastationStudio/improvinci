@@ -32,13 +32,13 @@ class Menu extends Phaser.Scene {
     	this.pancarta = this.add.image(0,0,'cartelImprovinci').setInteractive();
     	this.jugar_bt = this.add.image(0,0,'Play'+game.global.languageSuffix).setInteractive({cursor: 'pointer'});
     	this.puntuaciones_bt = this.add.image(0,0,'Puntuaciones'+game.global.languageSuffix).setInteractive({cursor: 'pointer'});
-    	this.tutorial_bt = this.add.image(0,0,'Ready_host_es').setInteractive({cursor: 'pointer'});
+    	this.tutorial_bt = this.add.image(0,0,'tutorialBt').setInteractive({cursor: 'pointer'});
 		this.credits_bt = this.add.image(0,0,'Credits'+game.global.languageSuffix).setInteractive({cursor: 'pointer'});
 
 		//Tutorial
 		this.tutorialPage = 1;
 
-		this.tFondo = this.add.image(0,0,'tFondo1').setInteractive();
+		this.tFondo = this.add.image(0,0,'TutorialBg'+this.tutorialPage+game.global.languageSuffix).setInteractive();
 		this.tDerecha = this.add.image(0,0,'tDerecha').setInteractive({cursor: 'pointer'});
 		this.tIzquierda = this.add.image(0,0,'tIzquierda').setInteractive({cursor: 'pointer'}).setAlpha(0);
 		this.salirTuto = this.add.image(0,0,'SalirCod').setInteractive({cursor: 'pointer'});
@@ -58,18 +58,18 @@ class Menu extends Phaser.Scene {
 
 		//Tutorial
 		this.tDerecha.on('pointerdown', function (pointer){
-			if(this.tutorialPage+1<=3) 
+			if(this.tutorialPage+1<=11) 
 			{
 				this.tutorialPage++;
-				if(this.tutorialPage === 3) this.tDerecha.setAlpha(0.4);
-				if(this.tutorialPage < 3) this.tDerecha.setAlpha(1);
+				if(this.tutorialPage === 11) this.tDerecha.setAlpha(0.4);
+				if(this.tutorialPage < 11) this.tDerecha.setAlpha(1);
 			}
 			if(this.tutorialPage>=1) 
 			{
 				if(this.tutorialPage === 1) this.tIzquierda.setAlpha(0.4);
 				if(this.tutorialPage > 1) this.tIzquierda.setAlpha(1);
 			}
-			this.tFondo.setTexture('tFondo'+this.tutorialPage);
+			this.tFondo.setTexture('TutorialBg'+this.tutorialPage+game.global.languageSuffix);
 			console.log(this.tutorialPage);
 		}, this);
 
@@ -80,12 +80,12 @@ class Menu extends Phaser.Scene {
 				if(this.tutorialPage === 1) this.tIzquierda.setAlpha(0.4);
 				if(this.tutorialPage > 1) this.tIzquierda.setAlpha(1);
 			}
-			if(this.tutorialPage<=3) 
+			if(this.tutorialPage<=11) 
 			{
-				if(this.tutorialPage === 3) this.tDerecha.setAlpha(0.4);
-				if(this.tutorialPage < 3) this.tDerecha.setAlpha(1);
+				if(this.tutorialPage === 11) this.tDerecha.setAlpha(0.4);
+				if(this.tutorialPage < 11) this.tDerecha.setAlpha(1);
 			}
-			this.tFondo.setTexture('tFondo'+this.tutorialPage);
+			this.tFondo.setTexture('TutorialBg'+this.tutorialPage+game.global.languageSuffix);
 			console.log(this.tutorialPage);
 		}, this);
 
@@ -167,7 +167,7 @@ class Menu extends Phaser.Scene {
 
 	invisible(isVisible)
 	{
-		if(isVisible) this.tFondo.setTexture('tFondo'+this.tutorialPage);
+		if(isVisible) this.tFondo.setTexture('TutorialBg'+this.tutorialPage+game.global.languageSuffix);
 		this.tIzquierda.setAlpha(isVisible);
 		this.tDerecha.setAlpha(isVisible);
 		this.salirTuto.setAlpha(isVisible);
@@ -192,7 +192,7 @@ class Menu extends Phaser.Scene {
 
     	this.tutorial_bt.x = game.canvas.width * 5 / 6;
 		this.tutorial_bt.y = game.canvas.height * 2.3 / 4;
-		this.tutorial_bt.setScale(this.sY*0.9);
+		this.tutorial_bt.setScale(this.sY*0.8);
 
     	this.credits_bt.x = game.canvas.width * 5 / 6;
 		this.credits_bt.y = game.canvas.height * 5.2 / 6;
@@ -213,22 +213,22 @@ class Menu extends Phaser.Scene {
 		//Tutorial
 		this.tFondo.x = game.canvas.width /2;
 		this.tFondo.y = game.canvas.height /2;
-		this.tFondo.setScale(this.sY);
+		this.tFondo.setScale(this.sY*0.8);
 
 		let kbLTCornerX = (this.tFondo.x-(this.tFondo.width*this.tFondo.scaleX)/2);
         let kbLTCornerY = (this.tFondo.y-(this.tFondo.height*this.tFondo.scaleY)/2);
         let columnPos = this.tFondo.width*this.tFondo.scaleX/20;
         let rowPos = this.tFondo.height*this.tFondo.scaleY/20;
 
-		this.tDerecha.x = kbLTCornerX+columnPos*22;
+		this.tDerecha.x = kbLTCornerX+columnPos*21;
 		this.tDerecha.y = kbLTCornerY+rowPos*10;
 		this.tDerecha.setScale(this.sY);
 
-		this.tIzquierda.x = kbLTCornerX+(columnPos*-2);
+		this.tIzquierda.x = kbLTCornerX+(columnPos*-1);
 		this.tIzquierda.y = kbLTCornerY+rowPos*10;
 		this.tIzquierda.setScale(this.sY);
 
-		this.salirTuto.x = kbLTCornerX+columnPos*19;
+		this.salirTuto.x = kbLTCornerX+columnPos*17;
 		this.salirTuto.y = kbLTCornerY+rowPos;
 		this.salirTuto.setScale(this.sY);
 		

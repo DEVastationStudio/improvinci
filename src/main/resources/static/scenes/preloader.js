@@ -170,11 +170,33 @@ class Preloader extends Phaser.Scene {
 		this.load.image('empty', 'assets/empty.png');
 
 		//Tutorial
-		this.load.image('tDerecha', 'assets/interface/tDerecha.png');
-		this.load.image('tIzquierda', 'assets/interface/tIzquierda.png');
-		this.load.image('tFondo1', 'assets/interface/tFondo1.png');
-		this.load.image('tFondo2', 'assets/interface/tFondo2.png');
-		this.load.image('tFondo3', 'assets/interface/tFondo3.png');
+		this.load.image('tIzquierda', 'assets/tutorial/TutorialFlechaIzq.png');
+		this.load.image('tDerecha', 'assets/tutorial/TutorialFlecha.png');
+		this.load.image('tutorialBt', 'assets/interface/tutorial.png');
+		//---Español
+		this.load.image('TutorialBg1_es', 'assets/tutorial/TutorialBg1_es.png');
+		this.load.image('TutorialBg2_es', 'assets/tutorial/TutorialBg2_es.png');
+		this.load.image('TutorialBg3_es', 'assets/tutorial/TutorialBg3_es.png');
+		this.load.image('TutorialBg4_es', 'assets/tutorial/TutorialBg4_es.png');
+		this.load.image('TutorialBg5_es', 'assets/tutorial/TutorialBg5_es.png');
+		this.load.image('TutorialBg6_es', 'assets/tutorial/TutorialBg6_es.png');
+		this.load.image('TutorialBg7_es', 'assets/tutorial/TutorialBg7_es.png');
+		this.load.image('TutorialBg8_es', 'assets/tutorial/TutorialBg8_es.png');
+		this.load.image('TutorialBg9_es', 'assets/tutorial/TutorialBg9_es.png');
+		this.load.image('TutorialBg10_es', 'assets/tutorial/TutorialBg10_es.png');
+		this.load.image('TutorialBg11_es', 'assets/tutorial/TutorialBg11_es.png');
+		//---Inglés
+		this.load.image('TutorialBg1_en', 'assets/tutorial/TutorialBg1_en.png');
+		this.load.image('TutorialBg2_en', 'assets/tutorial/TutorialBg2_en.png');
+		this.load.image('TutorialBg3_en', 'assets/tutorial/TutorialBg3_en.png');
+		this.load.image('TutorialBg4_en', 'assets/tutorial/TutorialBg4_en.png');
+		this.load.image('TutorialBg5_en', 'assets/tutorial/TutorialBg5_en.png');
+		this.load.image('TutorialBg6_en', 'assets/tutorial/TutorialBg6_en.png');
+		this.load.image('TutorialBg7_en', 'assets/tutorial/TutorialBg7_en.png');
+		this.load.image('TutorialBg8_en', 'assets/tutorial/TutorialBg8_en.png');
+		this.load.image('TutorialBg9_en', 'assets/tutorial/TutorialBg9_en.png');
+		this.load.image('TutorialBg10_en', 'assets/tutorial/TutorialBg10_en.png');
+		this.load.image('TutorialBg11_en', 'assets/tutorial/TutorialBg11_en.png');
 
 		//Puntuaciones
 		this.load.image('Puntuaciones_es', 'assets/interface/Puntuaciones_es.png');
