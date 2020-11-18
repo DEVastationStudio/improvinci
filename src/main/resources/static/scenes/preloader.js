@@ -110,10 +110,10 @@ class Preloader extends Phaser.Scene {
 		//menu Configuración
 		this.load.image('Daily_en', 'assets/backgrounds/Configuracion/Daily_en.png');
 		this.load.image('Blind_en', 'assets/backgrounds/Configuracion/Blind_en.png');
-		this.load.image('Default_en', 'assets/backgrounds/Configuracion/Default_en.png');
+		this.load.image('Default', 'assets/backgrounds/Configuracion/Default.png');
 		this.load.image('Dificil_en', 'assets/backgrounds/Configuracion/Dificil_en.png');
 		this.load.image('Facil_en', 'assets/backgrounds/Configuracion/Facil_en.png');
-		this.load.image('Growing_en', 'assets/backgrounds/Configuracion/Growing_en.png');
+		this.load.image('Growing', 'assets/backgrounds/Configuracion/Growing.png');
 		this.load.image('Limit_en', 'assets/backgrounds/Configuracion/Limit_en.png');
 		this.load.image('Modos_en', 'assets/backgrounds/Configuracion/Modos_en.png');
 		this.load.image('NumRondas_en', 'assets/backgrounds/Configuracion/NumRondas_en.png');

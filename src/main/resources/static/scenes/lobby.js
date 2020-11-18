@@ -81,10 +81,10 @@ class Lobby extends Phaser.Scene {
          this.keyBoardBg = this.add.image(0,0,'Gameplay').setInteractive();
          this.DailyImg = this.add.image(0,0,'Daily'+game.global.languageSuffix).setInteractive({cursor: 'pointer'});
          this.BlindImg = this.add.image(0,0,'Blind'+game.global.languageSuffix).setInteractive();
-         this.DefaultImg = this.add.image(0,0,'Default'+game.global.languageSuffix).setInteractive();
+         this.DefaultImg = this.add.image(0,0,'Default').setInteractive();
          this.DificilImg = this.add.image(0,0,'Dificil'+game.global.languageSuffix).setInteractive({cursor: 'pointer'});
          this.FacilImg = this.add.image(0,0,'Facil'+game.global.languageSuffix).setInteractive({cursor: 'pointer'});
-         this.GrowingImg = this.add.image(0,0,'Growing'+game.global.languageSuffix).setInteractive();
+         this.GrowingImg = this.add.image(0,0,'Growing').setInteractive();
          this.LimitImg = this.add.image(0,0,'Limit'+game.global.languageSuffix).setInteractive();
          this.ModosImg = this.add.image(0,0,'Modos'+game.global.languageSuffix).setInteractive();
          this.NumRondasImg = this.add.image(0,0,'NumRondas'+game.global.languageSuffix).setInteractive();
@@ -476,20 +476,20 @@ class Lobby extends Phaser.Scene {
             else
                 this.roomInfo.text+='Word bank language: Spanish\n';
             if(vowelsM)
-                this.roomInfo.text+='Faker sees vowels: Yes\n \n';
+                this.roomInfo.text+='Visible vowels: Yes\n \n';
             else
-                this.roomInfo.text+='Faker sees vowels: No\n \n';
+                this.roomInfo.text+='Visible vowels: No\n \n';
             this.roomInfo.text+='GAMEMODES IN USE: \n';
             if(defaultM)
-                this.roomInfo.text+='Default \n';
+                this.roomInfo.text+='Normal \n';
             if(blindM)
-                this.roomInfo.text+='Blind mode \n';
+                this.roomInfo.text+='Blindfolded \n';
             if(limitM)
-                this.roomInfo.text+='Limit mode \n';
+                this.roomInfo.text+='Stroke Limit \n';
             if(oneM)
-                this.roomInfo.text+='One Mode \n';
+                this.roomInfo.text+='One Stroke \n';
             if(growingM)
-                this.roomInfo.text+='Growing Mode\n';
+                this.roomInfo.text+='Incremental\n';
         }
         else
         {
@@ -503,20 +503,20 @@ class Lobby extends Phaser.Scene {
             else
                 this.roomInfo.text+='Banco de palabras: Español\n';
             if(vowelsM)
-                this.roomInfo.text+='Improvisador ve las vocales: Si\n \n';
+                this.roomInfo.text+='Vocales visibles: Si\n \n';
             else
-                this.roomInfo.text+='Improvisador ve las vocales: No\n \n';
+                this.roomInfo.text+='Vocales visibles: No\n \n';
             this.roomInfo.text+='MODOS EN USO: \n';
             if(defaultM)
                 this.roomInfo.text+='Normal \n';
             if(blindM)
                 this.roomInfo.text+='A Ciegas \n';
             if(limitM)
-                this.roomInfo.text+='Trazos limitados \n';
+                this.roomInfo.text+='Límite Trazos \n';
             if(oneM)
-                this.roomInfo.text+='Un solo trazo \n';
+                this.roomInfo.text+='Un Solo Trazo \n';
             if(growingM)
-                this.roomInfo.text+='Picel incremetal\n';
+                this.roomInfo.text+='Incremetal\n';
         }
         
     }
