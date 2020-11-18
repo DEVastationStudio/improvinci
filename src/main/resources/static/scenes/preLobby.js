@@ -295,9 +295,9 @@ class PreLobby extends Phaser.Scene {
         this.codeText = this.add.text(0, 0, '', { fontSize: '50px', fontFamily: 'comic sans ms', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff' });
 
         //Connection popup
-        this.popupBg = this.add.image(0,0,'Gameplay');
+        this.popupBg = this.add.image(0,0,'ConfigBg');
         this.popupBg.setAlpha(0);
-        this.popupText = this.add.text(0, 0, '', { fontSize: '40px', fontFamily: 'comic sans ms', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff'}).setOrigin(0.5, 0.5);
+        this.popupText = this.add.text(0, 0, '', { fontSize: '80px', fontFamily: 'comic sans ms', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff'}).setOrigin(0.5, 0.5);
         this.popupText.setAlpha(0);
         this.popupCancel = this.add.image(0,0,'SalirCod');
         this.popupCancel.setAlpha(0);
@@ -629,7 +629,7 @@ class PreLobby extends Phaser.Scene {
         
         this.popupCancel.x = this.popupBg.x
         this.popupCancel.y = this.popupBg.y + this.popupBg.height*this.popupBg.scaleY/6;
-        this.popupCancel.setScale(this.popupBg.scale);
+        this.popupCancel.setScale(this.popupBg.scale*2);
         
         
 

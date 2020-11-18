@@ -75,6 +75,7 @@ class Preloader extends Phaser.Scene {
 		this.load.image('DobleConfirmSi_en', 'assets/interface/DobleConfirmSi_en.png');
 		this.load.image('DobleConfirmNo_es', 'assets/interface/DobleConfirmNo_es.png');
 		this.load.image('DobleConfirmNo_en', 'assets/interface/DobleConfirmNo_en.png');
+		this.load.image('BorrarDibujo', 'assets/interface/BorrarDibujo.png');
 
 		//keyboard
 		this.load.image('KeyBoardBg', 'assets/backgrounds/KeyBoardBg.png');
