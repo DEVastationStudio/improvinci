@@ -17,7 +17,7 @@ class Options extends Phaser.Scene {
         this.bg = this.add.image(0,0,'finFondoO');
 
         this.tablaPuntuaciones = this.add.image( 0, 0,'TopScores'+game.global.languageSuffix);
-    	this.return_options_bt = this.add.image( 0, 0,'salirBoton'+game.global.languageSuffix);
+    	this.return_options_bt = this.add.image( 0, 0,'salirBoton'+game.global.languageSuffix).setInteractive({cursor: 'pointer'});
         
     	this.return_options_bt.on('pointerdown', function (pointer){
 			this.cameras.main.fadeOut(200);
