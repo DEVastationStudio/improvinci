@@ -3,27 +3,27 @@
 class Preloader extends Phaser.Scene {
 
 
-    constructor() {
-        super('Preloader');
-    }
-    preload() {
+	constructor() {
+		super('Preloader');
+	}
+	preload() {
 
 		//Loading bar
 		this.progressBar = this.add.graphics();
 		this.progressBox = this.add.graphics();
 
 		this.progressBox.fillStyle(0x222222, 0.8);
-		this.progressBox.fillRect(game.canvas.width/4, game.canvas.height*4/9, game.canvas.width/2, game.canvas.height/9);
+		this.progressBox.fillRect(game.canvas.width / 4, game.canvas.height * 4 / 9, game.canvas.width / 2, game.canvas.height / 9);
 
-		this.loadingText = this.make.text({ x:game.canvas.width/2, y:game.canvas.height*4/10, text: 'Loading...', style: { font: '40px monospace', fill: '#ffffff'}}).setOrigin(0.5,0.5);
+		this.loadingText = this.make.text({ x: game.canvas.width / 2, y: game.canvas.height * 4 / 10, text: 'Loading...', style: { font: '40px monospace', fill: '#ffffff' } }).setOrigin(0.5, 0.5);
 
-		this.percentText = this.make.text({ x:game.canvas.width/2, y:game.canvas.height/2, text: '0%', style: {font: '20px monospace', fill: '#ffffff'} }).setOrigin(0.5,0.5);
+		this.percentText = this.make.text({ x: game.canvas.width / 2, y: game.canvas.height / 2, text: '0%', style: { font: '20px monospace', fill: '#ffffff' } }).setOrigin(0.5, 0.5);
 
 		this.load.on('progress', function (value) {
 			this.progressBar.clear();
 			this.progressBar.fillStyle(0xffffff, 1);
-			this.progressBar.fillRect(game.canvas.width/3.9, game.canvas.height*4/8.7, value * game.canvas.width/2.05, game.canvas.height/12.5);
-			this.percentText.setText(parseInt(value*100)+'%');
+			this.progressBar.fillRect(game.canvas.width / 3.9, game.canvas.height * 4 / 8.7, value * game.canvas.width / 2.05, game.canvas.height / 12.5);
+			this.percentText.setText(parseInt(value * 100) + '%');
 		}, this);
 
 		this.load.on('fileprogress', function (file) {
@@ -33,22 +33,22 @@ class Preloader extends Phaser.Scene {
 		this.load.on('complete', function (file) {
 			this.loadingText.setText('Loading complete.');
 			this.cameras.main.fadeOut(200);
-            this.cameras.main.once('camerafadeoutcomplete', function(camera) {
-                this.scene.start('Menu');
-            }, this);
+			this.cameras.main.once('camerafadeoutcomplete', function (camera) {
+				this.scene.start('Menu');
+			}, this);
 		}, this);
 
 		this.load.spritesheet('TimeAnim', 'assets/interface/Tiempo.png',
-		{
-			frameWidth: 332,
-			frameHeight: 303
-		});
+			{
+				frameWidth: 332,
+				frameHeight: 303
+			});
 		this.load.image('Menu', 'assets/backgrounds/Menu.png');
 		this.load.image('cartelImprovinci', 'assets/interface/Pancarta.png');
 		this.load.image('Gameplay', 'assets/backgrounds/Gameplay.png');
 		this.load.image('credsFondoO', 'assets/backgrounds/credsFondoO.png');
 		this.load.image('finFondoO', 'assets/backgrounds/finFondoO.png');
-    	this.load.image('Caballete_gameplay', 'assets/interface/Caballete_gameplay.png');
+		this.load.image('Caballete_gameplay', 'assets/interface/Caballete_gameplay.png');
 		this.load.image('Play_en', 'assets/interface/Play_en.png');
 		this.load.image('Play_es', 'assets/interface/Play_es.png');
 		this.load.image('Credits_es', 'assets/interface/Credits_es.png');
@@ -61,16 +61,16 @@ class Preloader extends Phaser.Scene {
 		this.load.image('Config_en', 'assets/interface/Config_en.png');
 		this.load.image('Copiar_es', 'assets/interface/Copiar_es.png');
 		this.load.image('Copiar_en', 'assets/interface/Copiar_en.png');
-    	this.load.image('Ready_es', 'assets/interface/Ready_es.png');
-    	this.load.image('Ready_en', 'assets/interface/Ready_en.png');
-    	this.load.image('Ready_host_es', 'assets/interface/Ready_host_es.png');
-    	this.load.image('Ready_host_en', 'assets/interface/Ready_host_en.png');
-    	this.load.image('Ronda_es', 'assets/interface/Ronda_es.png');
-    	this.load.image('Ronda_es', 'assets/interface/Ronda_en.png');
-    	this.load.image('Corona', 'assets/interface/Corona.png');
-    	this.load.image('Marco1', 'assets/interface/Marco1.png');
-    	this.load.image('Marco2', 'assets/interface/Marco2.png');
-    	this.load.image('Marco3', 'assets/interface/Marco3.png');
+		this.load.image('Ready_es', 'assets/interface/Ready_es.png');
+		this.load.image('Ready_en', 'assets/interface/Ready_en.png');
+		this.load.image('Ready_host_es', 'assets/interface/Ready_host_es.png');
+		this.load.image('Ready_host_en', 'assets/interface/Ready_host_en.png');
+		this.load.image('Ronda_es', 'assets/interface/Ronda_es.png');
+		this.load.image('Ronda_es', 'assets/interface/Ronda_en.png');
+		this.load.image('Corona', 'assets/interface/Corona.png');
+		this.load.image('Marco1', 'assets/interface/Marco1.png');
+		this.load.image('Marco2', 'assets/interface/Marco2.png');
+		this.load.image('Marco3', 'assets/interface/Marco3.png');
 		this.load.image('Marco4', 'assets/interface/Marco4.png');
 		this.load.image('CriticoLejos', 'assets/character/critico_lejos.png');
 		this.load.image('salirBoton_es', 'assets/interface/salirBoton_es.png');
@@ -82,28 +82,28 @@ class Preloader extends Phaser.Scene {
 		this.load.image('DobleConfirmSi_en', 'assets/interface/DobleConfirmSi_en.png');
 		this.load.image('DobleConfirmNo_es', 'assets/interface/DobleConfirmNo_es.png');
 		this.load.image('DobleConfirmNo_en', 'assets/interface/DobleConfirmNo_en.png');
-		
+
 		//keyboard
 		this.load.image('KeyBoardBg', 'assets/backgrounds/KeyBoardBg.png');
 		this.load.image('ConfirmarCod', 'assets/backgrounds/Confirmar.png');
-    	this.load.image('SalirCod', 'assets/backgrounds/Salir.png');
-    	this.load.image('BarraCod', 'assets/backgrounds/BarraCodigo.png');
-    	this.load.image('BorrarCod', 'assets/backgrounds/Borrar.png');
-    	this.load.image('Letra_A', 'assets/backgrounds/letras/A.png');
-    	this.load.image('Letra_B', 'assets/backgrounds/letras/B.png');
-    	this.load.image('Letra_C', 'assets/backgrounds/letras/C.png');
-    	this.load.image('Letra_D', 'assets/backgrounds/letras/D.png');
-    	this.load.image('Letra_E', 'assets/backgrounds/letras/E.png');
-    	this.load.image('Letra_F', 'assets/backgrounds/letras/F.png');
-    	this.load.image('Letra_G', 'assets/backgrounds/letras/G.png');
-    	this.load.image('Letra_H', 'assets/backgrounds/letras/H.png');
-    	this.load.image('Letra_I', 'assets/backgrounds/letras/I.png');
-    	this.load.image('Letra_J', 'assets/backgrounds/letras/J.png');
-    	this.load.image('Letra_K', 'assets/backgrounds/letras/K.png');
-    	this.load.image('Letra_L', 'assets/backgrounds/letras/L.png');
-    	this.load.image('Letra_M', 'assets/backgrounds/letras/M.png');
-    	this.load.image('Letra_N', 'assets/backgrounds/letras/N.png');
-    	this.load.image('Letra_O', 'assets/backgrounds/letras/O.png');
+		this.load.image('SalirCod', 'assets/backgrounds/Salir.png');
+		this.load.image('BarraCod', 'assets/backgrounds/BarraCodigo.png');
+		this.load.image('BorrarCod', 'assets/backgrounds/Borrar.png');
+		this.load.image('Letra_A', 'assets/backgrounds/letras/A.png');
+		this.load.image('Letra_B', 'assets/backgrounds/letras/B.png');
+		this.load.image('Letra_C', 'assets/backgrounds/letras/C.png');
+		this.load.image('Letra_D', 'assets/backgrounds/letras/D.png');
+		this.load.image('Letra_E', 'assets/backgrounds/letras/E.png');
+		this.load.image('Letra_F', 'assets/backgrounds/letras/F.png');
+		this.load.image('Letra_G', 'assets/backgrounds/letras/G.png');
+		this.load.image('Letra_H', 'assets/backgrounds/letras/H.png');
+		this.load.image('Letra_I', 'assets/backgrounds/letras/I.png');
+		this.load.image('Letra_J', 'assets/backgrounds/letras/J.png');
+		this.load.image('Letra_K', 'assets/backgrounds/letras/K.png');
+		this.load.image('Letra_L', 'assets/backgrounds/letras/L.png');
+		this.load.image('Letra_M', 'assets/backgrounds/letras/M.png');
+		this.load.image('Letra_N', 'assets/backgrounds/letras/N.png');
+		this.load.image('Letra_O', 'assets/backgrounds/letras/O.png');
 		this.load.image('Letra_P', 'assets/backgrounds/letras/P.png');
 
 		//menu Configuración
@@ -145,11 +145,17 @@ class Preloader extends Phaser.Scene {
 		this.load.image('vowels_es', 'assets/backgrounds/Configuracion/vowels_es.png');
 
 		//Developers
-		this.load.image('RetratoBelen', 'assets/retratos_creditos/RetratoBelenCubismoSinLetra.png');
-		this.load.image('RetratoImanol', 'assets/retratos_creditos/RetratoImanolFovismoSinLetra.png');
-		this.load.image('RetratoMaria', 'assets/retratos_creditos/RetratoMariaAsiaticoSinLetra.png');
-		this.load.image('RetratoPablo', 'assets/retratos_creditos/RetratoPabloMedievoSinLetra.png');
-		this.load.image('RetratoTomas', 'assets/retratos_creditos/RetratoTomasEgipcioSinLetra.png');
+		this.load.image('RetratoBelen_es', 'assets/retratos_creditos/BelenCubismoESP.png');
+		this.load.image('RetratoImanol_es', 'assets/retratos_creditos/ImanolFovismoESP.png');
+		this.load.image('RetratoMaria_es', 'assets/retratos_creditos/MariaAsiaticoESP.png');
+		this.load.image('RetratoPablo_es', 'assets/retratos_creditos/PabloMedievoESP.png');
+		this.load.image('RetratoTomas_es', 'assets/retratos_creditos/TomasEgipcioESP.png');
+
+		this.load.image('RetratoBelen_en', 'assets/retratos_creditos/BelenCubismoENG.png');
+		this.load.image('RetratoImanol_en', 'assets/retratos_creditos/ImanolFovismoENG.png');
+		this.load.image('RetratoMaria_en', 'assets/retratos_creditos/MariaAsiaticoENG.png');
+		this.load.image('RetratoPablo_en', 'assets/retratos_creditos/PabloMedievoENG.png');
+		this.load.image('RetratoTomas_en', 'assets/retratos_creditos/TomasEgipcioENG.png');
 
 		//Spanish
 		//---Iconos
@@ -158,7 +164,7 @@ class Preloader extends Phaser.Scene {
 		this.load.image('ModoNormal_es', 'assets/gamemodes/ModoNormal_es.png');
 		this.load.image('ModoTrazosLim_es', 'assets/gamemodes/ModoTrazosLim_es.png');
 		this.load.image('ModoUnSoloTrazo_es', 'assets/gamemodes/ModoUnSoloTrazo_es.png');
-		
+
 		//English
 		//---Icons
 		this.load.image('ModoACiegas_en', 'assets/gamemodes/ModoACiegas_en.png');
@@ -169,15 +175,26 @@ class Preloader extends Phaser.Scene {
 
 		this.load.image('empty', 'assets/empty.png');
 
-    }
+		//Tutorial
+		this.load.image('tDerecha', 'assets/interface/tDerecha.png');
+		this.load.image('tIzquierda', 'assets/interface/tIzquierda.png');
+		this.load.image('tFondo1', 'assets/interface/tFondo1.png');
+		this.load.image('tFondo2', 'assets/interface/tFondo2.png');
+		this.load.image('tFondo3', 'assets/interface/tFondo3.png');
 
-    create() {
-        /*this.input.on('pointerdown', function(pointer){
-            this.scene.scene.start('Menu');
-        });*/
-    }
-    
-    update() { 
+	}
 
-    }
+	create() {
+		this.anims.create(
+			{
+				key: 'Clock_Anim',
+				frames: this.anims.generateFrameNumbers('TimeAnim'),
+				frameRate: 12,
+				repeat: -1
+			});
+	}
+
+	update() {
+
+	}
 }
