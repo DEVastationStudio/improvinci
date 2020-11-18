@@ -169,6 +169,7 @@ class Preloader extends Phaser.Scene {
 		this.load.image('ModoTrazosLim_en', 'assets/gamemodes/ModoTrazosLim_en.png');
 		this.load.image('ModoUnSoloTrazo_en', 'assets/gamemodes/ModoUnSoloTrazo_en.png');
 
+		this.load.image('empty', 'assets/empty.png');
 
     }
 

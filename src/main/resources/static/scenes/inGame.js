@@ -73,13 +73,13 @@ class InGame extends Phaser.Scene {
 
         for (let i = 0; i < 3; i++) {
             for (let j = 0; j < 3; j++) {
-                this.drawings[i+j*3] = this.add.image(game.canvas.width/2 + ((0.3*game.canvas.height)*(i-1)), game.canvas.height/2 + ((0.3*game.canvas.height)*(j-1)),''); 
+                this.drawings[i+j*3] = this.add.image(game.canvas.width/2 + ((0.3*game.canvas.height)*(i-1)), game.canvas.height/2 + ((0.3*game.canvas.height)*(j-1)),'empty'); 
                 this.drawings[i+j*3].setScale(game.canvas.height/1177.6,game.canvas.height/1177.6);
                 this.drawings[i+j*3].setAlpha(0);
                 this.frames[i+j*3] = this.add.image(game.canvas.width/2 + ((0.3*game.canvas.height)*(i-1)), game.canvas.height/2 + ((0.3*game.canvas.height)*(j-1)), this.frameImages[Math.floor(Math.random()*this.frameImages.length)]); 
                 this.frames[i+j*3].setScale(game.canvas.height/1177.6,game.canvas.height/1177.6);
                 this.frames[i+j*3].setAlpha(0);
-                this.pictures[i+j*3] = this.add.image(this.drawings[i+j*3].x, this.drawings[i+j*3].y, '');
+                this.pictures[i+j*3] = this.add.image(this.drawings[i+j*3].x, this.drawings[i+j*3].y, 'empty');
                 this.pictures[i+j*3].setScale(this.drawings[i+j*3].scaleX*2, this.drawings[i+j*3].scaleY*2);
                 this.pictures[i+j*3].setAlpha(0);
                 this.votes[i+j*3] = this.add.text(game.canvas.width/2 + ((0.3*game.canvas.height)*(i-1)), game.canvas.height/2 + ((0.3*game.canvas.height)*(j-1)) + (0.15*game.canvas.height), '', { fontSize: '30px', fontFamily: 'comic sans ms', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff', align: 'center'}).setOrigin(0.5, 0.5);
@@ -96,7 +96,7 @@ class InGame extends Phaser.Scene {
                 }, this);
             }
         }
-        this.bigImage = this.add.image(game.canvas.width/2, game.canvas.height/2,''); 
+        this.bigImage = this.add.image(game.canvas.width/2, game.canvas.height/2,'empty'); 
         this.bigImage.setScale(game.canvas.height/460.8,game.canvas.height/460.8);
         this.bigImage.setAlpha(0);
 
@@ -104,7 +104,7 @@ class InGame extends Phaser.Scene {
         this.bigFrame.setScale(game.canvas.height/460.8,game.canvas.height/460.8);
         this.bigFrame.setAlpha(0);
 
-        this.dcImage = this.add.image(game.canvas.width/4, game.canvas.height*7/8,''); 
+        this.dcImage = this.add.image(game.canvas.width/4, game.canvas.height*7/8,'empty'); 
         this.dcImage.setScale(game.canvas.height/921.6,game.canvas.height/921.6);
         this.dcImage.setAlpha(0);
         this.dcFrame = this.add.image(game.canvas.width/4, game.canvas.height*7/8,this.frameImages[Math.floor(Math.random()*this.frameImages.length)]); 
@@ -139,7 +139,7 @@ class InGame extends Phaser.Scene {
             this.scene.get('InGame').denhanceImage();
         }, this);
 
-        this.fakerImage = this.add.image(game.canvas.width/4, game.canvas.height*3/4,''); 
+        this.fakerImage = this.add.image(game.canvas.width/4, game.canvas.height*3/4,'empty'); 
         this.fakerImage.setScale(game.canvas.height/960.8,game.canvas.height/960.8);
         this.fakerImage.setAlpha(0);
 
@@ -644,7 +644,7 @@ class InGame extends Phaser.Scene {
         for (let i = 0; i < 3; i++) {
             for (let j = 0; j < 3; j++) {
                 if (this.players[i+j*3] !== undefined) {
-                    this.drawings[i+j*3].setTexture('');
+                    this.drawings[i+j*3].setTexture('empty');
                     this.drawings[i+j*3].removeInteractive();
                     this.drawings[i+j*3].setAlpha(0);
                     this.pictures[i+j*3].setAlpha(0);
@@ -679,7 +679,7 @@ class InGame extends Phaser.Scene {
                 if (this.players[i+j*3] !== undefined) {
                     if (player === this.players[i+j*3].playerId) {
 
-                        this.drawings[i+j*3].setTexture(''); 
+                        this.drawings[i+j*3].setTexture('empty'); 
                         if (this.textures.exists(player+'r')) {
                             this.textures.get(player+'r').destroy();
                         }

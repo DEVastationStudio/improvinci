@@ -69,7 +69,7 @@ class Lobby extends Phaser.Scene {
                     improCanvas.makeTexture(data.players[i+j*3].playerId, data.players[i+j*3].picture, this, 128);
                     this.avatars[i+j*3] = this.add.image(game.canvas.width/2 + (140*(i-1)),  game.canvas.height/2 + (140*(j-1)),data.players[i+j*3].playerId); 
                 } else {
-                    this.avatars[i+j*3] = this.add.image(game.canvas.width/2 + (140*(i-1)),  game.canvas.height/2 + (140*(j-1)),''); 
+                    this.avatars[i+j*3] = this.add.image(game.canvas.width/2 + (140*(i-1)),  game.canvas.height/2 + (140*(j-1)),'empty'); 
                 }
             }
         }
@@ -830,7 +830,7 @@ class Lobby extends Phaser.Scene {
                     else
                         this.avatars[i+j*3].setTint(0xffffff);
                 } else {
-                    this.avatars[i+j*3].setTexture(''); 
+                    this.avatars[i+j*3].setTexture('empty'); 
                 }
             }
         }
