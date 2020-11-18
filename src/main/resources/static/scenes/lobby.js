@@ -476,9 +476,9 @@ class Lobby extends Phaser.Scene {
             else
                 this.roomInfo.text+='Word bank language: Spanish\n';
             if(vowelsM)
-                this.roomInfo.text+='Faker sees vowels: Yes\n \n';
+                this.roomInfo.text+='Visible vowels: Yes\n \n';
             else
-                this.roomInfo.text+='Faker sees vowels: No\n \n';
+                this.roomInfo.text+='Visible vowels: No\n \n';
             this.roomInfo.text+='GAMEMODES IN USE: \n';
             if(defaultM)
                 this.roomInfo.text+='Default \n';
@@ -503,9 +503,9 @@ class Lobby extends Phaser.Scene {
             else
                 this.roomInfo.text+='Banco de palabras: Español\n';
             if(vowelsM)
-                this.roomInfo.text+='Improvisador ve las vocales: Si\n \n';
+                this.roomInfo.text+='Vocales visibles: Si\n \n';
             else
-                this.roomInfo.text+='Improvisador ve las vocales: No\n \n';
+                this.roomInfo.text+='Vocales visibles: No\n \n';
             this.roomInfo.text+='MODOS EN USO: \n';
             if(defaultM)
                 this.roomInfo.text+='Normal \n';
