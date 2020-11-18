@@ -129,13 +129,12 @@ class Preloader extends Phaser.Scene {
 		this.load.image('spainFlag', 'assets/backgrounds/Configuracion/spainFlag.png');
 		this.load.image('language_en', 'assets/backgrounds/Configuracion/Language_en.png');
 		this.load.image('vowels_en', 'assets/backgrounds/Configuracion/vowels_en.png');
+		this.load.image('ConfigBg', 'assets/backgrounds/ConfigBg.png');
 		//------//
 		this.load.image('Daily_es', 'assets/backgrounds/Configuracion/Daily_es.png');
 		this.load.image('Blind_es', 'assets/backgrounds/Configuracion/Blind_es.png');
-		this.load.image('Default_es', 'assets/backgrounds/Configuracion/Default_es.png');
 		this.load.image('Dificil_es', 'assets/backgrounds/Configuracion/Dificil_es.png');
 		this.load.image('Facil_es', 'assets/backgrounds/Configuracion/Facil_es.png');
-		this.load.image('Growing_es', 'assets/backgrounds/Configuracion/Growing_es.png');
 		this.load.image('Limit_es', 'assets/backgrounds/Configuracion/Limit_es.png');
 		this.load.image('Modos_es', 'assets/backgrounds/Configuracion/Modos_es.png');
 		this.load.image('NumRondas_es', 'assets/backgrounds/Configuracion/NumRondas_es.png');

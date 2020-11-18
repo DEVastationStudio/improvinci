@@ -17,7 +17,7 @@ class Lobby extends Phaser.Scene {
         this.bg = this.add.image(0,0,'Menu').setInteractive();
 
         //Buttons
-        this.button_start = this.add.image(0,0, 'Ready_host_es');
+        this.button_start = this.add.image(0,0, 'Ready_host'+game.global.languageSuffix);
         this.button_start.setAlpha(0.5);
         this.button_back = this.add.image(0,0, 'salirBoton'+game.global.languageSuffix).setInteractive({cursor: 'pointer'});
         this.button_Options = this.add.image(0,0, 'Config'+game.global.languageSuffix);
@@ -57,11 +57,15 @@ class Lobby extends Phaser.Scene {
             this.button_start.visible = false;
         }, this);
         
-        this.codeText = this.add.text(game.canvas.width/2, game.canvas.height/10, data.code, { fontSize: '40px', fontFamily: 'comic sans ms', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff', align: 'center'}).setOrigin(0.5, 0.5);
+        this.codeText = this.add.text(game.canvas.width/2, game.canvas.height/22, data.code, { fontSize: '40px', fontFamily: 'comic sans ms', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff', align: 'center'}).setOrigin(0.5, 0.5);
         
         this.avatars = [];
+        this.frames = [];
+        this.frameImages = ['Marco1', 'Marco2', 'Marco3', 'Marco4'];
+
         for (let i = 0; i < 3; i++) {
             for (let j = 0; j < 3; j++) {
+                this.frames[i+j*3] = this.add.image(0, 0, this.frameImages[Math.floor(Math.random()*this.frameImages.length)]); 
                 if (data.players[i+j*3] !== undefined) {
                     if (this.textures.exists(data.players[i+j*3].playerId)) {
                         this.textures.get(data.players[i+j*3].playerId).destroy();
@@ -70,6 +74,7 @@ class Lobby extends Phaser.Scene {
                     this.avatars[i+j*3] = this.add.image(game.canvas.width/2 + (140*(i-1)),  game.canvas.height/2 + (140*(j-1)),data.players[i+j*3].playerId); 
                 } else {
                     this.avatars[i+j*3] = this.add.image(game.canvas.width/2 + (140*(i-1)),  game.canvas.height/2 + (140*(j-1)),'empty'); 
+                    this.frames[i+j*3].setAlpha(0);
                 }
             }
         }
@@ -78,7 +83,7 @@ class Lobby extends Phaser.Scene {
          this.roomInfo = this.add.text(0, 0, '', {fontSize: '40px', fontFamily: 'comic sans ms', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff'});
 
          //Options
-         this.keyBoardBg = this.add.image(0,0,'Gameplay').setInteractive();
+         this.keyBoardBg = this.add.image(0,0,'ConfigBg').setInteractive();
          this.DailyImg = this.add.image(0,0,'Daily'+game.global.languageSuffix).setInteractive({cursor: 'pointer'});
          this.BlindImg = this.add.image(0,0,'Blind'+game.global.languageSuffix).setInteractive();
          this.DefaultImg = this.add.image(0,0,'Default').setInteractive();
@@ -643,157 +648,157 @@ class Lobby extends Phaser.Scene {
         this.keyBoardBg.setScale(this.sY*3/4);
 
         let kbLTCornerX = (this.keyBoardBg.x-(this.keyBoardBg.width*this.keyBoardBg.scaleX)/2)+0;
-        let kbLTCornerY = (this.keyBoardBg.y-(this.keyBoardBg.height*this.keyBoardBg.scaleY)/2)+0;
+        let kbLTCornerY = (this.keyBoardBg.y-(this.keyBoardBg.height*this.keyBoardBg.scaleY)*13/32)+0;
         let columnPos = this.keyBoardBg.width*this.keyBoardBg.scaleX/20;
         let rowPos = this.keyBoardBg.height*this.keyBoardBg.scaleY/20;
 
         this.SalirCod.x = kbLTCornerX+columnPos*18;
         this.SalirCod.y = kbLTCornerY+rowPos/2
-        this.SalirCod.setScale(this.keyBoardBg.scale);
+        this.SalirCod.setScale(this.keyBoardBg.scale*0.8);
 
         //Modos
         this.ModosImg.x = kbLTCornerX+columnPos*6;
         this.ModosImg.y = kbLTCornerY+rowPos*2;
-        this.ModosImg.setScale(this.keyBoardBg.scale);
+        this.ModosImg.setScale(this.keyBoardBg.scale*0.8);
 
         //---Default
         this.DefaultImg.x = kbLTCornerX+columnPos*4;
         this.DefaultImg.y = kbLTCornerY+rowPos*4;
-        this.DefaultImg.setScale(this.keyBoardBg.scale);
+        this.DefaultImg.setScale(this.keyBoardBg.scale*0.8);
         
         this.DefaultTickNoCheck.x = kbLTCornerX+columnPos*7;
         this.DefaultTickNoCheck.y = kbLTCornerY+rowPos*4;
-        this.DefaultTickNoCheck.setScale(this.keyBoardBg.scale);
+        this.DefaultTickNoCheck.setScale(this.keyBoardBg.scale*1.2);
         
         this.DefaultTickCheck.x = kbLTCornerX+columnPos*7;
         this.DefaultTickCheck.y = kbLTCornerY+rowPos*4;
-        this.DefaultTickCheck.setScale(this.keyBoardBg.scale);
+        this.DefaultTickCheck.setScale(this.keyBoardBg.scale*1.2);
         
         //---Blind
         this.BlindImg.x = kbLTCornerX+columnPos*4;
         this.BlindImg.y = kbLTCornerY+rowPos*6;
-        this.BlindImg.setScale(this.keyBoardBg.scale);
+        this.BlindImg.setScale(this.keyBoardBg.scale*0.8);
         
         this.BlindTickNoCheck.x = kbLTCornerX+columnPos*7;
         this.BlindTickNoCheck.y = kbLTCornerY+rowPos*6;
-        this.BlindTickNoCheck.setScale(this.keyBoardBg.scale);
+        this.BlindTickNoCheck.setScale(this.keyBoardBg.scale*1.2);
         
         this.BlindTickCheck.x = kbLTCornerX+columnPos*7;
         this.BlindTickCheck.y = kbLTCornerY+rowPos*6;
-        this.BlindTickCheck.setScale(this.keyBoardBg.scale);
+        this.BlindTickCheck.setScale(this.keyBoardBg.scale*1.2);
         
         //---Limit
         this.LimitImg.x = kbLTCornerX+columnPos*4;
         this.LimitImg.y = kbLTCornerY+rowPos*8;
-        this.LimitImg.setScale(this.keyBoardBg.scale);
+        this.LimitImg.setScale(this.keyBoardBg.scale*0.8);
         
         this.LimitTickNoCheck.x = kbLTCornerX+columnPos*7;
         this.LimitTickNoCheck.y = kbLTCornerY+rowPos*8;
-        this.LimitTickNoCheck.setScale(this.keyBoardBg.scale);
+        this.LimitTickNoCheck.setScale(this.keyBoardBg.scale*1.2);
         
         this.LimitTickCheck.x = kbLTCornerX+columnPos*7;
         this.LimitTickCheck.y = kbLTCornerY+rowPos*8;
-        this.LimitTickCheck.setScale(this.keyBoardBg.scale);
+        this.LimitTickCheck.setScale(this.keyBoardBg.scale*1.2);
         
         //---One
         this.OneImg.x = kbLTCornerX+columnPos*4;
         this.OneImg.y = kbLTCornerY+rowPos*10;
-        this.OneImg.setScale(this.keyBoardBg.scale);
+        this.OneImg.setScale(this.keyBoardBg.scale*0.8);
         
         this.OneTickNoCheck.x = kbLTCornerX+columnPos*7;
         this.OneTickNoCheck.y = kbLTCornerY+rowPos*10;
-        this.OneTickNoCheck.setScale(this.keyBoardBg.scale);
+        this.OneTickNoCheck.setScale(this.keyBoardBg.scale*1.2);
         
         this.OneTickCheck.x = kbLTCornerX+columnPos*7;
         this.OneTickCheck.y = kbLTCornerY+rowPos*10;
-        this.OneTickCheck.setScale(this.keyBoardBg.scale);
+        this.OneTickCheck.setScale(this.keyBoardBg.scale*1.2);
         
         //---Growing
         this.GrowingImg.x = kbLTCornerX+columnPos*4;
         this.GrowingImg.y = kbLTCornerY+rowPos*12;
-        this.GrowingImg.setScale(this.keyBoardBg.scale);
+        this.GrowingImg.setScale(this.keyBoardBg.scale*0.8);
         
         this.GrowingTickNoCheck.x = kbLTCornerX+columnPos*7;
         this.GrowingTickNoCheck.y = kbLTCornerY+rowPos*12;
-        this.GrowingTickNoCheck.setScale(this.keyBoardBg.scale);
+        this.GrowingTickNoCheck.setScale(this.keyBoardBg.scale*1.2);
         
         this.GrowingTickCheck.x = kbLTCornerX+columnPos*7;
         this.GrowingTickCheck.y = kbLTCornerY+rowPos*12;
-        this.GrowingTickCheck.setScale(this.keyBoardBg.scale);
+        this.GrowingTickCheck.setScale(this.keyBoardBg.scale*1.2);
 
         //InRoom
         this.TiemposImg.x = kbLTCornerX+columnPos*14;
         this.TiemposImg.y = kbLTCornerY+rowPos*2;
-        this.TiemposImg.setScale(this.keyBoardBg.scale);
+        this.TiemposImg.setScale(this.keyBoardBg.scale*0.8);
 
         //---Numero de rondas
         this.NumRondasImg.x = kbLTCornerX+columnPos*12;
         this.NumRondasImg.y = kbLTCornerY+rowPos*4;
-        this.NumRondasImg.setScale(this.keyBoardBg.scale);
+        this.NumRondasImg.setScale(this.keyBoardBg.scale*0.8);
         
         this.NumRondasMenos.x = kbLTCornerX+columnPos*14.5;
         this.NumRondasMenos.y = kbLTCornerY+rowPos*4;
-        this.NumRondasMenos.setScale(this.keyBoardBg.scale);
+        this.NumRondasMenos.setScale(this.keyBoardBg.scale*0.8);
         
         this.NumRondasText.x = kbLTCornerX+columnPos*15.5;
         this.NumRondasText.y = kbLTCornerY+rowPos*3.4;
-        this.NumRondasText.setScale(this.keyBoardBg.scale);
+        this.NumRondasText.setScale(this.keyBoardBg.scale*0.8);
         
         this.NumRondasMas.x = kbLTCornerX+columnPos*17;
         this.NumRondasMas.y = kbLTCornerY+rowPos*4;
-        this.NumRondasMas.setScale(this.keyBoardBg.scale);
+        this.NumRondasMas.setScale(this.keyBoardBg.scale*0.8);
 
         //---Tiempo pintar
         this.RondaImg.x = kbLTCornerX+columnPos*12;
         this.RondaImg.y = kbLTCornerY+rowPos*6;
-        this.RondaImg.setScale(this.keyBoardBg.scale);
+        this.RondaImg.setScale(this.keyBoardBg.scale*0.8);
         
         this.TiempoRondasMenos.x = kbLTCornerX+columnPos*14.5;
         this.TiempoRondasMenos.y = kbLTCornerY+rowPos*6;
-        this.TiempoRondasMenos.setScale(this.keyBoardBg.scale);
+        this.TiempoRondasMenos.setScale(this.keyBoardBg.scale*0.8);
 
         this.TiempoRondasText.x = kbLTCornerX+columnPos*15.5;
         this.TiempoRondasText.y = kbLTCornerY+rowPos*5.4;
-        this.TiempoRondasText.setScale(this.keyBoardBg.scale);
+        this.TiempoRondasText.setScale(this.keyBoardBg.scale*0.8);
 
         this.TiempoRondasMas.x = kbLTCornerX+columnPos*17;
         this.TiempoRondasMas.y = kbLTCornerY+rowPos*6;
-        this.TiempoRondasMas.setScale(this.keyBoardBg.scale);
+        this.TiempoRondasMas.setScale(this.keyBoardBg.scale*0.8);
 
         //---Tiempo Votaciones
         this.VotacionImg.x = kbLTCornerX+columnPos*12;
         this.VotacionImg.y = kbLTCornerY+rowPos*8;
-        this.VotacionImg.setScale(this.keyBoardBg.scale);
+        this.VotacionImg.setScale(this.keyBoardBg.scale*0.8);
         
         this.TiempoVotacionMenos.x = kbLTCornerX+columnPos*14.5;
         this.TiempoVotacionMenos.y = kbLTCornerY+rowPos*8;
-        this.TiempoVotacionMenos.setScale(this.keyBoardBg.scale);
+        this.TiempoVotacionMenos.setScale(this.keyBoardBg.scale*0.8);
         
         this.TiempoVotacionText.x = kbLTCornerX+columnPos*15.5;
         this.TiempoVotacionText.y = kbLTCornerY+rowPos*7.4;
-        this.TiempoVotacionText.setScale(this.keyBoardBg.scale);
+        this.TiempoVotacionText.setScale(this.keyBoardBg.scale*0.8);
         
         this.TiempoVotacionMas.x = kbLTCornerX+columnPos*17;
         this.TiempoVotacionMas.y = kbLTCornerY+rowPos*8;
-        this.TiempoVotacionMas.setScale(this.keyBoardBg.scale);
+        this.TiempoVotacionMas.setScale(this.keyBoardBg.scale*0.8);
 
         //---Aparicion de letras
         this.vowelsImg.x = kbLTCornerX+columnPos*12;
         this.vowelsImg.y = kbLTCornerY+rowPos*10;
-        this.vowelsImg.setScale(this.keyBoardBg.scale);
+        this.vowelsImg.setScale(this.keyBoardBg.scale*0.8);
 
         this.VowelsTickNoCheck.x = kbLTCornerX+columnPos*15.7;
         this.VowelsTickNoCheck.y = kbLTCornerY+rowPos*10;
-        this.VowelsTickNoCheck.setScale(this.keyBoardBg.scale*2);
+        this.VowelsTickNoCheck.setScale(this.keyBoardBg.scale*1.2);
 
         this.VowelsTickCheck.x = kbLTCornerX+columnPos*15.7;
         this.VowelsTickCheck.y = kbLTCornerY+rowPos*10;
-        this.VowelsTickCheck.setScale(this.keyBoardBg.scale);
+        this.VowelsTickCheck.setScale(this.keyBoardBg.scale*1.2);
 
         //Language
         this.languageImg.x = kbLTCornerX+columnPos*12;
         this.languageImg.y = kbLTCornerY+rowPos*12;
-        this.languageImg.setScale(this.keyBoardBg.scale);
+        this.languageImg.setScale(this.keyBoardBg.scale*0.8);
         
         this.spainFlag.x = kbLTCornerX+columnPos*14.7;
         this.spainFlag.y = kbLTCornerY+rowPos*12;
@@ -805,27 +810,30 @@ class Lobby extends Phaser.Scene {
 
         //Presets
         this.FacilImg.x = kbLTCornerX+columnPos*6;
-        this.FacilImg.y = kbLTCornerY+rowPos*18;
-        this.FacilImg.setScale(this.keyBoardBg.scale);
+        this.FacilImg.y = kbLTCornerY+rowPos*15;
+        this.FacilImg.setScale(this.keyBoardBg.scale*0.7);
 
         this.DificilImg.x = kbLTCornerX+columnPos*10;
-        this.DificilImg.y = kbLTCornerY+rowPos*18;
-        this.DificilImg.setScale(this.keyBoardBg.scale);
+        this.DificilImg.y = kbLTCornerY+rowPos*15;
+        this.DificilImg.setScale(this.keyBoardBg.scale*0.7);
 
         this.DailyImg.x = kbLTCornerX+columnPos*14;
-        this.DailyImg.y = kbLTCornerY+rowPos*18;
-        this.DailyImg.setScale(this.keyBoardBg.scale);
+        this.DailyImg.y = kbLTCornerY+rowPos*15;
+        this.DailyImg.setScale(this.keyBoardBg.scale*0.7);
 
         //Pictures
         for (let i = 0; i < 3; i++) {
             for (let j = 0; j < 3; j++) {
-                this.avatars[i+j*3].x = game.canvas.width/2 + ((0.3*game.canvas.height)*(i-1));
-                this.avatars[i+j*3].y = game.canvas.height/2 + ((0.3*game.canvas.height)*(j-1));
-                this.avatars[i+j*3].setScale(game.canvas.height/588.8,game.canvas.height/588.8);
+                this.avatars[i+j*3].x = game.canvas.width/2 + ((0.2*game.canvas.height)*(i-1));
+                this.avatars[i+j*3].y = game.canvas.height/2 + ((0.2*game.canvas.height)*(j-1));
+                this.avatars[i+j*3].setScale(game.canvas.height/883.2,game.canvas.height/883.2);
+                this.frames[i+j*3].x = this.avatars[i+j*3].x; 
+                this.frames[i+j*3].y = this.avatars[i+j*3].y; 
+                this.frames[i+j*3].setScale(this.avatars[i+j*3].scaleX/2, this.avatars[i+j*3].scaleY/2);
             }
         }
         this.codeText.x = game.canvas.width/2;
-        this.codeText.y = game.canvas.height/20;
+        this.codeText.y = game.canvas.height/22;
         this.codeText.setScale(this.sY);
     }
 
@@ -841,8 +849,10 @@ class Lobby extends Phaser.Scene {
                         this.avatars[i+j*3].setTint(0x888888);
                     else
                         this.avatars[i+j*3].setTint(0xffffff);
+                    this.frames[i+j*3].setAlpha(1);
                 } else {
                     this.avatars[i+j*3].setTexture('empty'); 
+                    this.frames[i+j*3].setAlpha(0);
                 }
             }
         }
