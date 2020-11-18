@@ -18,9 +18,18 @@ class Menu extends Phaser.Scene {
 		
 		//Buttons
     	this.pancarta = this.add.image(0,0,'cartelImprovinci').setInteractive();
-    	this.ready_bt = this.add.image(0,0,'Ready_es').setInteractive({cursor: 'pointer'});
+    	this.ready_bt = this.add.image(0,0,'Play'+game.global.languageSuffix).setInteractive({cursor: 'pointer'});
     	this.options_bt = this.add.image(0,0,'Ready_host_es').setInteractive({cursor: 'pointer'});
-		this.credits_bt = this.add.image(0,0,'Ronda_es').setInteractive({cursor: 'pointer'});
+		this.credits_bt = this.add.image(0,0,'Credits'+game.global.languageSuffix).setInteractive({cursor: 'pointer'});
+		if(game.global.languageSuffix === '_en')
+		{
+			this.spanishBtn = this.add.image(0,0,'spainFlag').setInteractive({cursor: 'pointer'}).setAlpha(0.4);
+			this.englishBtn = this.add.image(0,0,'ukFlag');
+		}else
+		{
+			this.spanishBtn = this.add.image(0,0,'spainFlag');
+			this.englishBtn = this.add.image(0,0,'ukFlag').setInteractive({cursor: 'pointer'}).setAlpha(0.4);
+		}
 
 		this.scaler();
 
@@ -37,6 +46,29 @@ class Menu extends Phaser.Scene {
 		this.credits_bt.on('pointerdown', function (pointer){
 			this.scene.start('Credits');
 		}, this);
+
+		this.englishBtn.on('pointerdown', function (pointer){
+			this.englishBtn.removeInteractive();
+			this.spanishBtn.setInteractive({cursor: 'pointer'});
+			this.spanishBtn.setAlpha(0.4);
+			this.englishBtn.setAlpha(1);
+			game.global.languageSuffix = '_en';
+			this.ready_bt.setTexture('Play'+game.global.languageSuffix);
+    		this.options_bt.setTexture('Ready_host_es');
+			this.credits_bt.setTexture('Credits'+game.global.languageSuffix);
+		}, this);
+
+		this.spanishBtn.on('pointerdown', function (pointer){
+			this.spanishBtn.removeInteractive();
+			this.englishBtn.setInteractive({cursor: 'pointer'});
+			this.englishBtn.setAlpha(0.4);
+			this.spanishBtn.setAlpha(1);
+			game.global.languageSuffix = '_es';
+			this.ready_bt.setTexture('Play'+game.global.languageSuffix);
+    		this.options_bt.setTexture('Ready_host_es');
+			this.credits_bt.setTexture('Credits'+game.global.languageSuffix);
+		}, this);
+		
     }
     
     update() { 
@@ -66,6 +98,14 @@ class Menu extends Phaser.Scene {
     	this.pancarta.x = game.canvas.width / 2;
 		this.pancarta.y = game.canvas.height * 8.3 / 50;
 		this.pancarta.setScale(this.sY);
+		
+		this.spanishBtn.x = game.canvas.width * 6.6 / 8;
+		this.spanishBtn.y = game.canvas.height * 0.8 / 8;
+		this.spanishBtn.setScale(this.sY);
+
+		this.englishBtn.x = game.canvas.width * 7 / 8;
+		this.englishBtn.y = game.canvas.height * 0.8 / 8;
+		this.englishBtn.setScale(this.sY);
 		
 		//Background
 		this.bg.x = game.canvas.width / 2;

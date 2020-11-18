@@ -226,9 +226,9 @@ class PreLobby extends Phaser.Scene {
         this.bg = this.add.image(0,0,'Menu').setInteractive();
 
         //buttons
-        this.button_create = this.add.image(0,0, 'Ready_es').setInteractive({cursor: 'pointer'});
-        this.codeButton = this.add.image(0,0, 'Ready_host_es').setInteractive({cursor: 'pointer'});
-        this.button_back = this.add.image(0,0, 'salirBoton_en').setInteractive({cursor: 'pointer'});
+        this.button_create = this.add.image(0,0, 'CrearPartida'+game.global.languageSuffix).setInteractive({cursor: 'pointer'});
+        this.codeButton = this.add.image(0,0, 'UnirsePartida'+game.global.languageSuffix).setInteractive({cursor: 'pointer'});
+        this.button_back = this.add.image(0,0, 'salirBoton'+game.global.languageSuffix).setInteractive({cursor: 'pointer'});
 
         //keyboard
         this.keyBoardBg = this.add.image(0,0,'KeyBoardBg').setInteractive();
@@ -253,12 +253,12 @@ class PreLobby extends Phaser.Scene {
         this.Letra_O = this.add.image(0,0,'Letra_O').setInteractive({cursor: 'pointer'});
         this.Letra_P = this.add.image(0,0,'Letra_P').setInteractive({cursor: 'pointer'});
 
-        this.codeText = this.add.text(0, 0, '', { fontSize: '70px',color: '#000000',fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' });
+        this.codeText = this.add.text(0, 0, '', { fontSize: '40px', fontFamily: 'comic sans ms', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff' });
 
         //Connection popup
         this.popupBg = this.add.image(0,0,'Gameplay');
         this.popupBg.setAlpha(0);
-        this.popupText = this.add.text(0, 0, '', { fontSize: '70px',color: '#000000',fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', align: 'center'}).setOrigin(0.5, 0.5);
+        this.popupText = this.add.text(0, 0, '', { fontSize: '40px', fontFamily: 'comic sans ms', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff'}).setOrigin(0.5, 0.5);
         this.popupText.setAlpha(0);
         this.popupCancel = this.add.image(0,0,'SalirCod');
         this.popupCancel.setAlpha(0);
@@ -457,11 +457,11 @@ class PreLobby extends Phaser.Scene {
     scaler()
     {
         //Buttons
-        this.button_create.x = game.canvas.width / 4;
+        this.button_create.x = game.canvas.width / 2;
         this.button_create.y = game.canvas.height / 4;
         this.button_create.setScale(this.sY);
 
-        this.codeButton.x = game.canvas.width / 4;
+        this.codeButton.x = game.canvas.width / 2;
         this.codeButton.y = game.canvas.height / 2;
         this.codeButton.setScale(this.sY);
 

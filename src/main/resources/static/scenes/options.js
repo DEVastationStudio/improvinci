@@ -23,7 +23,7 @@ class Options extends Phaser.Scene {
 
         this.canvas = new improCanvas(this, 128);
 
-        this.topScores = this.add.text(game.canvas.width/2, 10, 'Top Scores:\n', { fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' });
+        this.topScores = this.add.text(game.canvas.width/2, 10, 'Top Scores:\n', { fontSize: '40px', fontFamily: 'comic sans ms', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff'});
     
         if (this.usesLocalStorage) {
             if (localStorage.getItem('score') !== null) {

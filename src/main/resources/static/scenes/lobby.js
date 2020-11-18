@@ -19,8 +19,8 @@ class Lobby extends Phaser.Scene {
         //Buttons
         this.button_start = this.add.image(0,0, 'Ready_host_es');
         this.button_start.setAlpha(0.5);
-        this.button_back = this.add.image(0,0, 'salirBoton_en').setInteractive({cursor: 'pointer'});
-        this.button_Options = this.add.image(0,0, 'Ready_host_es');
+        this.button_back = this.add.image(0,0, 'salirBoton'+game.global.languageSuffix).setInteractive({cursor: 'pointer'});
+        this.button_Options = this.add.image(0,0, 'Config'+game.global.languageSuffix);
         this.button_Options.setAlpha(0);
         
 
@@ -54,7 +54,7 @@ class Lobby extends Phaser.Scene {
             this.button_start.visible = false;
         }, this);
         
-        this.add.text(game.canvas.width/2, 10, data.code, { fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' });
+        this.add.text(game.canvas.width/2, 10, data.code, { fontSize: '40px', fontFamily: 'comic sans ms', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff' });
         
         this.avatars = [];
         for (let i = 0; i < 3; i++) {
@@ -72,28 +72,28 @@ class Lobby extends Phaser.Scene {
         }
 
          //Lobby info
-         this.roomInfo = this.add.text(0, 0, '', { fontSize: '40px',color: '#FFFFFF',fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' });
+         this.roomInfo = this.add.text(0, 0, '', {fontSize: '40px', fontFamily: 'comic sans ms', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff'});
 
          //Options
          this.keyBoardBg = this.add.image(0,0,'Gameplay').setInteractive();
-         this.DailyImg = this.add.image(0,0,'Daily').setInteractive({cursor: 'pointer'});
-         this.BlindImg = this.add.image(0,0,'Blind').setInteractive();
-         this.DefaultImg = this.add.image(0,0,'Default').setInteractive();
-         this.DificilImg = this.add.image(0,0,'Dificil').setInteractive({cursor: 'pointer'});
-         this.FacilImg = this.add.image(0,0,'Facil').setInteractive({cursor: 'pointer'});
-         this.GrowingImg = this.add.image(0,0,'Growing').setInteractive();
-         this.LimitImg = this.add.image(0,0,'Limit').setInteractive();
-         this.ModosImg = this.add.image(0,0,'Modos').setInteractive();
-         this.NumRondasImg = this.add.image(0,0,'NumRondas').setInteractive();
-         this.OneImg = this.add.image(0,0,'One').setInteractive();
-         this.RondaImg = this.add.image(0,0,'Ronda').setInteractive();
-         this.TiemposImg = this.add.image(0,0,'Tiempos').setInteractive();
-         this.VotacionImg = this.add.image(0,0,'Votacion').setInteractive();
+         this.DailyImg = this.add.image(0,0,'Daily'+game.global.languageSuffix).setInteractive({cursor: 'pointer'});
+         this.BlindImg = this.add.image(0,0,'Blind'+game.global.languageSuffix).setInteractive();
+         this.DefaultImg = this.add.image(0,0,'Default'+game.global.languageSuffix).setInteractive();
+         this.DificilImg = this.add.image(0,0,'Dificil'+game.global.languageSuffix).setInteractive({cursor: 'pointer'});
+         this.FacilImg = this.add.image(0,0,'Facil'+game.global.languageSuffix).setInteractive({cursor: 'pointer'});
+         this.GrowingImg = this.add.image(0,0,'Growing'+game.global.languageSuffix).setInteractive();
+         this.LimitImg = this.add.image(0,0,'Limit'+game.global.languageSuffix).setInteractive();
+         this.ModosImg = this.add.image(0,0,'Modos'+game.global.languageSuffix).setInteractive();
+         this.NumRondasImg = this.add.image(0,0,'NumRondas'+game.global.languageSuffix).setInteractive();
+         this.OneImg = this.add.image(0,0,'One'+game.global.languageSuffix).setInteractive();
+         this.RondaImg = this.add.image(0,0,'RondaC'+game.global.languageSuffix).setInteractive();
+         this.TiemposImg = this.add.image(0,0,'Tiempos'+game.global.languageSuffix).setInteractive();
+         this.VotacionImg = this.add.image(0,0,'Votacion'+game.global.languageSuffix).setInteractive();
          this.SalirCod = this.add.image(0,0,'SalirCod').setInteractive({cursor: 'pointer'});
          this.spainFlag = this.add.image(0,0,'spainFlag').setInteractive({cursor: 'pointer'});
          this.ukFlag = this.add.image(0,0,'ukFlag').setInteractive({cursor: 'pointer'});
-         this.languageImg = this.add.image(0,0,'language').setInteractive();
-         this.vowelsImg = this.add.image(0,0,'vowels').setInteractive();
+         this.languageImg = this.add.image(0,0,'language'+game.global.languageSuffix).setInteractive();
+         this.vowelsImg = this.add.image(0,0,'vowels'+game.global.languageSuffix).setInteractive();
 
          //Checks modos
          //----NoChecks
@@ -114,13 +114,13 @@ class Lobby extends Phaser.Scene {
          //MasMenos Configuracion Ronda
          this.NumRondasMas = this.add.image(0,0,'Mas').setInteractive({cursor: 'pointer'});
          this.NumRondasMenos = this.add.image(0,0,'Menos').setInteractive({cursor: 'pointer'});
-         this.NumRondasText = this.add.text(0, 0, '--', { fontSize: '60px',color: '#000000',fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' });
+         this.NumRondasText = this.add.text(0, 0, '--', { fontSize: '30px', fontFamily: 'comic sans ms', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff'});
          this.TiempoRondasMas = this.add.image(0,0,'Mas').setInteractive({cursor: 'pointer'});
          this.TiempoRondasMenos = this.add.image(0,0,'Menos').setInteractive({cursor: 'pointer'});
-         this.TiempoRondasText = this.add.text(0, 0, '--', { fontSize: '60px',color: '#000000',fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' });
+         this.TiempoRondasText = this.add.text(0, 0, '--', { fontSize: '30px', fontFamily: 'comic sans ms', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff'});
          this.TiempoVotacionMas = this.add.image(0,0,'Mas').setInteractive({cursor: 'pointer'});
          this.TiempoVotacionMenos = this.add.image(0,0,'Menos').setInteractive({cursor: 'pointer'});
-         this.TiempoVotacionText = this.add.text(0, 0, '--', { fontSize: '60px',color: '#000000',fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' });
+         this.TiempoVotacionText = this.add.text(0, 0, '--', { fontSize: '30px', fontFamily: 'comic sans ms', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff'});
          //this.Mas = this.add.image(0,0,'Mas').setInteractive();
          //this.Menos = this.add.image(0,0,'Menos').setInteractive();
 
@@ -441,7 +441,7 @@ class Lobby extends Phaser.Scene {
         }
 
         if (leader) {
-            if (count >= 3) {
+            if (count >= 1) {
                 this.button_start.setInteractive({cursor: 'pointer'});
                 this.button_start.setAlpha(1);
             } else {
@@ -460,30 +460,61 @@ class Lobby extends Phaser.Scene {
     
     showLobbyInfo(defaultM, blindM, limitM, oneM, growingM, vowelsM, isEnglish, numRoundsM, roundTimeM, voteTimeM, numActGamemodes)
     {
-        this.activeGamemodes = numActGamemodes;
-        this.roomInfo.text='ROUND INFO: \n';
-        this.roomInfo.text+='Rounds: '+numRoundsM+'\n';
-        this.roomInfo.text+='Round time: '+roundTimeM+'\n';
-        this.roomInfo.text+='Voting time: '+voteTimeM+'\n';
-        if(isEnglish)
-            this.roomInfo.text+='Word bank language: English\n';
+        if(game.global.languageSuffix === '_en')
+        {
+            this.activeGamemodes = numActGamemodes;
+            this.roomInfo.text='ROUND INFO: \n';
+            this.roomInfo.text+='Rounds: '+numRoundsM+'\n';
+            this.roomInfo.text+='Round time: '+roundTimeM+'\n';
+            this.roomInfo.text+='Voting time: '+voteTimeM+'\n';
+            if(isEnglish)
+                this.roomInfo.text+='Word bank language: English\n';
+            else
+                this.roomInfo.text+='Word bank language: Spanish\n';
+            if(vowelsM)
+                this.roomInfo.text+='Faker sees vowels: Yes\n \n';
+            else
+                this.roomInfo.text+='Faker sees vowels: No\n \n';
+            this.roomInfo.text+='GAMEMODES IN USE: \n';
+            if(defaultM)
+                this.roomInfo.text+='Default \n';
+            if(blindM)
+                this.roomInfo.text+='Blind mode \n';
+            if(limitM)
+                this.roomInfo.text+='Limit mode \n';
+            if(oneM)
+                this.roomInfo.text+='One Mode \n';
+            if(growingM)
+                this.roomInfo.text+='Growing Mode\n';
+        }
         else
-            this.roomInfo.text+='Word bank language: Spanish\n';
-        if(vowelsM)
-            this.roomInfo.text+='Faker sees vowels: Yes\n \n';
-        else
-            this.roomInfo.text+='Faker sees vowels: No\n \n';
-        this.roomInfo.text+='GAMEMODES IN USE: \n';
-        if(defaultM)
-            this.roomInfo.text+='Default \n';
-        if(blindM)
-            this.roomInfo.text+='Blind mode \n';
-        if(limitM)
-            this.roomInfo.text+='Limit mode \n';
-        if(oneM)
-            this.roomInfo.text+='One Mode \n';
-        if(growingM)
-            this.roomInfo.text+='Growing Mode\n';
+        {
+            this.activeGamemodes = numActGamemodes;
+            this.roomInfo.text='INFO RONDA: \n';
+            this.roomInfo.text+='Rondas: '+numRoundsM+'\n';
+            this.roomInfo.text+='Tiempo ronda: '+roundTimeM+'\n';
+            this.roomInfo.text+='Tiempo votación: '+voteTimeM+'\n';
+            if(isEnglish)
+                this.roomInfo.text+='Banco de palabras: Inglés\n';
+            else
+                this.roomInfo.text+='Banco de palabras: Español\n';
+            if(vowelsM)
+                this.roomInfo.text+='Improvisador ve las vocales: Si\n \n';
+            else
+                this.roomInfo.text+='Improvisador ve las vocales: No\n \n';
+            this.roomInfo.text+='MODOS EN USO: \n';
+            if(defaultM)
+                this.roomInfo.text+='Normal \n';
+            if(blindM)
+                this.roomInfo.text+='A Ciegas \n';
+            if(limitM)
+                this.roomInfo.text+='Trazos limitados \n';
+            if(oneM)
+                this.roomInfo.text+='Un solo trazo \n';
+            if(growingM)
+                this.roomInfo.text+='Picel incremetal\n';
+        }
+        
     }
 
     update() { 
@@ -628,11 +659,11 @@ class Lobby extends Phaser.Scene {
         
         this.DefaultTickNoCheck.x = kbLTCornerX+columnPos*7;
         this.DefaultTickNoCheck.y = kbLTCornerY+rowPos*4;
-        this.DefaultTickNoCheck.setScale(this.keyBoardBg.scale*2);
+        this.DefaultTickNoCheck.setScale(this.keyBoardBg.scale);
         
         this.DefaultTickCheck.x = kbLTCornerX+columnPos*7;
         this.DefaultTickCheck.y = kbLTCornerY+rowPos*4;
-        this.DefaultTickCheck.setScale(this.keyBoardBg.scale*2);
+        this.DefaultTickCheck.setScale(this.keyBoardBg.scale);
         
         //---Blind
         this.BlindImg.x = kbLTCornerX+columnPos*4;
@@ -641,11 +672,11 @@ class Lobby extends Phaser.Scene {
         
         this.BlindTickNoCheck.x = kbLTCornerX+columnPos*7;
         this.BlindTickNoCheck.y = kbLTCornerY+rowPos*6;
-        this.BlindTickNoCheck.setScale(this.keyBoardBg.scale*2);
+        this.BlindTickNoCheck.setScale(this.keyBoardBg.scale);
         
         this.BlindTickCheck.x = kbLTCornerX+columnPos*7;
         this.BlindTickCheck.y = kbLTCornerY+rowPos*6;
-        this.BlindTickCheck.setScale(this.keyBoardBg.scale*2);
+        this.BlindTickCheck.setScale(this.keyBoardBg.scale);
         
         //---Limit
         this.LimitImg.x = kbLTCornerX+columnPos*4;
@@ -654,11 +685,11 @@ class Lobby extends Phaser.Scene {
         
         this.LimitTickNoCheck.x = kbLTCornerX+columnPos*7;
         this.LimitTickNoCheck.y = kbLTCornerY+rowPos*8;
-        this.LimitTickNoCheck.setScale(this.keyBoardBg.scale*2);
+        this.LimitTickNoCheck.setScale(this.keyBoardBg.scale);
         
         this.LimitTickCheck.x = kbLTCornerX+columnPos*7;
         this.LimitTickCheck.y = kbLTCornerY+rowPos*8;
-        this.LimitTickCheck.setScale(this.keyBoardBg.scale*2);
+        this.LimitTickCheck.setScale(this.keyBoardBg.scale);
         
         //---One
         this.OneImg.x = kbLTCornerX+columnPos*4;
@@ -667,11 +698,11 @@ class Lobby extends Phaser.Scene {
         
         this.OneTickNoCheck.x = kbLTCornerX+columnPos*7;
         this.OneTickNoCheck.y = kbLTCornerY+rowPos*10;
-        this.OneTickNoCheck.setScale(this.keyBoardBg.scale*2);
+        this.OneTickNoCheck.setScale(this.keyBoardBg.scale);
         
         this.OneTickCheck.x = kbLTCornerX+columnPos*7;
         this.OneTickCheck.y = kbLTCornerY+rowPos*10;
-        this.OneTickCheck.setScale(this.keyBoardBg.scale*2);
+        this.OneTickCheck.setScale(this.keyBoardBg.scale);
         
         //---Growing
         this.GrowingImg.x = kbLTCornerX+columnPos*4;
@@ -680,11 +711,11 @@ class Lobby extends Phaser.Scene {
         
         this.GrowingTickNoCheck.x = kbLTCornerX+columnPos*7;
         this.GrowingTickNoCheck.y = kbLTCornerY+rowPos*12;
-        this.GrowingTickNoCheck.setScale(this.keyBoardBg.scale*2);
+        this.GrowingTickNoCheck.setScale(this.keyBoardBg.scale);
         
         this.GrowingTickCheck.x = kbLTCornerX+columnPos*7;
         this.GrowingTickCheck.y = kbLTCornerY+rowPos*12;
-        this.GrowingTickCheck.setScale(this.keyBoardBg.scale*2);
+        this.GrowingTickCheck.setScale(this.keyBoardBg.scale);
 
         //InRoom
         this.TiemposImg.x = kbLTCornerX+columnPos*14;
@@ -698,7 +729,7 @@ class Lobby extends Phaser.Scene {
         
         this.NumRondasMenos.x = kbLTCornerX+columnPos*14.5;
         this.NumRondasMenos.y = kbLTCornerY+rowPos*4;
-        this.NumRondasMenos.setScale(this.keyBoardBg.scale*2);
+        this.NumRondasMenos.setScale(this.keyBoardBg.scale);
         
         this.NumRondasText.x = kbLTCornerX+columnPos*15.5;
         this.NumRondasText.y = kbLTCornerY+rowPos*3.4;
@@ -706,7 +737,7 @@ class Lobby extends Phaser.Scene {
         
         this.NumRondasMas.x = kbLTCornerX+columnPos*17;
         this.NumRondasMas.y = kbLTCornerY+rowPos*4;
-        this.NumRondasMas.setScale(this.keyBoardBg.scale*2);
+        this.NumRondasMas.setScale(this.keyBoardBg.scale);
 
         //---Tiempo pintar
         this.RondaImg.x = kbLTCornerX+columnPos*12;
@@ -715,7 +746,7 @@ class Lobby extends Phaser.Scene {
         
         this.TiempoRondasMenos.x = kbLTCornerX+columnPos*14.5;
         this.TiempoRondasMenos.y = kbLTCornerY+rowPos*6;
-        this.TiempoRondasMenos.setScale(this.keyBoardBg.scale*2);
+        this.TiempoRondasMenos.setScale(this.keyBoardBg.scale);
 
         this.TiempoRondasText.x = kbLTCornerX+columnPos*15.5;
         this.TiempoRondasText.y = kbLTCornerY+rowPos*5.4;
@@ -723,7 +754,7 @@ class Lobby extends Phaser.Scene {
 
         this.TiempoRondasMas.x = kbLTCornerX+columnPos*17;
         this.TiempoRondasMas.y = kbLTCornerY+rowPos*6;
-        this.TiempoRondasMas.setScale(this.keyBoardBg.scale*2);
+        this.TiempoRondasMas.setScale(this.keyBoardBg.scale);
 
         //---Tiempo Votaciones
         this.VotacionImg.x = kbLTCornerX+columnPos*12;
@@ -732,7 +763,7 @@ class Lobby extends Phaser.Scene {
         
         this.TiempoVotacionMenos.x = kbLTCornerX+columnPos*14.5;
         this.TiempoVotacionMenos.y = kbLTCornerY+rowPos*8;
-        this.TiempoVotacionMenos.setScale(this.keyBoardBg.scale*2);
+        this.TiempoVotacionMenos.setScale(this.keyBoardBg.scale);
         
         this.TiempoVotacionText.x = kbLTCornerX+columnPos*15.5;
         this.TiempoVotacionText.y = kbLTCornerY+rowPos*7.4;
@@ -740,7 +771,7 @@ class Lobby extends Phaser.Scene {
         
         this.TiempoVotacionMas.x = kbLTCornerX+columnPos*17;
         this.TiempoVotacionMas.y = kbLTCornerY+rowPos*8;
-        this.TiempoVotacionMas.setScale(this.keyBoardBg.scale*2);
+        this.TiempoVotacionMas.setScale(this.keyBoardBg.scale);
 
         //---Aparicion de letras
         this.vowelsImg.x = kbLTCornerX+columnPos*12;
@@ -753,7 +784,7 @@ class Lobby extends Phaser.Scene {
 
         this.VowelsTickCheck.x = kbLTCornerX+columnPos*15.7;
         this.VowelsTickCheck.y = kbLTCornerY+rowPos*10;
-        this.VowelsTickCheck.setScale(this.keyBoardBg.scale*2);
+        this.VowelsTickCheck.setScale(this.keyBoardBg.scale);
 
         //Language
         this.languageImg.x = kbLTCornerX+columnPos*12;
@@ -779,7 +810,7 @@ class Lobby extends Phaser.Scene {
 
         this.DailyImg.x = kbLTCornerX+columnPos*14;
         this.DailyImg.y = kbLTCornerY+rowPos*18;
-        this.DailyImg.setScale(this.keyBoardBg.scale*2);
+        this.DailyImg.setScale(this.keyBoardBg.scale);
     }
 
     updateAvatars(data) {

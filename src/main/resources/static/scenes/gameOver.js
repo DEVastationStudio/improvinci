@@ -19,8 +19,6 @@ class GameOver extends Phaser.Scene {
         //Buttons
     	this.playAgain_bt = this.add.image(0,0,'Ready_es').setInteractive({cursor: 'pointer'});
     	this.quit_bt = this.add.image(0,0,'Ready_host_es').setInteractive({cursor: 'pointer'});
-        
-        this.wipScoreText = this.add.text(game.canvas.width/2, 10, '', { fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' });
 
         if (this.textures.exists(data.players[0].playerId+'s')) {
             this.textures.get(data.players[0].playerId+'s').destroy();
@@ -36,7 +34,7 @@ class GameOver extends Phaser.Scene {
 
         this.crown = this.add.image(this.winnerFrame.x - this.winnerFrame.displayWidth/2, this.winnerFrame.y - this.winnerFrame.displayHeight/2,'Corona'); 
 
-        this.winnerScore = this.add.text(game.canvas.width*5/16, game.canvas.height*7/16 + this.winnerFrame.displayHeight/2, data.players[0].score, { fontSize: '40px',fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#ff6600', stroke: '#000000', align: 'center'}).setOrigin(0.5, 0.5);
+        this.winnerScore = this.add.text(game.canvas.width*5/16, game.canvas.height*7/16 + this.winnerFrame.displayHeight/2, data.players[0].score, { fontSize: '30px', fontFamily: 'comic sans ms', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff', align: 'center'}).setOrigin(0.5, 0.5);
 
         this.drawings = [];
         this.frames = [];
@@ -60,7 +58,7 @@ class GameOver extends Phaser.Scene {
                 this.frames[i+j*4] = this.add.image(game.canvas.width*11/16 + ((0.2*game.canvas.height)*(i-1.5)), game.canvas.height*5/16 + ((0.2*game.canvas.height)*(j-0.5)), this.frameImages[Math.floor(Math.random()*this.frameImages.length)]); 
                 this.frames[i+j*4].setScale(game.canvas.height/2355.2,game.canvas.height/2355.2);
 
-                this.scores[i+j*4] = this.add.text(game.canvas.width*11/16 + ((0.2*game.canvas.height)*(i-1.5)), game.canvas.height*5/16 + ((0.2*game.canvas.height)*(j-0.5)) + (0.1*game.canvas.height), data.players[1+i+j*4].score, { fontSize: '40px',fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#ff6600', stroke: '#000000', align: 'center'}).setOrigin(0.5, 0.5);
+                this.scores[i+j*4] = this.add.text(game.canvas.width*11/16 + ((0.2*game.canvas.height)*(i-1.5)), game.canvas.height*5/16 + ((0.2*game.canvas.height)*(j-0.5)) + (0.1*game.canvas.height), data.players[1+i+j*4].score, { fontSize: '30px', fontFamily: 'comic sans ms', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff', align: 'center'}).setOrigin(0.5, 0.5);
                 if (data.players[1+i+j*4].score === this.topScore)
                     this.crowns[i+j*4] = this.add.image(this.frames[i+j*4].x - this.frames[i+j*4].displayWidth/2, this.frames[i+j*4].y - this.frames[i+j*4].displayHeight/2,'Corona'); 
             }

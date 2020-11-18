@@ -17,22 +17,22 @@ class InGame extends Phaser.Scene {
 
         //Buttons
         this.confirmVoteButton = this.add.image(0,0,'Ready_es'); 
-        this.cancelVoteButton = this.add.image(0,0, 'Ready_en');
-        this.fakerPeekButton = this.add.image(0,0,'Ready_es'); 
+        this.cancelVoteButton = this.add.image(0,0, 'Ready'+game.global.languageSuffix);
+        this.fakerPeekButton = this.add.image(0,0,'Copiar'+game.global.languageSuffix); 
         this.fakerPeekButton.setAlpha(0);
         this.button_clear = this.add.image(game.canvas.width * 3 / 4, game.canvas.height / 4, 'Corona').setInteractive({cursor: 'pointer'});
         //this.fakerPeekButton.setScale(0.2, 0.2);
-        this.button_back = this.add.image(0,0, 'salirBoton_en').setInteractive({cursor: 'pointer'});
+        this.button_back = this.add.image(0,0, 'salirBoton'+game.global.languageSuffix).setInteractive({cursor: 'pointer'});
 
         //Critico
         this.CriticoLejosImg = this.add.image(0,0,'CriticoLejos');
 
         //Gamemodes
-        this.iconoDefaultImg = this.add.image(0,0,'ModoNormal_en');
-        this.iconoBlindImg = this.add.image(0,0,'Blind_en');
-        this.iconoLimitImg = this.add.image(0,0,'ModoTrazosLim_en');
-        this.iconoOneImg = this.add.image(0,0,'ModoUnSoloTrazo_en');
-        this.iconoGrowingImg = this.add.image(0,0,'ModoBrochaIncremental_en');
+        this.iconoDefaultImg = this.add.image(0,0,'ModoNormal'+game.global.languageSuffix);
+        this.iconoBlindImg = this.add.image(0,0,'ModoACiegas'+game.global.languageSuffix);
+        this.iconoLimitImg = this.add.image(0,0,'ModoTrazosLim'+game.global.languageSuffix);
+        this.iconoOneImg = this.add.image(0,0,'ModoUnSoloTrazo'+game.global.languageSuffix);
+        this.iconoGrowingImg = this.add.image(0,0,'ModoBrochaIncremental'+game.global.languageSuffix);
 
         //timerText
         this.TimeAnim = this.add.sprite(0,0, 'TimeAnim');
@@ -78,7 +78,7 @@ class InGame extends Phaser.Scene {
                 this.frames[i+j*3] = this.add.image(game.canvas.width/2 + ((0.3*game.canvas.height)*(i-1)), game.canvas.height/2 + ((0.3*game.canvas.height)*(j-1)), this.frameImages[Math.floor(Math.random()*this.frameImages.length)]); 
                 this.frames[i+j*3].setScale(game.canvas.height/1177.6,game.canvas.height/1177.6);
                 this.frames[i+j*3].setAlpha(0);
-                this.votes[i+j*3] = this.add.text(game.canvas.width/2 + ((0.3*game.canvas.height)*(i-1)), game.canvas.height/2 + ((0.3*game.canvas.height)*(j-1)) + (0.15*game.canvas.height), '', { fontSize: '40px',fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#ff6600', stroke: '#000000', align: 'center'}).setOrigin(0.5, 0.5);
+                this.votes[i+j*3] = this.add.text(game.canvas.width/2 + ((0.3*game.canvas.height)*(i-1)), game.canvas.height/2 + ((0.3*game.canvas.height)*(j-1)) + (0.15*game.canvas.height), '', { fontSize: '30px', fontFamily: 'comic sans ms', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff', align: 'center'}).setOrigin(0.5, 0.5);
                 this.votedIndicators[i+j*3] = this.add.image(this.drawings[i+j*3].x + this.drawings[i+j*3].displayWidth/2, this.drawings[i+j*3].y - this.drawings[i+j*3].displayHeight/2,'Corona'); 
                 this.votedIndicators[i+j*3].setScale(this.sY);
                 this.votedIndicators[i+j*3].setAlpha(0);
@@ -105,7 +105,7 @@ class InGame extends Phaser.Scene {
         this.dcFrame = this.add.image(game.canvas.width/4, game.canvas.height*7/8,this.frameImages[Math.floor(Math.random()*this.frameImages.length)]); 
         this.dcFrame.setScale(game.canvas.height/1843.2,game.canvas.height/1843.2);
         this.dcFrame.setAlpha(0);
-        this.dcText = this.add.text(this.dcFrame.x + this.dcFrame.displayWidth/2, game.canvas.height*7/8, 'A player left the game.', { fontSize: '40px',fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#ff6600', stroke: '#000000'});
+        this.dcText = this.add.text(this.dcFrame.x + this.dcFrame.displayWidth/2, game.canvas.height*7/8, 'A player left the game.', { fontSize: '40px', fontFamily: 'comic sans ms', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff'});
         this.dcText.setAlpha(0);
         this.dcFadeTween = this.tweens.add({
             targets: [this.dcImage, this.dcFrame, this.dcText],
@@ -158,11 +158,10 @@ class InGame extends Phaser.Scene {
         this.canvas = new improCanvas(this, 256);
         this.canvas.hideCanvas();
 
-        this.word = this.add.text(game.canvas.width/2 ,game.canvas.height/2, 'Waiting for other players...', {fontSize: '50px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#000000', stroke: '#000000' });
-        this.gameMode = this.add.text(game.canvas.width/4 ,game.canvas.height/8, '', { fontSize: '50px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#000000', stroke: '#000000' });
-        //this.timerText = this.add.text(game.canvas.width/10 ,game.canvas.height/8, '', { fontSize: '50px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#000000', stroke: '#000000' });
-        this.inGameWord = this.add.text(game.canvas.width/2 ,game.canvas.height/12, '', { fontSize: '50px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#000000', stroke: '#000000' });
-        this.roundText = this.add.text(game.canvas.width*6/8 ,game.canvas.height/12, '0/'+this.maxRounds, { fontSize: '50px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#000000', stroke: '#000000' });
+        this.word = this.add.text(game.canvas.width/2 ,game.canvas.height/2, 'Waiting for other players...', {fontSize: '40px', fontFamily: 'comic sans ms', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff'});
+        this.gameMode = this.add.text(game.canvas.width/4 ,game.canvas.height/8, '', { fontSize: '40px', fontFamily: 'comic sans ms', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff'});
+        this.inGameWord = this.add.text(game.canvas.width/2 ,game.canvas.height/12, '', {fontSize: '40px', fontFamily: 'comic sans ms', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff'});
+        this.roundText = this.add.text(game.canvas.width*6/8 ,game.canvas.height/12, '0/'+this.maxRounds, { fontSize: '40px', fontFamily: 'comic sans ms', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff'});
         this.strokesLeft = this.add.text(0 ,0, '', {fontSize: '30px', fontFamily: 'comic sans ms', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff' });
         
         this.button_clear.on('pointerdown', function (pointer){
@@ -175,11 +174,11 @@ class InGame extends Phaser.Scene {
         game.global.socketDir.send(JSON.stringify(msg2));
 
         //Doble confirmacion
-        this.DobleConfirmImg = this.add.image(0,0,'DobleConfirm').setInteractive();
+        this.DobleConfirmImg = this.add.image(0,0,'DobleConfirm'+game.global.languageSuffix).setInteractive();
         this.DobleConfirmImg.setAlpha(0);
-        this.DobleConfirmYES = this.add.image(0,0,'ConfirmarCod').setInteractive({cursor: 'pointer'});
+        this.DobleConfirmYES = this.add.image(0,0,'DobleConfirmSi'+game.global.languageSuffix).setInteractive({cursor: 'pointer'});
         this.DobleConfirmYES.setAlpha(0);
-		this.DobleConfirmNO = this.add.image(0,0,'SalirCod').setInteractive({cursor: 'pointer'});
+		this.DobleConfirmNO = this.add.image(0,0,'DobleConfirmNo'+game.global.languageSuffix).setInteractive({cursor: 'pointer'});
         this.DobleConfirmNO.setAlpha(0);
 
 
@@ -375,7 +374,7 @@ class InGame extends Phaser.Scene {
         //Doble confirmacion
         this.DobleConfirmImg.x = game.canvas.width / 2;
         this.DobleConfirmImg.y = game.canvas.height / 2;
-        this.DobleConfirmImg.setScale(this.sY);
+        this.DobleConfirmImg.setScale(this.sY/3);
 
         let kbLTCornerX = (this.DobleConfirmImg.x-(this.DobleConfirmImg.width*this.DobleConfirmImg.scaleX)/2)+0;
         let kbLTCornerY = (this.DobleConfirmImg.y-(this.DobleConfirmImg.height*this.DobleConfirmImg.scaleY)/2)+0;
@@ -384,11 +383,11 @@ class InGame extends Phaser.Scene {
 
         this.DobleConfirmYES.x = kbLTCornerX+columnPos*5;
         this.DobleConfirmYES.y = kbLTCornerY+rowPos*15;
-        this.DobleConfirmYES.setScale(this.sY);
+        this.DobleConfirmYES.setScale(this.sY/3);
 
         this.DobleConfirmNO.x = kbLTCornerX+columnPos*15;
         this.DobleConfirmNO.y = kbLTCornerY+rowPos*15;
-        this.DobleConfirmNO.setScale(this.sY);
+        this.DobleConfirmNO.setScale(this.sY/3);
 
         //Background
         this.bg.x = game.canvas.width / 2;
@@ -751,7 +750,7 @@ class InGame extends Phaser.Scene {
 
     writeRoomCode(roomCode)
     {
-        this.add.text(10, 10, roomCode, { fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#ff6600', stroke: '#000000' });
+        this.add.text(10, 10, roomCode, { fontSize: '40px', fontFamily: 'comic sans ms', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff'});
     }
 }
 var joinRoomOnce = false;

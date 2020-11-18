@@ -46,6 +46,18 @@ class Preloader extends Phaser.Scene {
 		this.load.image('credsFondoO', 'assets/backgrounds/credsFondoO.png');
 		this.load.image('finFondoO', 'assets/backgrounds/finFondoO.png');
     	this.load.image('Caballete_gameplay', 'assets/interface/Caballete_gameplay.png');
+		this.load.image('Play_en', 'assets/interface/Play_en.png');
+		this.load.image('Play_es', 'assets/interface/Play_es.png');
+		this.load.image('Credits_es', 'assets/interface/Credits_es.png');
+		this.load.image('Credits_en', 'assets/interface/Credits_en.png');
+		this.load.image('CrearPartida_en', 'assets/interface/CrearPartida_en.png');
+		this.load.image('CrearPartida_es', 'assets/interface/CrearPartida_es.png');
+		this.load.image('UnirsePartida_en', 'assets/interface/UnirsePartida_en.png');
+		this.load.image('UnirsePartida_es', 'assets/interface/UnirsePartida_es.png');
+		this.load.image('Config_es', 'assets/interface/Config_es.png');
+		this.load.image('Config_en', 'assets/interface/Config_en.png');
+		this.load.image('Copiar_es', 'assets/interface/Copiar_es.png');
+		this.load.image('Copiar_en', 'assets/interface/Copiar_en.png');
     	this.load.image('Ready_es', 'assets/interface/Ready_es.png');
     	this.load.image('Ready_en', 'assets/interface/Ready_en.png');
     	this.load.image('Ready_host_es', 'assets/interface/Ready_host_es.png');
@@ -62,7 +74,12 @@ class Preloader extends Phaser.Scene {
 		this.load.image('salirBoton_en', 'assets/interface/salirBoton_en.png');
 		this.load.image('Desco_en', 'assets/interface/Desco_en.png');
 		this.load.image('Desco_es', 'assets/interface/Desco_es.png');
-		this.load.image('DobleConfirm', 'assets/interface/DobleConfirm.png');
+		this.load.image('DobleConfirm_es', 'assets/interface/DobleConfirm_es.png');
+		this.load.image('DobleConfirm_en', 'assets/interface/DobleConfirm_en.png');
+		this.load.image('DobleConfirmSi_es', 'assets/interface/DobleConfirmSi_es.png');
+		this.load.image('DobleConfirmSi_en', 'assets/interface/DobleConfirmSi_en.png');
+		this.load.image('DobleConfirmNo_es', 'assets/interface/DobleConfirmNo_es.png');
+		this.load.image('DobleConfirmNo_en', 'assets/interface/DobleConfirmNo_en.png');
 		
 		//keyboard
 		this.load.image('KeyBoardBg', 'assets/backgrounds/KeyBoardBg.png');
@@ -88,27 +105,43 @@ class Preloader extends Phaser.Scene {
 		this.load.image('Letra_P', 'assets/backgrounds/letras/P.png');
 
 		//menu Configuración
-		this.load.image('Daily', 'assets/backgrounds/Configuracion/Daily_en.png');
-		this.load.image('Blind', 'assets/backgrounds/Configuracion/Blind_en.png');
-		this.load.image('Default', 'assets/backgrounds/Configuracion/Default.png');
-		this.load.image('Dificil', 'assets/backgrounds/Configuracion/Dificil_en.png');
-		this.load.image('Facil', 'assets/backgrounds/Configuracion/Facil_en.png');
-		this.load.image('Growing', 'assets/backgrounds/Configuracion/Growing.png');
-		this.load.image('Limit', 'assets/backgrounds/Configuracion/Limit_en.png');
-		this.load.image('Modos', 'assets/backgrounds/Configuracion/Modos_en.png');
-		this.load.image('NumRondas', 'assets/backgrounds/Configuracion/NumRondas_en.png');
-		this.load.image('One', 'assets/backgrounds/Configuracion/One_en.png');
-		this.load.image('Ronda', 'assets/backgrounds/Configuracion/Ronda_en.png');
-		this.load.image('Tiempos', 'assets/backgrounds/Configuracion/Tiempos_en.png');
-		this.load.image('Votacion', 'assets/backgrounds/Configuracion/Votacion_en.png');
+		this.load.image('Daily_en', 'assets/backgrounds/Configuracion/Daily_en.png');
+		this.load.image('Blind_en', 'assets/backgrounds/Configuracion/Blind_en.png');
+		this.load.image('Default_en', 'assets/backgrounds/Configuracion/Default_en.png');
+		this.load.image('Dificil_en', 'assets/backgrounds/Configuracion/Dificil_en.png');
+		this.load.image('Facil_en', 'assets/backgrounds/Configuracion/Facil_en.png');
+		this.load.image('Growing_en', 'assets/backgrounds/Configuracion/Growing_en.png');
+		this.load.image('Limit_en', 'assets/backgrounds/Configuracion/Limit_en.png');
+		this.load.image('Modos_en', 'assets/backgrounds/Configuracion/Modos_en.png');
+		this.load.image('NumRondas_en', 'assets/backgrounds/Configuracion/NumRondas_en.png');
+		this.load.image('One_en', 'assets/backgrounds/Configuracion/One_en.png');
+		this.load.image('RondaC_en', 'assets/backgrounds/Configuracion/Ronda_en.png');
+		this.load.image('Tiempos_en', 'assets/backgrounds/Configuracion/Tiempos_en.png');
+		this.load.image('Votacion_en', 'assets/backgrounds/Configuracion/Votacion_en.png');
 		this.load.image('Mas', 'assets/backgrounds/Configuracion/Mas.png');
 		this.load.image('Menos', 'assets/backgrounds/Configuracion/Menos.png');
 		this.load.image('TickNoCheck', 'assets/backgrounds/Configuracion/TickNoCheck.png');
 		this.load.image('TickCheck', 'assets/backgrounds/Configuracion/TickCheck.png');
 		this.load.image('ukFlag', 'assets/backgrounds/Configuracion/ukFlag.png');
 		this.load.image('spainFlag', 'assets/backgrounds/Configuracion/spainFlag.png');
-		this.load.image('language', 'assets/backgrounds/Configuracion/Language_en.png');
-		this.load.image('vowels', 'assets/backgrounds/Configuracion/vowels_en.png');
+		this.load.image('language_en', 'assets/backgrounds/Configuracion/Language_en.png');
+		this.load.image('vowels_en', 'assets/backgrounds/Configuracion/vowels_en.png');
+		//------//
+		this.load.image('Daily_es', 'assets/backgrounds/Configuracion/Daily_es.png');
+		this.load.image('Blind_es', 'assets/backgrounds/Configuracion/Blind_es.png');
+		this.load.image('Default_es', 'assets/backgrounds/Configuracion/Default_es.png');
+		this.load.image('Dificil_es', 'assets/backgrounds/Configuracion/Dificil_es.png');
+		this.load.image('Facil_es', 'assets/backgrounds/Configuracion/Facil_es.png');
+		this.load.image('Growing_es', 'assets/backgrounds/Configuracion/Growing_es.png');
+		this.load.image('Limit_es', 'assets/backgrounds/Configuracion/Limit_es.png');
+		this.load.image('Modos_es', 'assets/backgrounds/Configuracion/Modos_es.png');
+		this.load.image('NumRondas_es', 'assets/backgrounds/Configuracion/NumRondas_es.png');
+		this.load.image('One_es', 'assets/backgrounds/Configuracion/One_es.png');
+		this.load.image('RondaC_es', 'assets/backgrounds/Configuracion/Ronda_es.png');
+		this.load.image('Tiempos_es', 'assets/backgrounds/Configuracion/Tiempos_es.png');
+		this.load.image('Votacion_es', 'assets/backgrounds/Configuracion/Votacion_es.png');
+		this.load.image('language_es', 'assets/backgrounds/Configuracion/Language_es.png');
+		this.load.image('vowels_es', 'assets/backgrounds/Configuracion/vowels_es.png');
 
 		//Developers
 		this.load.image('RetratoBelen', 'assets/retratos_creditos/RetratoBelenCubismoSinLetra.png');
@@ -119,7 +152,7 @@ class Preloader extends Phaser.Scene {
 
 		//Spanish
 		//---Iconos
-		this.load.image('Blind_es', 'assets/gamemodes/ModoACiegas_es.png');
+		this.load.image('ModoACiegas_es', 'assets/gamemodes/ModoACiegas_es.png');
 		this.load.image('ModoBrochaIncremental', 'assets/gamemodes/ModoBrochaIncremental_es.png');
 		this.load.image('ModoNormal_es', 'assets/gamemodes/ModoNormal_es.png');
 		this.load.image('ModoTrazosLim_es', 'assets/gamemodes/ModoTrazosLim_es.png');
@@ -127,7 +160,7 @@ class Preloader extends Phaser.Scene {
 		
 		//English
 		//---Icons
-		this.load.image('Blind_en', 'assets/gamemodes/ModoACiegas_en.png');
+		this.load.image('ModoACiegas_en', 'assets/gamemodes/ModoACiegas_en.png');
 		this.load.image('ModoBrochaIncremental_en', 'assets/gamemodes/ModoBrochaIncremental_en.png');
 		this.load.image('ModoNormal_en', 'assets/gamemodes/ModoNormal_en.png');
 		this.load.image('ModoTrazosLim_en', 'assets/gamemodes/ModoTrazosLim_en.png');

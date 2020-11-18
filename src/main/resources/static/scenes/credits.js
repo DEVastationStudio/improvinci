@@ -16,7 +16,7 @@ class Credits extends Phaser.Scene {
         this.bg = this.add.image(0, 0,'credsFondoO').setInteractive();
         
         //Buttons
-        this.return_credits_bt = this.add.image(0, 0,'salirBoton_en').setInteractive({cursor: 'pointer'});
+        this.return_credits_bt = this.add.image(0, 0,'salirBoton'+game.global.languageSuffix).setInteractive({cursor: 'pointer'});
         
         //Developers
         this.RetratoBelenImg = this.add.image(0, 0,'RetratoBelen').setInteractive();
