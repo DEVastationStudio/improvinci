@@ -32,7 +32,7 @@ class Options extends Phaser.Scene {
             if (localStorage.getItem('score') !== null) {
                 let arr = JSON.parse(localStorage.getItem('score'));
                 for (let i = 0; i < arr.length; i++) {
-                    this.topScores.text += arr[i] + "\n";
+                    this.topScores.text += arr[i].score + ' (' + arr[i].result + ')' + '\n';
                 }
             }
         }

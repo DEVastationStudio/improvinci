@@ -107,9 +107,9 @@ class GameOver extends Phaser.Scene {
             } else {
                 arr = JSON.parse(localStorage.getItem('score'));
             }
-            arr.push(data.yourScore);
+            arr.push({ score: data.yourScore, result: ((data.yourScore===this.topScore)?('W'):('L')) });
             console.log("Added score " + data.yourScore);
-            arr.sort((a, b) => b - a);
+            arr.sort((a, b) => b.score - a.score);
             arr = arr.slice(0,10)
             localStorage.setItem('score', JSON.stringify(arr));
             console.dir(arr);

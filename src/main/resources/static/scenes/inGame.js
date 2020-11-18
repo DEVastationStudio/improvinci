@@ -738,7 +738,7 @@ class InGame extends Phaser.Scene {
     showPlayerScores(playerArray) {
         for (let i = 0; i < 3; i++) {
             for (let j = 0; j < 3; j++) {
-                if (this.players[i+j*3] !== undefined && this.playerArray[i+j*3] !== undefined) {
+                if (this.players[i+j*3] !== undefined && playerArray[i+j*3] !== undefined) {
                     //generate profile pic textures and replace them
                     this.pictures[i+j*3].setTexture(this.players[i+j*3].playerId); 
                     this.drawings[i+j*3].setAlpha(0);
