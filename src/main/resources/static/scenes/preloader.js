@@ -4,34 +4,27 @@ class Preloader extends Phaser.Scene {
 
 
 	constructor() {
-		super('Preloader');
+		super({key: 'Preloader', pack: { files: [ {type: 'spritesheet', key: 'LoadGraphic', url: 'assets/interface/Tiempo.png', frameConfig: {frameWidth: 256, frameHeight: 256}}]}});
 	}
+	
 	preload() {
+		this.LoadGraphic = this.add.sprite(game.canvas.width / 2, game.canvas.height / 2, 'Menu2');
+		this.anims.create({
+			key: 'LoadAnim',
+			frames: this.anims.generateFrameNumbers('LoadGraphic'),
+			frameRate: 12,
+			repeat: -1
+		});
+		this.LoadGraphic.anims.load('LoadAnim');
+		this.LoadGraphic.setScale(1); //?
 
 		//Loading bar
-		this.progressBar = this.add.graphics();
-		this.progressBox = this.add.graphics();
-
-		this.progressBox.fillStyle(0x222222, 0.8);
-		this.progressBox.fillRect(game.canvas.width / 4, game.canvas.height * 4 / 9, game.canvas.width / 2, game.canvas.height / 9);
-
-		this.loadingText = this.make.text({ x: game.canvas.width / 2, y: game.canvas.height * 4 / 10, text: 'Loading...', style: { font: '40px monospace', fill: '#ffffff' } }).setOrigin(0.5, 0.5);
-
-		this.percentText = this.make.text({ x: game.canvas.width / 2, y: game.canvas.height / 2, text: '0%', style: { font: '20px monospace', fill: '#ffffff' } }).setOrigin(0.5, 0.5);
-
+		
 		this.load.on('progress', function (value) {
-			this.progressBar.clear();
-			this.progressBar.fillStyle(0xffffff, 1);
-			this.progressBar.fillRect(game.canvas.width / 3.9, game.canvas.height * 4 / 8.7, value * game.canvas.width / 2.05, game.canvas.height / 12.5);
-			this.percentText.setText(parseInt(value * 100) + '%');
-		}, this);
-
-		this.load.on('fileprogress', function (file) {
-			this.loadingText.setText('Loading ' + file.key + '...');
+			this.LoadGraphic.anims.setProgress(value);
 		}, this);
 
 		this.load.on('complete', function (file) {
-			this.loadingText.setText('Loading complete.');
 			this.cameras.main.fadeOut(200);
 			this.cameras.main.once('camerafadeoutcomplete', function (camera) {
 				this.scene.start('Menu');
