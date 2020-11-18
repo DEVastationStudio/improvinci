@@ -152,6 +152,9 @@ class improCanvas {
         }
     }
 
+    getX(){ return this.x; }
+    getY(){ return this.y; }
+
     toString() {
         let image_to_send = '';
         let partial_image = '';
