@@ -50,7 +50,7 @@ class GameOver extends Phaser.Scene {
                 if (this.textures.exists(data.players[1+i+j*4].playerId+'s')) {
                     this.textures.get(data.players[1+i+j*4].playerId+'s').destroy();
                 }
-                improCanvas.makeTexture(data.players[1+i+j*4].playerId+'s', data.players[0].picture, this, 128);
+                improCanvas.makeTexture(data.players[1+i+j*4].playerId+'s', data.players[1+i+j*4].picture, this, 128);
 
                 this.drawings[i+j*4] = this.add.image(game.canvas.width*11/16 + ((0.2*game.canvas.height)*(i-1.5)), game.canvas.height*5/16 + ((0.2*game.canvas.height)*(j-0.5)),data.players[1+i+j*4].playerId+'s'); 
                 this.drawings[i+j*4].setScale(game.canvas.height/1177.6,game.canvas.height/1177.6);

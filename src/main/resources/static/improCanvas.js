@@ -131,7 +131,6 @@ class improCanvas {
         if (this.hidden) return;
         if(this.pointer_mode === this.modes.BLIND)
         {
-            //console.log("Estoy ciego");
             if(this.fadeStatus === 0)
                 this.backGroundFadeIn(time);
             if(this.fadeStatus === 1)
