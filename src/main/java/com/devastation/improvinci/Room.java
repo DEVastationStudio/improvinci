@@ -597,6 +597,12 @@ public class Room {
 					}
 				break;
 				case VOTING:
+					for (Player p : players) {
+						if (!p.sentPicture()) {
+							System.out.println("At least one player hasn't sent their picture yet.");
+							return;
+						}
+					}
 					if (gameTimer > 0) {
 						gameTimer--;
 						msg.put("event", "TIME_UPDATE");

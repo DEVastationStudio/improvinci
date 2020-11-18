@@ -16,6 +16,7 @@ public class Player {
 	private int score;
 	private int oldScore;
 	private boolean inLobby;
+	private boolean picSent;
 	
 	public Player(String playerId, WebSocketSession session) {
 		this.playerId= playerId;
@@ -88,6 +89,7 @@ public class Player {
 	public void clearVotes() {
 		votes = 0;
 		oldScore = score;
+		picSent = false;
 	}
 
 	public int getVotes() {
@@ -117,6 +119,12 @@ public class Player {
 
 	public void setInLobby(boolean b) {
 		inLobby = b;
+	}
+	public void setSentPicture() {
+		picSent = true;
+	}
+	public boolean sentPicture() {
+		return picSent;
 	}
 }
 

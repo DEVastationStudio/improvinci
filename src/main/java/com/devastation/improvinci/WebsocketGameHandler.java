@@ -228,6 +228,7 @@ public class WebsocketGameHandler extends TextWebSocketHandler {
 				msg.put("event", "SEND_IMAGE_RETURN");
 				if(player.isInRoom()) 
 				{
+					player.setSentPicture();
 					for(int i = 0; i<rooms.get(player.getRoomCode()).getPlayers().size(); i++) 
 					{
 						if (rooms.get(player.getRoomCode()).getPlayers().get(i).WSSession().isOpen())
