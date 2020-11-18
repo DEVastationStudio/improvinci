@@ -648,7 +648,7 @@ class Lobby extends Phaser.Scene {
         let rowPos = this.keyBoardBg.height*this.keyBoardBg.scaleY/20;
 
         this.SalirCod.x = kbLTCornerX+columnPos*18;
-        this.SalirCod.y = kbLTCornerY+rowPos/2
+        this.SalirCod.y = kbLTCornerY+rowPos/2;
         this.SalirCod.setScale(this.keyBoardBg.scale);
 
         //Modos
