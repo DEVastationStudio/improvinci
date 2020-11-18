@@ -165,9 +165,9 @@ class InGame extends Phaser.Scene {
 
         this.word = this.add.text(game.canvas.width/2 ,game.canvas.height/2, 'Waiting for other players...', {fontSize: '40px', fontFamily: 'comic sans ms', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff'});
         this.gameMode = this.add.text(game.canvas.width/4 ,game.canvas.height/8, '', { fontSize: '40px', fontFamily: 'comic sans ms', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff'});
-        this.inGameWord = this.add.text(game.canvas.width/2 ,game.canvas.height/12, '', {fontSize: '40px', fontFamily: 'comic sans ms', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff'});
+        this.inGameWord = this.add.text(game.canvas.width/2 ,game.canvas.height/12, '', {align: 'center', fontSize: '40px', fontFamily: 'comic sans ms', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff'}).setOrigin(0.5,0.5);
         this.roundText = this.add.text(game.canvas.width*6/8 ,game.canvas.height/12, '0/'+this.maxRounds, { fontSize: '40px', fontFamily: 'comic sans ms', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff'});
-        this.strokesLeft = this.add.text(0 ,0, '', {fontSize: '30px', fontFamily: 'comic sans ms', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff' });
+        this.strokesLeft = this.add.text(0 ,0, '', {align: 'center', fontSize: '30px', fontFamily: 'comic sans ms', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff' }).setOrigin(0.5,0.5);
         
         this.button_clear.on('pointerdown', function (pointer){
             this.canvas.clear();
@@ -245,13 +245,14 @@ class InGame extends Phaser.Scene {
         this.strokesLeft.text = 'Strokes left: '+this.maxTrazos;
     }
 
-    gamemodeIcon(type, x, y, scale)
+    gamemodeIcon(type, x, y, scale, isActive)
     {
         this.iconoDefaultImg.setAlpha(false);
         this.iconoBlindImg.setAlpha(false);
         this.iconoLimitImg.setAlpha(false);
         this.iconoOneImg.setAlpha(false);
         this.iconoGrowingImg.setAlpha(false);
+        if(!isActive) return;
         switch(type){
             case 'default':
                 this.iconoDefaultImg.x = x;
@@ -270,10 +271,10 @@ class InGame extends Phaser.Scene {
                 this.iconoLimitImg.y = y;
                 this.iconoLimitImg.setScale(scale);
                 this.iconoLimitImg.setAlpha(true);
-                if(this.roundState)
+                if(this.roundState === 1)
                 {
-                    this.strokesLeft.x = x*0.70;
-                    this.strokesLeft.y = y*2.1;
+                    this.strokesLeft.x = this.canvas.getX();
+                    this.strokesLeft.y = this.canvas.getY()+150;
                     this.strokesLeft.setAlpha(1);
                     this.strokesLeft.text = 'Strokes left: '+this.maxTrazos;
                 }
@@ -298,6 +299,7 @@ class InGame extends Phaser.Scene {
         console.log(!this.inVotingPhase +' - '+ i);
         if(!this.inVotingPhase && i)
         {
+            //this.gamemodeIcon('',0,0,0,false);
             this.TimeAnim.anims.play('Clock_Anim', true);
             this.inVotingPhase = true;
         }
@@ -307,7 +309,7 @@ class InGame extends Phaser.Scene {
     {
         if(this.roundState == 1)
         {
-            this.gamemodeIcon(this.roundGamemode, game.canvas.width / 4, game.canvas.height / 8, this.sY);
+            this.gamemodeIcon(this.roundGamemode, game.canvas.width / 4, game.canvas.height / 8, this.sY, true);
             this.TimeAnim.setAlpha(1);
             this.timerText.setAlpha(1);
             this.TimeAnim.anims.play('Clock_Anim', true);
@@ -316,7 +318,8 @@ class InGame extends Phaser.Scene {
         {
             if(this.roundState == 2)
             {
-                this.gamemodeIcon(this.roundGamemode, game.canvas.width / 4, game.canvas.height / 8, this.sY);
+                this.gamemodeIcon(this.roundGamemode, game.canvas.width / 4, game.canvas.height / 8, this.sY, true);
+                this.gamemodeIcon('',0,0,0,false);
             }else
             {
                 this.TimeAnim.setAlpha(0);
@@ -334,7 +337,7 @@ class InGame extends Phaser.Scene {
                 this.word.y = kbLTCornerY+rowPos*4;
                 this.word.setScale(this.sY);
 
-                this.gamemodeIcon(this.roundGamemode, kbLTCornerX+columnPos*17, kbLTCornerY+rowPos*2, this.sY);
+                this.gamemodeIcon(this.roundGamemode, kbLTCornerX+columnPos*17, kbLTCornerY+rowPos*2, this.sY, true);
             }
         }
     }
@@ -368,9 +371,9 @@ class InGame extends Phaser.Scene {
         this.timerText.y = game.canvas.height * 8.7 / 40;
         this.timerText.setScale(this.sY);
 
-        this.inGameWord.x = game.canvas.width / 2;
-        this.inGameWord.y = game.canvas.height / 12;
-        this.inGameWord.setScale(this.sY);
+        this.inGameWord.x = this.canvas.getX();
+        this.inGameWord.y = this.canvas.getY()-170;
+        //this.inGameWord.setScale(this.sY);
 
         this.roundText.x = game.canvas.width * 6 / 8;
         this.roundText.y = game.canvas.height / 12;

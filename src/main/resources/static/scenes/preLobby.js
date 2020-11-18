@@ -292,7 +292,7 @@ class PreLobby extends Phaser.Scene {
         this.Letra_O = this.add.image(0,0,'Letra_O').setInteractive({cursor: 'pointer'});
         this.Letra_P = this.add.image(0,0,'Letra_P').setInteractive({cursor: 'pointer'});
 
-        this.codeText = this.add.text(0, 0, '', { fontSize: '40px', fontFamily: 'comic sans ms', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff' });
+        this.codeText = this.add.text(0, 0, '', { fontSize: '50px', fontFamily: 'comic sans ms', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff' });
 
         //Connection popup
         this.popupBg = this.add.image(0,0,'Gameplay');
@@ -505,7 +505,7 @@ class PreLobby extends Phaser.Scene {
         this.button_create.setScale(this.sY);
 
         this.codeButton.x = game.canvas.width / 2;
-        this.codeButton.y = game.canvas.height / 2;
+        this.codeButton.y = game.canvas.height * 2.5 / 4;
         this.codeButton.setScale(this.sY);
 
         this.button_back.x = game.canvas.width / 4;
@@ -527,91 +527,95 @@ class PreLobby extends Phaser.Scene {
         let columnPos = this.keyBoardBg.width*this.keyBoardBg.scaleX/20;
         let rowPos = this.keyBoardBg.height*this.keyBoardBg.scaleY/6
 
-        //First Row
-        this.Letra_A.x = kbLTCornerX+columnPos*2;
-		this.Letra_A.y = kbLTCornerY+rowPos;
-        this.Letra_A.setScale(this.keyBoardBg.scale);
+        let scaleMultiplier = 0.9;
+        let rowdisplacer = 1.1;
+        let coldisplacer = 3.7;
 
-        this.Letra_B.x = kbLTCornerX+columnPos*4;
-		this.Letra_B.y = kbLTCornerY+rowPos;
-        this.Letra_B.setScale(this.keyBoardBg.scale);
+        //First Row
+        this.Letra_A.x = kbLTCornerX+columnPos*2*rowdisplacer;
+		this.Letra_A.y = kbLTCornerY+rowPos*coldisplacer;
+        this.Letra_A.setScale(this.keyBoardBg.scale*scaleMultiplier);
+
+        this.Letra_B.x = kbLTCornerX+columnPos*4*rowdisplacer;
+		this.Letra_B.y = kbLTCornerY+rowPos*coldisplacer;
+        this.Letra_B.setScale(this.keyBoardBg.scale*scaleMultiplier);
         
-        this.Letra_C.x = kbLTCornerX+columnPos*6;
-		this.Letra_C.y = kbLTCornerY+rowPos;
-        this.Letra_C.setScale(this.keyBoardBg.scale);
+        this.Letra_C.x = kbLTCornerX+columnPos*6*rowdisplacer;
+		this.Letra_C.y = kbLTCornerY+rowPos*coldisplacer;
+        this.Letra_C.setScale(this.keyBoardBg.scale*scaleMultiplier);
         
-        this.Letra_D.x = kbLTCornerX+columnPos*8;
-		this.Letra_D.y = kbLTCornerY+rowPos;
-        this.Letra_D.setScale(this.keyBoardBg.scale);
+        this.Letra_D.x = kbLTCornerX+columnPos*8*rowdisplacer;
+		this.Letra_D.y = kbLTCornerY+rowPos*coldisplacer;
+        this.Letra_D.setScale(this.keyBoardBg.scale*scaleMultiplier);
         
-        this.Letra_E.x = kbLTCornerX+columnPos*10;
-		this.Letra_E.y = kbLTCornerY+rowPos;
-        this.Letra_E.setScale(this.keyBoardBg.scale);
+        this.Letra_E.x = kbLTCornerX+columnPos*10*rowdisplacer;
+		this.Letra_E.y = kbLTCornerY+rowPos*coldisplacer;
+        this.Letra_E.setScale(this.keyBoardBg.scale*scaleMultiplier);
         
-        this.Letra_F.x = kbLTCornerX+columnPos*12;
-		this.Letra_F.y = kbLTCornerY+rowPos;
-        this.Letra_F.setScale(this.keyBoardBg.scale);
+        this.Letra_F.x = kbLTCornerX+columnPos*12*rowdisplacer;
+		this.Letra_F.y = kbLTCornerY+rowPos*coldisplacer;
+        this.Letra_F.setScale(this.keyBoardBg.scale*scaleMultiplier);
         
-        this.Letra_G.x = kbLTCornerX+columnPos*14;
-		this.Letra_G.y = kbLTCornerY+rowPos;
-        this.Letra_G.setScale(this.keyBoardBg.scale);
+        this.Letra_G.x = kbLTCornerX+columnPos*14*rowdisplacer;
+		this.Letra_G.y = kbLTCornerY+rowPos*coldisplacer;
+        this.Letra_G.setScale(this.keyBoardBg.scale*scaleMultiplier);
         
-        this.Letra_H.x = kbLTCornerX+columnPos*16;
-		this.Letra_H.y = kbLTCornerY+rowPos;
-        this.Letra_H.setScale(this.keyBoardBg.scale);
+        this.Letra_H.x = kbLTCornerX+columnPos*16*rowdisplacer;
+		this.Letra_H.y = kbLTCornerY+rowPos*coldisplacer;
+        this.Letra_H.setScale(this.keyBoardBg.scale*scaleMultiplier);
         
         //Second Row
-        this.Letra_I.x = kbLTCornerX+columnPos*2;
-		this.Letra_I.y = kbLTCornerY+rowPos*2;
-        this.Letra_I.setScale(this.keyBoardBg.scale);
+        this.Letra_I.x = kbLTCornerX+columnPos*2*rowdisplacer;
+		this.Letra_I.y = kbLTCornerY+rowPos*(1+coldisplacer);
+        this.Letra_I.setScale(this.keyBoardBg.scale*scaleMultiplier);
         
-        this.Letra_J.x = kbLTCornerX+columnPos*4;
-		this.Letra_J.y = kbLTCornerY+rowPos*2;
-        this.Letra_J.setScale(this.keyBoardBg.scale);
+        this.Letra_J.x = kbLTCornerX+columnPos*4*rowdisplacer;
+		this.Letra_J.y = kbLTCornerY+rowPos*(1+coldisplacer);
+        this.Letra_J.setScale(this.keyBoardBg.scale*scaleMultiplier);
         
-        this.Letra_K.x = kbLTCornerX+columnPos*6;
-		this.Letra_K.y = kbLTCornerY+rowPos*2;
-        this.Letra_K.setScale(this.keyBoardBg.scale);
+        this.Letra_K.x = kbLTCornerX+columnPos*6*rowdisplacer;
+		this.Letra_K.y = kbLTCornerY+rowPos*(1+coldisplacer);
+        this.Letra_K.setScale(this.keyBoardBg.scale*scaleMultiplier);
         
-        this.Letra_L.x = kbLTCornerX+columnPos*8;
-		this.Letra_L.y = kbLTCornerY+rowPos*2;
-        this.Letra_L.setScale(this.keyBoardBg.scale);
+        this.Letra_L.x = kbLTCornerX+columnPos*8*rowdisplacer;
+		this.Letra_L.y = kbLTCornerY+rowPos*(1+coldisplacer);
+        this.Letra_L.setScale(this.keyBoardBg.scale*scaleMultiplier);
         
-        this.Letra_M.x = kbLTCornerX+columnPos*10;
-		this.Letra_M.y = kbLTCornerY+rowPos*2;
-        this.Letra_M.setScale(this.keyBoardBg.scale);
+        this.Letra_M.x = kbLTCornerX+columnPos*10*rowdisplacer;
+		this.Letra_M.y = kbLTCornerY+rowPos*(1+coldisplacer);
+        this.Letra_M.setScale(this.keyBoardBg.scale*scaleMultiplier);
         
-        this.Letra_N.x = kbLTCornerX+columnPos*12;
-		this.Letra_N.y = kbLTCornerY+rowPos*2;
-        this.Letra_N.setScale(this.keyBoardBg.scale);
+        this.Letra_N.x = kbLTCornerX+columnPos*12*rowdisplacer;
+		this.Letra_N.y = kbLTCornerY+rowPos*(1+coldisplacer);
+        this.Letra_N.setScale(this.keyBoardBg.scale*scaleMultiplier);
         
-        this.Letra_O.x = kbLTCornerX+columnPos*14;
-		this.Letra_O.y = kbLTCornerY+rowPos*2;
-        this.Letra_O.setScale(this.keyBoardBg.scale);
+        this.Letra_O.x = kbLTCornerX+columnPos*14*rowdisplacer;
+		this.Letra_O.y = kbLTCornerY+rowPos*(1+coldisplacer);
+        this.Letra_O.setScale(this.keyBoardBg.scale*scaleMultiplier);
         
-        this.Letra_P.x = kbLTCornerX+columnPos*16;
-		this.Letra_P.y = kbLTCornerY+rowPos*2;
-        this.Letra_P.setScale(this.keyBoardBg.scale);
+        this.Letra_P.x = kbLTCornerX+columnPos*16*rowdisplacer;
+		this.Letra_P.y = kbLTCornerY+rowPos*(1+coldisplacer);
+        this.Letra_P.setScale(this.keyBoardBg.scale*scaleMultiplier);
         
         //Confirmation row
-        this.BarraCod.x = kbLTCornerX+columnPos*7;
-        this.BarraCod.y = kbLTCornerY+rowPos*4
-        this.BarraCod.setScale(this.keyBoardBg.scale);
+        this.BarraCod.x = kbLTCornerX+columnPos*9.5;
+        this.BarraCod.y = kbLTCornerY+rowPos*1.4;
+        this.BarraCod.setScale(this.keyBoardBg.scale*1.4);
         
-        this.BorrarCod.x = kbLTCornerX+columnPos*7;
-        this.BorrarCod.y = kbLTCornerY+rowPos*5
-        this.BorrarCod.setScale(this.keyBoardBg.scale);
+        this.BorrarCod.x = this.BarraCod.x+((this.BarraCod.width*this.BarraCod.scaleX)/2)*1.4;
+        this.BorrarCod.y = this.BarraCod.y;
+        this.BorrarCod.setScale(this.keyBoardBg.scale*1.2);
 
-        this.ConfirmarCod.x = kbLTCornerX+columnPos*7+((this.BarraCod.width*this.BarraCod.scaleX)/2)*1.5;
-        this.ConfirmarCod.y = kbLTCornerY+rowPos*4
-        this.ConfirmarCod.setScale(this.keyBoardBg.scale);
+        this.ConfirmarCod.x = this.BarraCod.x-((this.BarraCod.width*this.BarraCod.scaleX)/2)*1.3;
+        this.ConfirmarCod.y = this.BarraCod.y;
+        this.ConfirmarCod.setScale(this.keyBoardBg.scale*1.2);
 
         this.SalirCod.x = kbLTCornerX+columnPos*18;
-        this.SalirCod.y = kbLTCornerY+rowPos/2
+        this.SalirCod.y = kbLTCornerY+rowPos/5;
         this.SalirCod.setScale(this.keyBoardBg.scale);
 
         this.codeText.x = this.BarraCod.x-((this.BarraCod.width*this.BarraCod.scaleX)/2)*0.8;
-        this.codeText.y = this.BarraCod.y*0.95;
+        this.codeText.y = this.BarraCod.y*0.88;
         this.codeText.scaleX = this.BarraCod.scaleX;
         this.codeText.scaleY = this.BarraCod.scaleY;
 
