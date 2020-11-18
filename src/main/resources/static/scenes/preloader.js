@@ -52,8 +52,8 @@ class Preloader extends Phaser.Scene {
 		this.load.image('UnirsePartida_es', 'assets/interface/UnirsePartida_es.png');
 		this.load.image('Config_es', 'assets/interface/Config_es.png');
 		this.load.image('Config_en', 'assets/interface/Config_en.png');
-		this.load.image('Copiar_es', 'assets/interface/Copiar_es.png');
-		this.load.image('Copiar_en', 'assets/interface/Copiar_en.png');
+		this.load.image('Copiar_es', 'assets/interface/Peek_es.png');
+		this.load.image('Copiar_en', 'assets/interface/Peek_en.png');
 		this.load.image('Ready_es', 'assets/interface/Ready_es.png');
 		this.load.image('Ready_en', 'assets/interface/Ready_en.png');
 		this.load.image('Ready_host_es', 'assets/interface/Ready_host_es.png');
