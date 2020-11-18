@@ -156,7 +156,7 @@ class Preloader extends Phaser.Scene {
 		//Spanish
 		//---Iconos
 		this.load.image('ModoACiegas_es', 'assets/gamemodes/ModoACiegas_es.png');
-		this.load.image('ModoBrochaIncremental', 'assets/gamemodes/ModoBrochaIncremental_es.png');
+		this.load.image('ModoBrochaIncremental_es', 'assets/gamemodes/ModoBrochaIncremental_es.png');
 		this.load.image('ModoNormal_es', 'assets/gamemodes/ModoNormal_es.png');
 		this.load.image('ModoTrazosLim_es', 'assets/gamemodes/ModoTrazosLim_es.png');
 		this.load.image('ModoUnSoloTrazo_es', 'assets/gamemodes/ModoUnSoloTrazo_es.png');

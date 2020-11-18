@@ -174,9 +174,6 @@ class InGame extends Phaser.Scene {
             this.canvas.resetStrokes();
         }, this);
         
-        let msg2 = new Object();
-        msg2.event = 'GAME_LOADED';
-        game.global.socketDir.send(JSON.stringify(msg2));
 
         //Doble confirmacion
         this.DobleConfirmImg = this.add.image(0,0,'DobleConfirm'+game.global.languageSuffix).setInteractive();
@@ -208,6 +205,9 @@ class InGame extends Phaser.Scene {
         this.scaler();
 
         this.cameras.main.fadeIn(200);
+        let msg2 = new Object();
+        msg2.event = 'GAME_LOADED';
+        game.global.socketDir.send(JSON.stringify(msg2));
     }
 
     update(time, delta) {
