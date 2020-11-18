@@ -28,5 +28,5 @@ var game = new Phaser.Game(config);
 game.global = {
     WIDTH:1920,
     HEIGHT:1080,
-    languageSuffix: '_es'
+    languageSuffix: '_en'
 }

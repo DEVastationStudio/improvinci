@@ -9,6 +9,18 @@ class Menu extends Phaser.Scene {
     }
 
     create() {
+		if (typeof(Storage) !== 'undefined') {
+            this.usesLocalStorage = true;
+        } else {
+            this.usesLocalStorage = false;
+        }
+        if (this.usesLocalStorage) {
+            if (localStorage.getItem('lang') !== null) {
+                game.global.languageSuffix = localStorage.getItem('lang');
+            } else {
+                localStorage.setItem('lang', '_en');
+            }
+        }
 		//Scale factors
     	this.sX = game.canvas.width/game.global.WIDTH;
 		this.sY = game.canvas.height/game.global.HEIGHT;
@@ -21,6 +33,7 @@ class Menu extends Phaser.Scene {
     	this.ready_bt = this.add.image(0,0,'Play'+game.global.languageSuffix).setInteractive({cursor: 'pointer'});
     	this.options_bt = this.add.image(0,0,'Ready_host_es').setInteractive({cursor: 'pointer'});
 		this.credits_bt = this.add.image(0,0,'Credits'+game.global.languageSuffix).setInteractive({cursor: 'pointer'});
+
 		if(game.global.languageSuffix === '_en')
 		{
 			this.spanishBtn = this.add.image(0,0,'spainFlag').setInteractive({cursor: 'pointer'}).setAlpha(0.4);
@@ -62,6 +75,7 @@ class Menu extends Phaser.Scene {
 			this.spanishBtn.setAlpha(0.4);
 			this.englishBtn.setAlpha(1);
 			game.global.languageSuffix = '_en';
+			localStorage.setItem('lang', '_en');
 			this.ready_bt.setTexture('Play'+game.global.languageSuffix);
     		this.options_bt.setTexture('Ready_host_es');
 			this.credits_bt.setTexture('Credits'+game.global.languageSuffix);
@@ -73,6 +87,7 @@ class Menu extends Phaser.Scene {
 			this.englishBtn.setAlpha(0.4);
 			this.spanishBtn.setAlpha(1);
 			game.global.languageSuffix = '_es';
+			localStorage.setItem('lang', '_es');
 			this.ready_bt.setTexture('Play'+game.global.languageSuffix);
     		this.options_bt.setTexture('Ready_host_es');
 			this.credits_bt.setTexture('Credits'+game.global.languageSuffix);
