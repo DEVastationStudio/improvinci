@@ -508,8 +508,8 @@ class PreLobby extends Phaser.Scene {
         this.codeButton.y = game.canvas.height * 2.5 / 4;
         this.codeButton.setScale(this.sY);
 
-        this.button_back.x = game.canvas.width / 4;
-        this.button_back.y = game.canvas.height * 3 / 4;
+        this.button_back.x = game.canvas.width / 10;
+        this.button_back.y = game.canvas.height * 9 / 10;
         this.button_back.setScale(this.sY);
 
         //Background

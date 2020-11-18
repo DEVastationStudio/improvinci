@@ -379,8 +379,8 @@ class InGame extends Phaser.Scene {
         this.roundText.y = game.canvas.height / 12;
         this.roundText.setScale(this.sY);
 
-        this.button_back.x = game.canvas.width / 4;
-        this.button_back.y = game.canvas.height * 3 / 4;
+        this.button_back.x = game.canvas.width / 10;
+        this.button_back.y = game.canvas.height * 9 /10;
         this.button_back.setScale(this.sY);
 
         //Doble confirmacion
