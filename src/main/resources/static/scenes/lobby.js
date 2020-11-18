@@ -57,7 +57,7 @@ class Lobby extends Phaser.Scene {
             this.button_start.visible = false;
         }, this);
         
-        this.add.text(game.canvas.width/2, 10, data.code, { fontSize: '40px', fontFamily: 'comic sans ms', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff' });
+        this.codeText = this.add.text(game.canvas.width/2, game.canvas.height/10, data.code, { fontSize: '40px', fontFamily: 'comic sans ms', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff', align: 'center'}).setOrigin(0.5, 0.5);
         
         this.avatars = [];
         for (let i = 0; i < 3; i++) {
@@ -815,6 +815,18 @@ class Lobby extends Phaser.Scene {
         this.DailyImg.x = kbLTCornerX+columnPos*14;
         this.DailyImg.y = kbLTCornerY+rowPos*18;
         this.DailyImg.setScale(this.keyBoardBg.scale);
+
+        //Pictures
+        for (let i = 0; i < 3; i++) {
+            for (let j = 0; j < 3; j++) {
+                this.avatars[i+j*3].x = game.canvas.width/2 + ((0.3*game.canvas.height)*(i-1));
+                this.avatars[i+j*3].y = game.canvas.height/2 + ((0.3*game.canvas.height)*(j-1));
+                this.avatars[i+j*3].setScale(game.canvas.height/588.8,game.canvas.height/588.8);
+            }
+        }
+        this.codeText.x = game.canvas.width/2;
+        this.codeText.y = game.canvas.height/20;
+        this.codeText.setScale(this.sY);
     }
 
     updateAvatars(data) {

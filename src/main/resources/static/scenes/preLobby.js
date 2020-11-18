@@ -639,6 +639,8 @@ class PreLobby extends Phaser.Scene {
         //Show text that reads 'connecting...'
         this.popupText.setAlpha(1);
         this.popupText.text = 'Connecting...';
+        this.popupCancel.setAlpha(1);
+        this.popupCancel.setInteractive({cursor: 'pointer'});
         //Disable interactive on all other buttons and also hide the keyboard thingy
         this.invisible(false);
         this.codeButton.setAlpha(0);
