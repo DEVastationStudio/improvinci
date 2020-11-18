@@ -82,7 +82,8 @@ class PreLobby extends Phaser.Scene {
                     }
                     break;
                 case 'SEND_IMAGE_RETURN':
-                    this.scene.get('InGame').updateDrawing(msg.player, msg.image, msg.isSelf);
+                    if (this.scene.get('InGame').scene.isActive())
+                        this.scene.get('InGame').updateDrawing(msg.player, msg.image, msg.isSelf);
                     break;
                 case 'HEARTBEAT_RETURN':
                     if(!conectionUp){actualHeartBeat = Date.now(); conectionUp = true;}
@@ -103,23 +104,31 @@ class PreLobby extends Phaser.Scene {
                     }
                     break;
                 case 'CHOSEN_WORD':
-                    this.scene.get('InGame').showWord(msg.word, msg.faker, msg.drawMode);
+                    if (this.scene.get('InGame').scene.isActive())
+                        this.scene.get('InGame').showWord(msg.word, msg.faker, msg.drawMode);
                     break;
                 case 'DRAW_START':
-                    this.scene.get('InGame').drawStart(msg.time, msg.round, msg.vowels);
+                    if (this.scene.get('InGame').scene.isActive())
+                        this.scene.get('InGame').drawStart(msg.time, msg.round, msg.vowels);
                     break;
                 case 'TIME_UPDATE':
-                    this.scene.get('InGame').updateTime(msg.time);
-                    if(msg.votingPhase)
-                        this.scene.get('InGame').clockAnimControl(true);
+                    if (this.scene.get('InGame').scene.isActive()) {
+                        this.scene.get('InGame').updateTime(msg.time);
+                        if(msg.votingPhase)
+                            this.scene.get('InGame').clockAnimControl(true);
+                    }
                     break;
+                        
                 case 'ROUND_OVER':
-                    this.scene.get('InGame').roundOver();
+                    if (this.scene.get('InGame').scene.isActive())
+                        this.scene.get('InGame').roundOver();
                     break;
                 case 'ROUND_VOTES':
-                    this.scene.get('InGame').updateVoteResults(msg);
-                    if(msg.stopAnim)
-                        this.scene.get('InGame').TimeAnim.anims.stopOnRepeat();
+                    if (this.scene.get('InGame').scene.isActive()) {
+                        this.scene.get('InGame').updateVoteResults(msg);
+                        if(msg.stopAnim)
+                            this.scene.get('InGame').TimeAnim.anims.stopOnRepeat();
+                    }
                     break;
                 case 'POINTS':
                     if (this.scene.get('InGame').scene.isActive()) {
@@ -146,16 +155,20 @@ class PreLobby extends Phaser.Scene {
                     }
                 break;
                 case 'CHECK_RETURN':
-                    this.scene.get('Lobby').check(msg.type, msg.isChecked);
+                    if (this.scene.get('Lobby').scene.isActive())
+                        this.scene.get('Lobby').check(msg.type, msg.isChecked);
                 break;
                 case 'NOCHECK_RETURN':
-                    this.scene.get('Lobby').check(msg.type, msg.isChecked)
+                    if (this.scene.get('Lobby').scene.isActive())
+                        this.scene.get('Lobby').check(msg.type, msg.isChecked)
                 break;
                 case 'GET_CONFIG_ROOM_RETURN':
-                    this.scene.get('Lobby').setInfo(msg.default, msg.blind, msg.limit, msg.one, msg.growing, msg.vowels, msg.isEnglish, msg.numRounds, msg.roundTime, msg.voteTime, msg.numActiveGamemodes);
+                    if (this.scene.get('Lobby').scene.isActive())
+                        this.scene.get('Lobby').setInfo(msg.default, msg.blind, msg.limit, msg.one, msg.growing, msg.vowels, msg.isEnglish, msg.numRounds, msg.roundTime, msg.voteTime, msg.numActiveGamemodes);
                 break;
                 case 'PLUSCONFIG_RETURN':
-                    this.scene.get('Lobby').plusControls(msg.type, msg.amount);
+                    if (this.scene.get('Lobby').scene.isActive())
+                        this.scene.get('Lobby').plusControls(msg.type, msg.amount);
                 break;
                 case 'ROOM_INFO_RETURN':
                     if (this.scene.get('Lobby').scene.isActive())
