@@ -11,9 +11,10 @@ class DisconnectOverlay extends Phaser.Scene {
         this.sY = game.canvas.height/game.global.HEIGHT;
 
         //backgrounds
-        this.bg = this.add.image(0,0,'Desco'+game.global.languageSuffix).setInteractive();
+        this.bbg = this.add.image(0,0,'Menu');
+        this.bg = this.add.image(0,0,'Desco').setInteractive();
 
-        this.textInfo = this.add.text(400, 150, data.message, {fontSize: '30px', fontFamily: 'Bookman', color: '#ff6600', stroke: '#000000', strokeThickness: 2, align: 'center'}).setOrigin(0.5, 0.5);
+        this.textInfo = this.add.text(game.canvas.width / 2, game.canvas.height * 3 / 8, data.message, {fontSize: '80px', fontFamily: 'comic sans ms', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff', align: 'center'}).setOrigin(0.5, 0.5);
         this.disconnectButton = this.add.sprite(0,0,'salirBoton'+game.global.languageSuffix);
 
         this.disconnectButton.setInteractive({cursor: 'pointer'});
@@ -40,14 +41,25 @@ class DisconnectOverlay extends Phaser.Scene {
 
     scaler()
     {
-        //Buttons
-        this.disconnectButton.x = game.canvas.width * 3/ 10;
-		this.disconnectButton.y = game.canvas.height * 8 / 10;
-		this.disconnectButton.setScale(this.sY);
         
+		//Backbackground
+		this.bbg.x = game.canvas.width / 2;
+		this.bbg.y = game.canvas.height / 2;
+        this.bbg.setScale(Math.max(this.sX, this.sY));
+
         //Background
 		this.bg.x = game.canvas.width/2;
 		this.bg.y = game.canvas.height/2;
-		this.bg.setScale(this.sY);
+        this.bg.setScale(Math.max(this.sX, this.sY));
+
+        //Buttons
+        this.disconnectButton.x = this.bg.x - this.bg.displayWidth / 4;
+		this.disconnectButton.y = this.bg.y + this.bg.displayHeight / 4;
+		this.disconnectButton.setScale(this.sY);
+        
+		this.textInfo.x = game.canvas.width/2;
+		this.textInfo.y = game.canvas.height * 3 / 8;
+        this.textInfo.setScale(this.sY);
+        
     }
 }

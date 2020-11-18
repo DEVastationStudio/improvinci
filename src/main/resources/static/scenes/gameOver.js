@@ -14,7 +14,7 @@ class GameOver extends Phaser.Scene {
         this.sY = game.canvas.height/game.global.HEIGHT;
 
         //Background
-        this.bg = this.add.image(0,0,'Menu');
+        this.bg = this.add.image(0,0,'finFondoO');
 
         //Buttons
     	this.playAgain_bt = this.add.image(0,0,'Ready_es').setInteractive({cursor: 'pointer'});
@@ -139,7 +139,7 @@ class GameOver extends Phaser.Scene {
 		//Background
 		this.bg.x = game.canvas.width / 2;
 		this.bg.y = game.canvas.height / 2;
-        this.bg.setScale(this.sX);
+        this.bg.setScale(Math.max(this.sX, this.sY));
         
         //Scores
         this.winnerDrawing.x = game.canvas.width*1/4;

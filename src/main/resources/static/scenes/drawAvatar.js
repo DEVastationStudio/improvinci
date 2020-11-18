@@ -20,9 +20,7 @@ class DrawAvatar extends Phaser.Scene {
         this.button_confirm = this.add.image(0,0, 'Ready_es').setInteractive({cursor: 'pointer'});
         this.button_clear = this.add.image(0,0, 'Corona').setInteractive({cursor: 'pointer'});
     	this.return_bt = this.add.image(game.canvas.width*4/5 ,game.canvas.height*1/5,'salirBoton'+game.global.languageSuffix).setInteractive({cursor: 'pointer'});
-    	
-        this.scaler();
-        
+    	        
         //Button actions
         this.button_confirm.on('pointerdown', function (pointer){
 			localStorage.setItem('lastAvatar',this.canvas.toString());
@@ -50,14 +48,17 @@ class DrawAvatar extends Phaser.Scene {
         }
 
         this.canvas = new improCanvas(this, 128);
+        this.frame = this.add.image(0, 0,'Marco1'); 
 
         if (this.usesLocalStorage) {
             if (localStorage.getItem('lastAvatar') !== null) {
                 this.canvas.loadDrawing(localStorage.getItem('lastAvatar'));
             }
         }
-        this.drawYourself = this.add.text(game.canvas.width/2, 10, 'Draw yourself!', { fontSize: '40px', fontFamily: 'comic sans ms', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff'});
+        this.drawYourself = this.add.text(game.canvas.width/2, game.canvas.height/22, 'Draw yourself!', {fontSize: '40px', fontFamily: 'comic sans ms', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff', align: 'center'}).setOrigin(0.5, 0.5);
         this.cameras.main.fadeIn(200);
+        
+        this.scaler();
     }
     
     update(time, delta) { 
@@ -88,6 +89,14 @@ class DrawAvatar extends Phaser.Scene {
         //Background
         this.bg.x = game.canvas.width / 2;
 		this.bg.y = game.canvas.height / 2;
-		this.bg.setScale(this.sX);
+        this.bg.setScale(Math.max(this.sX, this.sY));
+        
+        this.drawYourself.x = game.canvas.width/2;
+        this.drawYourself.y = game.canvas.height/22;
+        this.drawYourself.setScale(this.sY);
+
+        this.frame.x = game.canvas.width/2;
+        this.frame.y = game.canvas.height/2;
+        this.frame.setScale(0.5);
     }
 }

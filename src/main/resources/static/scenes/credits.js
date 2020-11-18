@@ -76,6 +76,6 @@ class Credits extends Phaser.Scene {
 		//Background
 		this.bg.x = game.canvas.width / 2;
 		this.bg.y = game.canvas.height / 2;
-		this.bg.setScale(this.sX);
+		this.bg.setScale(Math.max(this.sX, this.sY));
 	}
 }

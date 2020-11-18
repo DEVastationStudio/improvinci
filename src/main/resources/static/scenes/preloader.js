@@ -75,8 +75,7 @@ class Preloader extends Phaser.Scene {
 		this.load.image('CriticoLejos', 'assets/character/critico_lejos.png');
 		this.load.image('salirBoton_es', 'assets/interface/salirBoton_es.png');
 		this.load.image('salirBoton_en', 'assets/interface/salirBoton_en.png');
-		this.load.image('Desco_en', 'assets/interface/Desco_en.png');
-		this.load.image('Desco_es', 'assets/interface/Desco_es.png');
+		this.load.image('Desco', 'assets/interface/Desco.png');
 		this.load.image('DobleConfirm_es', 'assets/interface/DobleConfirm_es.png');
 		this.load.image('DobleConfirm_en', 'assets/interface/DobleConfirm_en.png');
 		this.load.image('DobleConfirmSi_es', 'assets/interface/DobleConfirmSi_es.png');

@@ -9,6 +9,9 @@ class Options extends Phaser.Scene {
     }
 
     create() {
+        
+        this.bg = this.add.image(0,0,'finFondoO');
+
     	this.return_options_bt = this.add.image(game.canvas.width*4/5 ,game.canvas.height*1/5,'Ronda_es').setInteractive({cursor: 'pointer'});
     	
     	this.return_options_bt.on('pointerdown', function (pointer){
