@@ -82,8 +82,8 @@ class DrawAvatar extends Phaser.Scene {
         this.button_clear.y = game.canvas.height / 4;
         this.button_clear.setScale(this.sY);
 
-        this.return_bt.x = game.canvas.width / 4;
-        this.return_bt.y = game.canvas.height * 3 / 4;
+        this.return_bt.x = game.canvas.width / 10;
+        this.return_bt.y = game.canvas.height * 9 / 10;
         this.return_bt.setScale(this.sY);
 
         //Background

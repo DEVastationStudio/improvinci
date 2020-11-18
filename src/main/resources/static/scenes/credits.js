@@ -48,29 +48,29 @@ class Credits extends Phaser.Scene {
     scaler()
 	{
 		//Buttons
-    	this.return_credits_bt.x = game.canvas.width * 3/ 10;
-		this.return_credits_bt.y = game.canvas.height * 8 / 10;
+    	this.return_credits_bt.x = game.canvas.width * 1/ 10;
+		this.return_credits_bt.y = game.canvas.height * 9 / 10;
 		this.return_credits_bt.setScale(this.sY);
         
         //Developers
         this.RetratoBelenImg.x = game.canvas.width * 3/ 10;
-		this.RetratoBelenImg.y = game.canvas.height * 3 / 10;
+		this.RetratoBelenImg.y = game.canvas.height * 2 / 10;
         this.RetratoBelenImg.setScale(this.sY*0.9);
         
         this.RetratoMariaImg.x = game.canvas.width * 7/ 10;
-		this.RetratoMariaImg.y = game.canvas.height * 3 / 10;
+		this.RetratoMariaImg.y = game.canvas.height * 2 / 10;
 		this.RetratoMariaImg.setScale(this.sY*0.9);
         
-        this.RetratoPabloImg.x = game.canvas.width * 2/ 10;
-		this.RetratoPabloImg.y = game.canvas.height * 6 / 10;
+        this.RetratoPabloImg.x = game.canvas.width * 3/ 10;
+		this.RetratoPabloImg.y = game.canvas.height * 5 / 10;
 		this.RetratoPabloImg.setScale(this.sY*0.9);
 
-        this.RetratoImanolImg.x = game.canvas.width * 5/ 10;
-		this.RetratoImanolImg.y = game.canvas.height * 6 / 10;
+        this.RetratoImanolImg.x = game.canvas.width * 7/ 10;
+		this.RetratoImanolImg.y = game.canvas.height * 5 / 10;
 		this.RetratoImanolImg.setScale(this.sY*0.9);
         
-        this.RetratoTomasImg.x = game.canvas.width * 8/ 10;
-		this.RetratoTomasImg.y = game.canvas.height * 6 / 10;
+        this.RetratoTomasImg.x = game.canvas.width * 5/ 10;
+		this.RetratoTomasImg.y = game.canvas.height * 8 / 10;
 		this.RetratoTomasImg.setScale(this.sY*0.9);
         
 		//Background

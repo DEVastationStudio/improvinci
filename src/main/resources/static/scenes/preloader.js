@@ -40,8 +40,8 @@ class Preloader extends Phaser.Scene {
 
 		this.load.spritesheet('TimeAnim', 'assets/interface/Tiempo.png',
 			{
-				frameWidth: 332,
-				frameHeight: 303
+				frameWidth: 256,
+				frameHeight: 256
 			});
 		this.load.image('Menu', 'assets/backgrounds/Menu.png');
 		this.load.image('cartelImprovinci', 'assets/interface/Pancarta.png');
@@ -182,16 +182,15 @@ class Preloader extends Phaser.Scene {
 		this.load.image('tFondo2', 'assets/interface/tFondo2.png');
 		this.load.image('tFondo3', 'assets/interface/tFondo3.png');
 
+		//Puntuaciones
+		this.load.image('Puntuaciones_es', 'assets/interface/Puntuaciones_es.png');
+		this.load.image('Puntuaciones_en', 'assets/interface/Puntuaciones_en.png');
+		this.load.image('TopScores_es', 'assets/interface/TopScores_es.png');
+		this.load.image('TopScores_en', 'assets/interface/TopScores_en.png');
+
 	}
 
 	create() {
-		this.anims.create(
-			{
-				key: 'Clock_Anim',
-				frames: this.anims.generateFrameNumbers('TimeAnim'),
-				frameRate: 12,
-				repeat: -1
-			});
 	}
 
 	update() {

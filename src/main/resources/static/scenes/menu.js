@@ -31,7 +31,7 @@ class Menu extends Phaser.Scene {
 		//Buttons
     	this.pancarta = this.add.image(0,0,'cartelImprovinci').setInteractive();
     	this.jugar_bt = this.add.image(0,0,'Play'+game.global.languageSuffix).setInteractive({cursor: 'pointer'});
-    	this.puntuaciones_bt = this.add.image(0,0,'Ready_host_es').setInteractive({cursor: 'pointer'});
+    	this.puntuaciones_bt = this.add.image(0,0,'Puntuaciones'+game.global.languageSuffix).setInteractive({cursor: 'pointer'});
     	this.tutorial_bt = this.add.image(0,0,'Ready_host_es').setInteractive({cursor: 'pointer'});
 		this.credits_bt = this.add.image(0,0,'Credits'+game.global.languageSuffix).setInteractive({cursor: 'pointer'});
 
@@ -136,7 +136,7 @@ class Menu extends Phaser.Scene {
 			game.global.languageSuffix = '_en';
 			localStorage.setItem('lang', '_en');
 			this.jugar_bt.setTexture('Play'+game.global.languageSuffix);
-    		this.puntuaciones_bt.setTexture('Ready_host_es');
+    		this.puntuaciones_bt.setTexture('Puntuaciones'+game.global.languageSuffix);
 			this.credits_bt.setTexture('Credits'+game.global.languageSuffix);
 		}, this);
 
@@ -150,7 +150,7 @@ class Menu extends Phaser.Scene {
 			game.global.languageSuffix = '_es';
 			localStorage.setItem('lang', '_es');
 			this.jugar_bt.setTexture('Play'+game.global.languageSuffix);
-    		this.puntuaciones_bt.setTexture('Ready_host_es');
+    		this.puntuaciones_bt.setTexture('Puntuaciones'+game.global.languageSuffix);
 			this.credits_bt.setTexture('Credits'+game.global.languageSuffix);
 		}, this);
 		this.cameras.main.fadeIn(200);
@@ -186,29 +186,29 @@ class Menu extends Phaser.Scene {
 		this.jugar_bt.y = game.canvas.height * 2.3 / 4;
 		this.jugar_bt.setScale(this.sY*0.9);
 
-    	this.puntuaciones_bt.x = game.canvas.width * 1.5 / 6;
+    	this.puntuaciones_bt.x = game.canvas.width * 1 / 6;
 		this.puntuaciones_bt.y = game.canvas.height * 2.3 / 4;
-		this.puntuaciones_bt.setScale(this.sY*0.9);
+		this.puntuaciones_bt.setScale(this.sY*0.6);
 
-    	this.tutorial_bt.x = game.canvas.width * 4.5 / 6;
+    	this.tutorial_bt.x = game.canvas.width * 5 / 6;
 		this.tutorial_bt.y = game.canvas.height * 2.3 / 4;
 		this.tutorial_bt.setScale(this.sY*0.9);
 
-    	this.credits_bt.x = game.canvas.width * 5.5 / 6;
-		this.credits_bt.y = game.canvas.height * 5.5 / 6;
-		this.credits_bt.setScale(this.sY*0.4);
+    	this.credits_bt.x = game.canvas.width * 5 / 6;
+		this.credits_bt.y = game.canvas.height * 5.2 / 6;
+		this.credits_bt.setScale(this.sY*0.45);
 		
     	this.pancarta.x = game.canvas.width / 2;
 		this.pancarta.y = game.canvas.height * 12 / 50;
 		this.pancarta.setScale(this.sY);
 		
-		this.spanishBtn.x = game.canvas.width * 8 / 10;
+		this.spanishBtn.x = game.canvas.width * 8.5 / 10;
 		this.spanishBtn.y = game.canvas.height * 0.8 / 8;
-		this.spanishBtn.setScale(this.sY*1.5);
+		this.spanishBtn.setScale(this.sY*1.3);
 
-		this.englishBtn.x = game.canvas.width * 9 / 10;
+		this.englishBtn.x = game.canvas.width * 9.5 / 10;
 		this.englishBtn.y = game.canvas.height * 0.8 / 8;
-		this.englishBtn.setScale(this.sY*1.5);
+		this.englishBtn.setScale(this.sY*1.3);
 
 		//Tutorial
 		this.tFondo.x = game.canvas.width /2;

@@ -477,14 +477,14 @@ class Lobby extends Phaser.Scene {
             this.roomInfo.text+='Round time: '+roundTimeM+'\n';
             this.roomInfo.text+='Voting time: '+voteTimeM+'\n';
             if(isEnglish)
-                this.roomInfo.text+='Word bank language: English\n';
+                this.roomInfo.text+='Language: English\n';
             else
-                this.roomInfo.text+='Word bank language: Spanish\n';
+                this.roomInfo.text+='Language: Spanish\n';
             if(vowelsM)
                 this.roomInfo.text+='Visible vowels: Yes\n \n';
             else
                 this.roomInfo.text+='Visible vowels: No\n \n';
-            this.roomInfo.text+='GAMEMODES IN USE: \n';
+            this.roomInfo.text+='GAMEMODES: \n';
             if(defaultM)
                 this.roomInfo.text+='Normal \n';
             if(blindM)
@@ -504,14 +504,14 @@ class Lobby extends Phaser.Scene {
             this.roomInfo.text+='Tiempo ronda: '+roundTimeM+'\n';
             this.roomInfo.text+='Tiempo votación: '+voteTimeM+'\n';
             if(isEnglish)
-                this.roomInfo.text+='Banco de palabras: Inglés\n';
+                this.roomInfo.text+='Idioma: Inglés\n';
             else
-                this.roomInfo.text+='Banco de palabras: Español\n';
+                this.roomInfo.text+='Idioma: Español\n';
             if(vowelsM)
                 this.roomInfo.text+='Vocales visibles: Si\n \n';
             else
                 this.roomInfo.text+='Vocales visibles: No\n \n';
-            this.roomInfo.text+='MODOS EN USO: \n';
+            this.roomInfo.text+='MODOS: \n';
             if(defaultM)
                 this.roomInfo.text+='Normal \n';
             if(blindM)
@@ -628,8 +628,8 @@ class Lobby extends Phaser.Scene {
         this.button_Options.y = game.canvas.height* 3 / 4;
         this.button_Options.setScale(this.sY);
 
-        this.button_back.x = game.canvas.width / 4;
-        this.button_back.y = game.canvas.height * 3 / 4;
+        this.button_back.x = game.canvas.width / 10;
+        this.button_back.y = game.canvas.height * 9 / 10;
         this.button_back.setScale(this.sY);
 
         //Background
