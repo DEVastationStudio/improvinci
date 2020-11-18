@@ -26,7 +26,10 @@ class DrawAvatar extends Phaser.Scene {
         //Button actions
         this.button_confirm.on('pointerdown', function (pointer){
 			localStorage.setItem('lastAvatar',this.canvas.toString());
-            this.scene.start('PreLobby');
+            this.cameras.main.fadeOut(200);
+            this.cameras.main.once('camerafadeoutcomplete', function(camera) {
+                this.scene.start('PreLobby');
+            }, this);
 		}, this);
 		
 		this.button_clear.on('pointerdown', function (pointer){
@@ -34,7 +37,10 @@ class DrawAvatar extends Phaser.Scene {
 		}, this);
 
     	this.return_bt.on('pointerdown', function (pointer){
-			this.scene.start('Menu');
+			this.cameras.main.fadeOut(200);
+            this.cameras.main.once('camerafadeoutcomplete', function(camera) {
+                this.scene.start('Menu');
+            }, this);
 		}, this);
 
         if (typeof(Storage) !== 'undefined') {
@@ -51,6 +57,7 @@ class DrawAvatar extends Phaser.Scene {
             }
         }
         this.drawYourself = this.add.text(game.canvas.width/2, 10, 'Draw yourself!', { fontSize: '40px', fontFamily: 'comic sans ms', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff'});
+        this.cameras.main.fadeIn(200);
     }
     
     update(time, delta) { 

@@ -45,10 +45,17 @@ class PreLobby extends Phaser.Scene {
                             break;
                         case 'ok':
                             if (msg.joining) {
-                                if (this.scene.isActive())
-                                    this.scene.start('Lobby', {code: msg.roomCode, players: msg.playerArray, leader: msg.leader});
-                                else if (this.scene.get('GameOver').scene.isActive())
-                                    this.scene.get('GameOver').scene.start('Lobby', {code: msg.roomCode, players: msg.playerArray, leader: msg.leader});
+                                if (this.scene.isActive()) {
+                                    this.cameras.main.fadeOut(200);
+                                    this.cameras.main.once('camerafadeoutcomplete', function(camera) {
+                                        this.scene.start('Lobby', {code: msg.roomCode, players: msg.playerArray, leader: msg.leader});
+                                    }, this);
+                                } else if (this.scene.get('GameOver').scene.isActive()) {
+                                    this.cameras.main.fadeOut(200);
+                                    this.cameras.main.once('camerafadeoutcomplete', function(camera) {
+                                        this.scene.get('GameOver').scene.start('Lobby', {code: msg.roomCode, players: msg.playerArray, leader: msg.leader});
+                                    }, this);
+                                }
                             } else {
                                 if (this.scene.get('Lobby').scene.isActive()) {
                                     this.scene.get('Lobby').updateAvatars({players: msg.playerArray, leader: msg.leader});
@@ -89,7 +96,10 @@ class PreLobby extends Phaser.Scene {
                     break;*/
                 case 'START_GAME_RETURN':
                     if (this.scene.get('Lobby').scene.isActive()) {
-                        this.scene.get('Lobby').scene.start('InGame', {maxRounds: msg.maxRounds, players: msg.players});
+                        this.scene.get('Lobby').cameras.main.fadeOut(200);
+                        this.scene.get('Lobby').cameras.main.once('camerafadeoutcomplete', function(camera) {
+                            this.scene.get('Lobby').scene.start('InGame', {maxRounds: msg.maxRounds, players: msg.players});
+                        }, this);
                     }
                     break;
                 case 'CHOSEN_WORD':
@@ -114,7 +124,10 @@ class PreLobby extends Phaser.Scene {
                 case 'POINTS':
                     if (this.scene.get('InGame').scene.isActive()) {
                         console.log(msg);
-                        this.scene.get('InGame').scene.start('GameOver', {code: msg.roomCode, players: msg.playerArray, leader: msg.leader, yourScore: msg.yourScore});
+                        this.scene.get('InGame').cameras.main.fadeOut(200);
+                        this.scene.get('InGame').cameras.main.once('camerafadeoutcomplete', function(camera) {
+                            this.scene.get('InGame').scene.start('GameOver', {code: msg.roomCode, players: msg.playerArray, leader: msg.leader, yourScore: msg.yourScore});
+                        }, this);
                     }
                     break;
                 case 'ALL_READY_RETURN':
@@ -189,13 +202,25 @@ class PreLobby extends Phaser.Scene {
                     game.global.socketDir = undefined;
                     //open disconnectoverlay scene
                     if (game.scene.keys.PreLobby.scene.isActive()) {
-                        game.scene.keys.PreLobby.scene.start('DisconnectOverlay', {message: 'Connection lost.', toPrelobby: false});
+                        game.scene.keys.PreLobby.cameras.main.fadeOut(200);
+                        game.scene.keys.PreLobby.cameras.main.once('camerafadeoutcomplete', function(camera) {
+                            game.scene.keys.PreLobby.scene.start('DisconnectOverlay', {message: 'Connection lost.', toPrelobby: false});
+                        }, this);
                     } else if (game.scene.keys.Lobby.scene.isActive()) {
-                        game.scene.keys.Lobby.scene.start('DisconnectOverlay', {message: 'Connection lost.', toPrelobby: false});
+                        game.scene.keys.PreLobby.cameras.main.fadeOut(200);
+                        game.scene.keys.PreLobby.cameras.main.once('camerafadeoutcomplete', function(camera) {
+                            game.scene.keys.Lobby.scene.start('DisconnectOverlay', {message: 'Connection lost.', toPrelobby: false});
+                        }, this);
                     } else if (game.scene.keys.InGame.scene.isActive()) {
-                        game.scene.keys.InGame.scene.start('DisconnectOverlay', {message: 'Connection lost.', toPrelobby: false});
+                        game.scene.keys.PreLobby.cameras.main.fadeOut(200);
+                        game.scene.keys.PreLobby.cameras.main.once('camerafadeoutcomplete', function(camera) {
+                            game.scene.keys.InGame.scene.start('DisconnectOverlay', {message: 'Connection lost.', toPrelobby: false});
+                        }, this);
                     } else if (game.scene.keys.GameOver.scene.isActive()) {
-                        game.scene.keys.GameOver.scene.start('DisconnectOverlay', {message: 'Connection lost.', toPrelobby: false});
+                        game.scene.keys.PreLobby.cameras.main.fadeOut(200);
+                        game.scene.keys.PreLobby.cameras.main.once('camerafadeoutcomplete', function(camera) {
+                            game.scene.keys.GameOver.scene.start('DisconnectOverlay', {message: 'Connection lost.', toPrelobby: false});
+                        }, this);
                     }
                 }
             }
@@ -277,7 +302,10 @@ class PreLobby extends Phaser.Scene {
             this.button_back.removeInteractive();
             game.global.socketDir.close();
             game.global.socketDir = undefined;
-            this.scene.start('DrawAvatar');
+            this.cameras.main.fadeOut(200);
+            this.cameras.main.once('camerafadeoutcomplete', function(camera) {
+                this.scene.start('DrawAvatar');
+            }, this);
         }, this);
 
 		this.button_create.on('pointerdown', function (pointer){
@@ -397,6 +425,7 @@ class PreLobby extends Phaser.Scene {
                 }
             }
         );
+        this.cameras.main.fadeIn(200);
     }
     
     updateText(text) {

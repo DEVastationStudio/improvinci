@@ -12,7 +12,10 @@ class Options extends Phaser.Scene {
     	this.return_options_bt = this.add.image(game.canvas.width*4/5 ,game.canvas.height*1/5,'Ronda_es').setInteractive({cursor: 'pointer'});
     	
     	this.return_options_bt.on('pointerdown', function (pointer){
-			this.scene.start('Menu');
+			this.cameras.main.fadeOut(200);
+            this.cameras.main.once('camerafadeoutcomplete', function(camera) {
+                this.scene.start('Menu');
+            }, this);
         }, this);
         
     	if (typeof(Storage) !== 'undefined') {
@@ -33,6 +36,7 @@ class Options extends Phaser.Scene {
                 }
             }
         }
+        this.cameras.main.fadeIn(200);
     }
     
     update() { 

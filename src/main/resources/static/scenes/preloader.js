@@ -32,7 +32,10 @@ class Preloader extends Phaser.Scene {
 
 		this.load.on('complete', function (file) {
 			this.loadingText.setText('Loading complete.');
-			this.scene.start('Menu');
+			this.cameras.main.fadeOut(200);
+            this.cameras.main.once('camerafadeoutcomplete', function(camera) {
+                this.scene.start('Menu');
+            }, this);
 		}, this);
 
 		this.load.spritesheet('TimeAnim', 'assets/interface/Tiempo.png',

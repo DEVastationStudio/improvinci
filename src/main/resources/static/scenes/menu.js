@@ -36,15 +36,24 @@ class Menu extends Phaser.Scene {
 
     	//Button actions
 		this.ready_bt.on('pointerdown', function (pointer){
-			this.scene.start('DrawAvatar');
+			this.cameras.main.fadeOut(200);
+            this.cameras.main.once('camerafadeoutcomplete', function(camera) {
+                this.scene.start('DrawAvatar');
+            }, this);
 		}, this);
 		
 		this.options_bt.on('pointerdown', function (pointer){
-			this.scene.start('Options');
+			this.cameras.main.fadeOut(200);
+            this.cameras.main.once('camerafadeoutcomplete', function(camera) {
+                this.scene.start('Options');
+            }, this);
 		}, this);
 		
 		this.credits_bt.on('pointerdown', function (pointer){
-			this.scene.start('Credits');
+			this.cameras.main.fadeOut(200);
+            this.cameras.main.once('camerafadeoutcomplete', function(camera) {
+                this.scene.start('Credits');
+            }, this);
 		}, this);
 
 		this.englishBtn.on('pointerdown', function (pointer){
@@ -68,7 +77,7 @@ class Menu extends Phaser.Scene {
     		this.options_bt.setTexture('Ready_host_es');
 			this.credits_bt.setTexture('Credits'+game.global.languageSuffix);
 		}, this);
-		
+		this.cameras.main.fadeIn(200);
     }
     
     update() { 

@@ -66,7 +66,10 @@ class GameOver extends Phaser.Scene {
         
         this.playAgain_bt.on('pointerdown', function (pointer){
             if (data.leader) {
-                this.scene.start('Lobby', {code: data.code, players: data.players, leader: data.leader});
+                this.cameras.main.fadeOut(200);
+                this.cameras.main.once('camerafadeoutcomplete', function(camera) {
+                    this.scene.start('Lobby', {code: data.code, players: data.players, leader: data.leader});
+                }, this);
             } else {
                 //this.scene.start('Lobby', {code: data.code, players: data.players, leader: data.leader});
                 let msg = new Object();
@@ -81,7 +84,10 @@ class GameOver extends Phaser.Scene {
         }, this);
         
         this.quit_bt.on('pointerdown', function (pointer){
-            this.scene.start('Menu');
+            this.cameras.main.fadeOut(200);
+            this.cameras.main.once('camerafadeoutcomplete', function(camera) {
+                this.scene.start('Menu');
+            }, this);
             this.playAgain_bt.removeInteractive();
             this.quit_bt.removeInteractive();
             game.global.socketDir.close();
@@ -108,6 +114,7 @@ class GameOver extends Phaser.Scene {
             localStorage.setItem('score', JSON.stringify(arr));
             console.dir(arr);
         }
+        this.cameras.main.fadeIn(200);
     }
     
     update() { 

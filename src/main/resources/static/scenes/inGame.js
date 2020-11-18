@@ -185,7 +185,10 @@ class InGame extends Phaser.Scene {
         this.DobleConfirmYES.on('pointerdown', function (pointer){
             game.global.socketDir.close();
             game.global.socketDir = undefined;
-            this.scene.start('DisconnectOverlay', {message: 'You left the game.', toPrelobby: false});
+            this.cameras.main.fadeOut(200);
+            this.cameras.main.once('camerafadeoutcomplete', function(camera) {
+                this.scene.start('DisconnectOverlay', {message: 'You left the game.', toPrelobby: false});
+            }, this);
         }, this);
 
         this.DobleConfirmNO.on('pointerdown', function (pointer){
@@ -199,6 +202,7 @@ class InGame extends Phaser.Scene {
         
         this.scaler();
 
+        this.cameras.main.fadeIn(200);
     }
 
     update(time, delta) {

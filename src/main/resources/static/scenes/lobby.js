@@ -35,7 +35,10 @@ class Lobby extends Phaser.Scene {
             this.button_Options.removeInteractive();
             game.global.socketDir.close();
             game.global.socketDir = undefined;
-            this.scene.start('DisconnectOverlay', {message: 'You left the lobby.', toPrelobby: true});
+            this.cameras.main.fadeOut(200);
+            this.cameras.main.once('camerafadeoutcomplete', function(camera) {
+                this.scene.start('DisconnectOverlay', {message: 'You left the lobby.', toPrelobby: true});
+            }, this);
         }, this);
         
 		this.button_start.on('pointerdown', function (pointer){
@@ -307,6 +310,7 @@ class Lobby extends Phaser.Scene {
         let msg2 = new Object();
         msg2.event = 'GET_INIT_INFO';
         game.global.socketDir.send(JSON.stringify(msg2));
+        this.cameras.main.fadeIn(200);
     }
 
     plusControls(type, info)
@@ -441,7 +445,7 @@ class Lobby extends Phaser.Scene {
         }
 
         if (leader) {
-            if (count >= 1) {
+            if (count >= 3) {
                 this.button_start.setInteractive({cursor: 'pointer'});
                 this.button_start.setAlpha(1);
             } else {

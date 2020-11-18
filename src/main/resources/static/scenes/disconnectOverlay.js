@@ -19,10 +19,14 @@ class DisconnectOverlay extends Phaser.Scene {
         this.disconnectButton.setInteractive({cursor: 'pointer'});
         this.disconnectButton.on('pointerdown', function (event) {
             console.log(data);
-            this.scene.start(data.toPrelobby?'PreLobby':'Menu');
+            this.cameras.main.fadeOut(200);
+            this.cameras.main.once('camerafadeoutcomplete', function(camera) {
+                this.scene.start(data.toPrelobby?'PreLobby':'Menu');
+            }, this);
         }, this);
 
         this.scaler();
+        this.cameras.main.fadeIn(200);
     }
     
     update() { 

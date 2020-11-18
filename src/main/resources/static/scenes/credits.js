@@ -26,10 +26,14 @@ class Credits extends Phaser.Scene {
         this.RetratoTomasImg = this.add.image(0, 0,'RetratoTomas').setInteractive();
     	
     	this.return_credits_bt.on('pointerdown', function (pointer){
-			this.scene.start('Menu');
+            this.cameras.main.fadeOut(200);
+            this.cameras.main.once('camerafadeoutcomplete', function(camera) {
+                this.scene.start('Menu');
+            }, this);
         }, this);
         
         this.scaler();
+		this.cameras.main.fadeIn(200);
     }
     
     update() { 
