@@ -4,7 +4,7 @@ class Preloader extends Phaser.Scene {
 
 
 	constructor() {
-		super({key: 'Preloader', pack: { files: [ {type: 'spritesheet', key: 'LoadGraphic', url: 'assets/interface/Tiempo.png', frameConfig: {frameWidth: 256, frameHeight: 256}}]}});
+		super({key: 'Preloader', pack: { files: [ {type: 'spritesheet', key: 'LoadGraphic', url: 'assets/interface/Tiempo.png', frameConfig: {frameWidth: 256, frameHeight: 256}}, {'type': 'image', 'key': 'logoDEV', 'url': 'assets/logoDEV.png'}]}});
 	}
 	
 	preload() {
@@ -16,7 +16,11 @@ class Preloader extends Phaser.Scene {
 			repeat: -1
 		});
 		this.LoadGraphic.anims.load('LoadAnim');
-		this.LoadGraphic.setScale(1); //?
+		this.LoadGraphic.setScale(Math.min(game.canvas.width/game.global.WIDTH,game.canvas.height/game.global.HEIGHT));
+		
+		this.logoDEV = this.add.sprite(game.canvas.width / 2, game.canvas.height / 2, 'logoDEV');
+		this.logoDEV.setScale(2*Math.min(game.canvas.width/game.global.WIDTH,game.canvas.height/game.global.HEIGHT));
+		this.logoDEV.setAlpha(0);
 
 		//Loading bar
 		
@@ -25,10 +29,28 @@ class Preloader extends Phaser.Scene {
 		}, this);
 
 		this.load.on('complete', function (file) {
-			this.cameras.main.fadeOut(200);
-			this.cameras.main.once('camerafadeoutcomplete', function (camera) {
-				this.scene.start('Menu');
-			}, this);
+			this.tweens.add({
+				targets: this.LoadGraphic,
+				alpha: {from: 1, to: 0},
+				duration: 1000,
+				ease: 'Quad.easeOut',
+				onComplete: function () {
+					this.tweens.add({
+						targets: this.logoDEV,
+						alpha: {from: 0, to: 1},
+						duration: 2000,
+						ease: 'Quad.easeOut',
+						onComplete: function () {
+							this.cameras.main.fadeOut(2000);
+							this.cameras.main.once('camerafadeoutcomplete', function (camera) {
+								this.scene.start('Menu');
+							}, this);
+						},
+						onCompleteScope: this
+					});
+				},
+				onCompleteScope: this
+			});
 		}, this);
 
 		this.load.spritesheet('TimeAnim', 'assets/interface/Tiempo.png',

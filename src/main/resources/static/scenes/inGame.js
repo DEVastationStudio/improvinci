@@ -550,7 +550,7 @@ class InGame extends Phaser.Scene {
         if (!this.roundFaker) {
             this.word.text = (game.global.languageSuffix === '_en')?('YOUR WORD IS:\n'+this.roundWord):('TU PALABRA ES:\n'+this.roundWord);
         } else {
-            this.word.text = (game.global.languageSuffix === '_en')?'YOU ARE THE FAKER\nTIME TO IMPROVISE!':'ERES EL IMPROVISADOR\n¡A IMPROVISAR!';
+            this.word.text = (game.global.languageSuffix === '_en')?'YOU ARE THE FAKER\nGOOD LUCK!':'ERES EL IMPROVISADOR\n¡BUENA SUERTE!';
         }
         this.gameMode.text = '';
         if (!this.roundFaker) {
