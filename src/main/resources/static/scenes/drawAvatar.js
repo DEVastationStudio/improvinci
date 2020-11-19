@@ -78,12 +78,12 @@ class DrawAvatar extends Phaser.Scene {
     scaler()
     {
         //Buttons
-        this.button_confirm.x = game.canvas.width / 2;
-        this.button_confirm.y = game.canvas.height * 7.3 / 10;
-        this.button_confirm.setScale(this.sY*0.65);
+        this.button_confirm.x = this.canvas.getX()+64;
+        this.button_confirm.y = game.canvas.height * 8 / 10;
+        this.button_confirm.setScale(this.sY*0.75);
 
-        this.button_clear.x = game.canvas.width * 1.2 / 2;
-        this.button_clear.y = game.canvas.height / 2;
+        this.button_clear.x = this.button_confirm.x-this.button_confirm.displayWidth*0.7;
+        this.button_clear.y = game.canvas.height * 8 / 10;
         this.button_clear.setScale(this.sY);
 
         this.return_bt.x = game.canvas.width / 10;
@@ -96,7 +96,7 @@ class DrawAvatar extends Phaser.Scene {
         this.bg.setScale(Math.max(this.sX, this.sY));
         
         this.drawYourself.x = game.canvas.width/2;
-        this.drawYourself.y = game.canvas.height * 4 /20;
+        this.drawYourself.y = game.canvas.height * 3 /20;
         this.drawYourself.setScale(this.sY);
 
         this.frame.x = game.canvas.width/2;
