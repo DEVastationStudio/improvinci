@@ -589,6 +589,7 @@ public class Room {
 							for (Player p : players) {
 								p.clearVotes();
 							} 
+							wrongVotes = 0;
 
 							for (Player p : players) {
 								synchronized(p.WSSession()) {
@@ -599,12 +600,12 @@ public class Room {
 					}
 				break;
 				case VOTING:
-					for (Player p : players) {
+					/*for (Player p : players) {
 						if (!p.sentPicture()) {
 							System.out.println("At least one player hasn't sent their picture yet.");
 							return;
 						}
-					}
+					}*/
 					if (gameTimer > 0) {
 						gameTimer--;
 						msg.put("event", "TIME_UPDATE");
