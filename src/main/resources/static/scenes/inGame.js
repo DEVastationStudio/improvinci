@@ -124,7 +124,6 @@ class InGame extends Phaser.Scene {
 
         this.confirmVoteButton.setAlpha(0);
         this.cancelVoteButton.setAlpha(0);
-        
 
         this.confirmVoteButton.on('pointerdown', function (pointer){
             let msg = new Object();
@@ -173,12 +172,6 @@ class InGame extends Phaser.Scene {
         this.roundText = this.add.text(game.canvas.width*6/8 ,game.canvas.height/12, '0/'+this.maxRounds, { fontSize: '40px', fontFamily: 'comic sans ms', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff'});
         this.strokesLeft = this.add.text(0 ,0, '', {align: 'center', fontSize: '30px', fontFamily: 'comic sans ms', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff' }).setOrigin(0.5,0.5);
         
-        this.button_clear.on('pointerdown', function (pointer){
-            this.canvas.clear();
-            this.canvas.resetStrokes();
-        }, this);
-        
-
         //Doble confirmacion
         this.DobleConfirmImg = this.add.image(0,0,'DobleConfirm'+game.global.languageSuffix).setInteractive();
         this.DobleConfirmImg.setAlpha(0);
@@ -186,9 +179,45 @@ class InGame extends Phaser.Scene {
         this.DobleConfirmYES.setAlpha(0);
 		this.DobleConfirmNO = this.add.image(0,0,'DobleConfirmNo'+game.global.languageSuffix).setInteractive({cursor: 'pointer'});
         this.DobleConfirmNO.setAlpha(0);
+        
+        this.scaler();
+        
+        //Tweens
+		this.button_clearTween = this.tweens.add({
+			targets:[this.button_clear],
+			scale: {from: this.button_clear.scale , to: this.button_clear.scale*0.9 },
+			duration: 100,
+			ease: 'Quad.easeout',
+			paused: true,
+			yoyo: true
+        });
+        
+        this.DobleConfirmYESTween = this.tweens.add({
+			targets:[this.DobleConfirmYES],
+			scale: {from: this.DobleConfirmYES.scale , to: this.DobleConfirmYES.scale*0.9 },
+			duration: 100,
+			ease: 'Quad.easeout',
+			paused: true,
+			yoyo: true
+        });
 
+        this.button_backTween = this.tweens.add({
+			targets:[this.button_back],
+			scale: {from: this.button_back.scale , to: this.button_back.scale*0.9 },
+			duration: 100,
+			ease: 'Quad.easeout',
+			paused: true,
+			yoyo: true
+        });
 
+        this.button_clear.on('pointerdown', function (pointer){
+            this.button_clearTween.play();
+            this.canvas.clear();
+            this.canvas.resetStrokes();
+        }, this);
+        
         this.DobleConfirmYES.on('pointerdown', function (pointer){
+            this.DobleConfirmYESTween.play();
             game.global.socketDir.close();
             game.global.socketDir = undefined;
             this.cameras.main.fadeOut(200);
@@ -202,11 +231,10 @@ class InGame extends Phaser.Scene {
         }, this);
 
         this.button_back.on('pointerdown', function (pointer){
+            this.button_backTween.play();
             this.scene.get('InGame').doubleConfirmationController(0);
         }, this);
 
-        
-        this.scaler();
 
         this.cameras.main.fadeIn(200);
         let msg2 = new Object();
