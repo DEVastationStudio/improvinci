@@ -16,13 +16,11 @@ class InGame extends Phaser.Scene {
         this.bg = this.add.image(0,0,'Gameplay');
 
         //Buttons
-        this.confirmVoteButton = this.add.image(0,0,'Ready_es'); 
-        this.cancelVoteButton = this.add.image(0,0, 'Ready'+game.global.languageSuffix);
         this.fakerPeekButton = this.add.image(0,0,'Copiar'+game.global.languageSuffix); 
         this.fakerPeekButton.setAlpha(0);
-        this.button_clear = this.add.image(game.canvas.width * 3 / 4, game.canvas.height / 4, 'Corona').setInteractive({cursor: 'pointer'});
+        this.button_clear = this.add.image(game.canvas.width * 3 / 4, game.canvas.height / 4, 'BorrarDibujo').setInteractive({cursor: 'pointer'});
         //this.fakerPeekButton.setScale(0.2, 0.2);
-        this.button_back = this.add.image(0,0, 'salirBoton'+game.global.languageSuffix).setInteractive({cursor: 'pointer'});
+        this.button_back = this.add.image(0,0, 'salirMainMenu'+game.global.languageSuffix).setInteractive({cursor: 'pointer'});
 
         //Critico
         this.CriticoLejosImg = this.add.image(0,0,'CriticoLejos');
@@ -83,8 +81,8 @@ class InGame extends Phaser.Scene {
                 this.pictures[i+j*3].setScale(this.drawings[i+j*3].scaleX*2, this.drawings[i+j*3].scaleY*2);
                 this.pictures[i+j*3].setAlpha(0);
                 this.votes[i+j*3] = this.add.text(game.canvas.width/2 + ((0.3*game.canvas.height)*(i-1)), game.canvas.height/2 + ((0.3*game.canvas.height)*(j-1)) + (0.15*game.canvas.height), '', { fontSize: '30px', fontFamily: 'comic sans ms', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff', align: 'center'}).setOrigin(0.5, 0.5);
-                this.votedIndicators[i+j*3] = this.add.image(this.drawings[i+j*3].x + this.drawings[i+j*3].displayWidth/2, this.drawings[i+j*3].y - this.drawings[i+j*3].displayHeight/2,'Corona'); 
-                this.votedIndicators[i+j*3].setScale(this.sY);
+                this.votedIndicators[i+j*3] = this.add.image(this.drawings[i+j*3].x + this.drawings[i+j*3].displayWidth/2, this.drawings[i+j*3].y - this.drawings[i+j*3].displayHeight/2,'critico_cerca'); 
+                this.votedIndicators[i+j*3].setScale(this.sY/6);
                 this.votedIndicators[i+j*3].setAlpha(0);
 
                 this.crowns[i+j*3] = this.add.image(this.frames[i+j*3].x - this.frames[i+j*3].displayWidth/2, this.frames[i+j*3].y - this.frames[i+j*3].displayHeight/2,'Corona'); 
@@ -103,6 +101,9 @@ class InGame extends Phaser.Scene {
         this.bigFrame = this.add.image(game.canvas.width/2, game.canvas.height/2,this.frameImages[Math.floor(Math.random()*this.frameImages.length)]); 
         this.bigFrame.setScale(game.canvas.height/460.8,game.canvas.height/460.8);
         this.bigFrame.setAlpha(0);
+        
+        this.confirmVoteButton = this.add.image(0,0,'Vote'+game.global.languageSuffix); 
+        this.cancelVoteButton = this.add.image(0,0, 'SalirCod');
 
         this.dcImage = this.add.image(game.canvas.width/4, game.canvas.height*7/8,'empty'); 
         this.dcImage.setScale(game.canvas.height/921.6,game.canvas.height/921.6);
@@ -164,8 +165,9 @@ class InGame extends Phaser.Scene {
         this.frame = this.add.image(0, 0,'Marco1'); 
         this.canvas.hideCanvas();
         this.frame.setAlpha(0);
+        this.button_clear.setAlpha(0);
 
-        this.word = this.add.text(game.canvas.width/2 ,game.canvas.height/2, 'Waiting for other players...', {fontSize: '40px', fontFamily: 'comic sans ms', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff'});
+        this.word = this.add.text(game.canvas.width/2 ,game.canvas.height/2, 'Waiting for other players...', {fontSize: '40px', fontFamily: 'comic sans ms', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff', align: 'center'}).setOrigin(0.5,0.5);
         this.gameMode = this.add.text(game.canvas.width/4 ,game.canvas.height/8, '', { fontSize: '40px', fontFamily: 'comic sans ms', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff'});
         this.inGameWord = this.add.text(game.canvas.width/2 ,game.canvas.height/12, '', {align: 'center', fontSize: '40px', fontFamily: 'comic sans ms', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff'}).setOrigin(0.5,0.5);
         this.roundText = this.add.text(game.canvas.width*6/8 ,game.canvas.height/12, '0/'+this.maxRounds, { fontSize: '40px', fontFamily: 'comic sans ms', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff'});
@@ -311,7 +313,7 @@ class InGame extends Phaser.Scene {
     {
         if(this.roundState == 1)
         {
-            this.gamemodeIcon(this.roundGamemode, game.canvas.width / 4, game.canvas.height / 8, this.sY, true);
+            this.gamemodeIcon(this.roundGamemode, game.canvas.width / 4, game.canvas.height / 8, this.sY*0.8, true);
             this.TimeAnim.setAlpha(1);
             this.timerText.setAlpha(1);
             this.TimeAnim.anims.play('Clock_Anim', true);
@@ -320,9 +322,9 @@ class InGame extends Phaser.Scene {
         {
             if(this.roundState == 2)
             {
-                this.gamemodeIcon(this.roundGamemode, game.canvas.width / 4, game.canvas.height / 8, this.sY, true);
+                this.gamemodeIcon(this.roundGamemode, game.canvas.width / 4, game.canvas.height / 8, this.sY*0.8, true);
                 this.gamemodeIcon('',0,0,0,false);
-            }else
+            }else //roundState == 0
             {
                 this.TimeAnim.setAlpha(0);
                 this.timerText.setAlpha(0);
@@ -336,10 +338,10 @@ class InGame extends Phaser.Scene {
                 let rowPos = this.CriticoLejosImg.height*this.CriticoLejosImg.scaleY/20;
 
                 this.word.x = kbLTCornerX+columnPos*16;
-                this.word.y = kbLTCornerY+rowPos*4;
+                this.word.y = kbLTCornerY+rowPos*3;
                 this.word.setScale(this.sY);
 
-                this.gamemodeIcon(this.roundGamemode, kbLTCornerX+columnPos*17, kbLTCornerY+rowPos*2, this.sY, true);
+                this.gamemodeIcon(this.roundGamemode, kbLTCornerX+columnPos*17, kbLTCornerY+rowPos*-1, this.sY*0.8, true);
             }
         }
     }
@@ -347,21 +349,14 @@ class InGame extends Phaser.Scene {
     scaler()
     {
         //Buttons
-        this.confirmVoteButton.x = game.canvas.width/4;
-        this.confirmVoteButton.y = game.canvas.height *7/ 8;
-        this.confirmVoteButton.setScale(this.sY);
-        
-        this.cancelVoteButton.x = game.canvas.width * 3 / 4;
-        this.cancelVoteButton.y = game.canvas.height *7/ 8;
-        this.cancelVoteButton.setScale(this.sY);
         
         this.fakerPeekButton.x = game.canvas.width / 4;
         this.fakerPeekButton.y = game.canvas.height / 2;
         this.fakerPeekButton.setScale(this.sY);
 
-        this.button_clear.x = game.canvas.width*3 / 4;
-        this.button_clear.y = game.canvas.height / 4;
-        this.button_clear.setScale(this.sY*0.3);
+        this.button_clear.x = game.canvas.width/2 + this.frame.displayWidth*0.6;
+        this.button_clear.y = game.canvas.height/2 + this.frame.displayHeight*0.3;
+        this.button_clear.setScale(this.sY);
 
         this.criticoScaler();
         
@@ -373,9 +368,13 @@ class InGame extends Phaser.Scene {
         this.timerText.y = game.canvas.height * 8.7 / 40;
         this.timerText.setScale(this.sY);
 
-        this.inGameWord.x = this.canvas.getX();
-        this.inGameWord.y = this.canvas.getY()-170;
-        //this.inGameWord.setScale(this.sY);
+        /*this.inGameWord.x = game.canvas.width * 13 / 16;
+        this.inGameWord.y = game.canvas.height * 3 / 8;
+        this.inGameWord.setScale(this.sY*2);
+        this.inGameWord.setWordWrapWidth(game.canvas.width / 4);*/
+        this.inGameWord.x = game.canvas.width / 2;
+        this.inGameWord.y = game.canvas.height * 29 / 32;
+        this.inGameWord.setScale(this.sY*2);
 
         this.roundText.x = game.canvas.width * 6 / 8;
         this.roundText.y = game.canvas.height / 12;
@@ -388,7 +387,7 @@ class InGame extends Phaser.Scene {
         //Doble confirmacion
         this.DobleConfirmImg.x = game.canvas.width / 2;
         this.DobleConfirmImg.y = game.canvas.height / 2;
-        this.DobleConfirmImg.setScale(this.sY/3);
+        this.DobleConfirmImg.setScale(this.sY/2);
 
         let kbLTCornerX = (this.DobleConfirmImg.x-(this.DobleConfirmImg.width*this.DobleConfirmImg.scaleX)/2)+0;
         let kbLTCornerY = (this.DobleConfirmImg.y-(this.DobleConfirmImg.height*this.DobleConfirmImg.scaleY)/2)+0;
@@ -422,7 +421,7 @@ class InGame extends Phaser.Scene {
                 this.votes[i+j*3].setScale(this.sY);
                 this.votedIndicators[i+j*3].x = this.drawings[i+j*3].x + this.drawings[i+j*3].displayWidth/2;
                 this.votedIndicators[i+j*3].y = this.drawings[i+j*3].y - this.drawings[i+j*3].displayHeight/2;
-                this.votedIndicators[i+j*3].setScale(this.sY);
+                this.votedIndicators[i+j*3].setScale(this.sY/8);
                 
                 this.pictures[i+j*3].x = this.drawings[i+j*3].x;
                 this.pictures[i+j*3].y = this.drawings[i+j*3].y;
@@ -441,6 +440,14 @@ class InGame extends Phaser.Scene {
         this.bigFrame.x = game.canvas.width/2; 
         this.bigFrame.y = game.canvas.height/2; 
         this.bigFrame.setScale(game.canvas.height/460.8,game.canvas.height/460.8);
+        
+        this.confirmVoteButton.setScale(this.sX/3);
+        this.confirmVoteButton.x = this.bigFrame.x+(this.bigFrame.displayWidth/2)+(this.confirmVoteButton.displayWidth/2);
+        this.confirmVoteButton.y = this.bigFrame.y + (this.bigFrame.displayHeight/2) - (this.confirmVoteButton.displayHeight/2);
+        
+        this.cancelVoteButton.x = this.bigFrame.x + this.bigFrame.displayWidth*0.4;
+        this.cancelVoteButton.y = this.bigFrame.y - this.bigFrame.displayHeight*0.4;
+        this.cancelVoteButton.setScale(this.sY);
 
         //Disconnecting player
         this.dcImage.x = game.canvas.width/4;
@@ -456,6 +463,14 @@ class InGame extends Phaser.Scene {
         this.frame.x = game.canvas.width/2;
         this.frame.y = game.canvas.height/2;
         this.frame.setScale(1);
+
+        this.fakerImage.x = game.canvas.width/6; 
+        this.fakerImage.y = game.canvas.height*5/8; 
+        this.fakerImage.setScale(game.canvas.height/960.8,game.canvas.height/960.8);
+        
+        this.fakerFrame.x = this.fakerImage.x;
+        this.fakerFrame.y = this.fakerImage.y;
+        this.fakerFrame.setScale(game.canvas.height/960.8,game.canvas.height/960.8);
     }
 
     enhanceImage(id) {
@@ -502,13 +517,12 @@ class InGame extends Phaser.Scene {
         this.canvas.setDrawMode(drawMode);
         this.hideDrawings();
         this.CriticoLejosImg.setAlpha(1);
-        this.button_clear.setAlpha(1);
         this.button_clear.setInteractive({cursor: 'pointer'})
         this.inGameWord.text = '';
         if (!this.roundFaker) {
-            this.word.text = this.roundWord;
+            this.word.text = (game.global.languageSuffix === '_en')?('YOUR WORD IS:\n'+this.roundWord):('TU PALABRA ES:\n'+this.roundWord);
         } else {
-            this.word.text = 'YOU ARE THE FAKER';
+            this.word.text = (game.global.languageSuffix === '_en')?'YOU ARE THE FAKER\nTIME TO IMPROVISE!':'ERES EL IMPROVISADOR\n¡A IMPROVISAR!';
         }
         this.gameMode.text = '';
         if (!this.roundFaker) {
@@ -537,6 +551,7 @@ class InGame extends Phaser.Scene {
         this.canvas.fadeStatus = -1;
         this.canvas.showCanvas();
         this.frame.setAlpha(1);
+        this.button_clear.setAlpha(1);
     }
 
     updateTime(time) {
@@ -569,6 +584,7 @@ class InGame extends Phaser.Scene {
         this.fakerImage.setAlpha(0);
         this.fakerPeekButton.setAlpha(0);
         this.fakerPeekButton.removeInteractive();
+        this.strokesLeft.setAlpha(0);
         
         this.button_clear.setAlpha(0);
         this.button_clear.removeInteractive();

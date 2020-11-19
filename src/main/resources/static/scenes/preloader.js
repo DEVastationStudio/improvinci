@@ -66,8 +66,11 @@ class Preloader extends Phaser.Scene {
 		this.load.image('Marco3', 'assets/interface/Marco3.png');
 		this.load.image('Marco4', 'assets/interface/Marco4.png');
 		this.load.image('CriticoLejos', 'assets/character/critico_lejos.png');
+		this.load.image('critico_cerca', 'assets/character/critico_cerca.png');
 		this.load.image('salirBoton_es', 'assets/interface/salirBoton_es.png');
 		this.load.image('salirBoton_en', 'assets/interface/salirBoton_en.png');
+		this.load.image('salirMainMenu_es', 'assets/interface/salirMainMenu_es.png');
+		this.load.image('salirMainMenu_en', 'assets/interface/salirMainMenu_en.png');
 		this.load.image('Desco', 'assets/interface/Desco.png');
 		this.load.image('DobleConfirm_es', 'assets/interface/DobleConfirm_es.png');
 		this.load.image('DobleConfirm_en', 'assets/interface/DobleConfirm_en.png');
@@ -76,6 +79,8 @@ class Preloader extends Phaser.Scene {
 		this.load.image('DobleConfirmNo_es', 'assets/interface/DobleConfirmNo_es.png');
 		this.load.image('DobleConfirmNo_en', 'assets/interface/DobleConfirmNo_en.png');
 		this.load.image('BorrarDibujo', 'assets/interface/BorrarDibujo.png');
+		this.load.image('Vote_en', 'assets/interface/Vote_en.png');
+		this.load.image('Vote_es', 'assets/interface/Vote_es.png');
 
 		//keyboard
 		this.load.image('KeyBoardBg', 'assets/backgrounds/KeyBoardBg.png');

@@ -50,7 +50,7 @@ class DisconnectOverlay extends Phaser.Scene {
         //Background
 		this.bg.x = game.canvas.width/2;
 		this.bg.y = game.canvas.height/2;
-        this.bg.setScale(this.sY);
+        this.bg.setScale(Math.min(this.sX, this.sY));
 
         //Buttons
         this.disconnectButton.x = this.bg.x - this.bg.displayWidth / 4;
