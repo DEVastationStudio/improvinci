@@ -246,7 +246,7 @@ class InGame extends Phaser.Scene {
     limitPaintingStrokes(num)
     {
         this.maxTrazos = num;
-        this.strokesLeft.text = 'Strokes left: '+this.maxTrazos;
+        this.strokesLeft.text = ((game.global.languageSuffix === '_en')?'Strokes left: ':'Trazos restantes: ') + this.maxTrazos;
     }
 
     gamemodeIcon(type, x, y, scale, isActive)
@@ -278,9 +278,9 @@ class InGame extends Phaser.Scene {
                 if(this.roundState === 1)
                 {
                     this.strokesLeft.x = this.canvas.getX();
-                    this.strokesLeft.y = this.canvas.getY()+150;
+                    this.strokesLeft.y = this.canvas.getY()-150;
                     this.strokesLeft.setAlpha(1);
-                    this.strokesLeft.text = 'Strokes left: '+this.maxTrazos;
+                    this.strokesLeft.text = ((game.global.languageSuffix === '_en')?'Strokes left: ':'Trazos restantes: ') + this.maxTrazos;
                 }
                 break;
             case 'one':
@@ -779,19 +779,23 @@ class InGame extends Phaser.Scene {
         }
         for (let i = 0; i < 3; i++) {
             for (let j = 0; j < 3; j++) {
-                if (this.players[i+j*3] !== undefined && playerArray[i+j*3] !== undefined) {
-                    //generate profile pic textures and replace them
-                    this.pictures[i+j*3].setTexture(this.players[i+j*3].playerId); 
-                    this.drawings[i+j*3].setAlpha(0);
-                    this.pictures[i+j*3].setAlpha(1);
-                    //replace text with score stuff
-                    let diff = playerArray[i+j*3].score - playerArray[i+j*3].oldScore;
-                    this.votes[i+j*3].text = playerArray[i+j*3].score + ' (' + ((diff < 0)?('-'):('+')) + Math.abs(diff) + ')';
-
-                    if (playerArray[i+j*3].score === topScore) {
-                        this.crowns[i+j*3].setAlpha(1);
+                for (let p in playerArray) {
+                    if (this.players[i+j*3] !== undefined && playerArray[p] !== undefined) {
+                        if (playerArray[p].playerId === this.players[i+j*3].playerId) {
+                            //generate profile pic textures and replace them
+                            this.pictures[i+j*3].setTexture(this.players[i+j*3].playerId); 
+                            this.drawings[i+j*3].setAlpha(0);
+                            this.pictures[i+j*3].setAlpha(1);
+                            //replace text with score stuff
+                            let diff = playerArray[p].score - playerArray[p].oldScore;
+                            this.votes[i+j*3].text = playerArray[p].score + ' (' + (( playerArray[p].score < playerArray[p].oldScore)?('-'):('+')) + Math.abs(diff) + ')';
+                            
+                            if (playerArray[p].score === topScore) {
+                                this.crowns[i+j*3].setAlpha(1);
+                            }
+                            break;
+                        }
                     }
-                    
                 }
             }
         }

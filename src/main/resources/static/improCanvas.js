@@ -13,7 +13,7 @@ class improCanvas {
         this.hidden = false;
         this.locked = false;
         this.pointerSize = 2;
-        this.maxPointerSize = 30;
+        this.maxPointerSize = 90;
         this.pointerChangeSizeTime = 250;
         this.maxTrazos = 10;
         this.inPainting = false;
@@ -219,6 +219,8 @@ class improCanvas {
     }
 
     setDrawMode(drawMode) {
+        if (drawMode === this.modes.BLIND)
+            this.backgroundColour = 0x000000;
         this.pointer_mode = drawMode;
         this.resetStrokes();
         console.log(drawMode);
