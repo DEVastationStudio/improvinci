@@ -27,16 +27,17 @@ class Options extends Phaser.Scene {
     
             this.canvas = new improCanvas(this, 128);
     
-            this.topScores = this.add.text(0, 0, '', { fontSize: '50px', fontFamily: 'Comic Sans MS', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff'});
+            this.topScoresL = this.add.text(0, 0, '', { fontSize: '50px', fontFamily: 'Comic Sans MS', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff'});
+            this.topScoresR = this.add.text(0, 0, '', { fontSize: '50px', fontFamily: 'Comic Sans MS', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff'});
         
             if (this.usesLocalStorage) {
                 if (localStorage.getItem('score') !== null) {
                     let arr = JSON.parse(localStorage.getItem('score'));
                     for (let i = 1; i <= arr.length; i++) {
                         if(i%2 == 0)
-                            this.topScores.text += (i)+': ' + arr[i-1].score + ' (' + arr[i-1].result + ')' + '\n';
+                            this.topScoresR.text += (i)+': ' + arr[i-1].score + ' (' + arr[i-1].result + ')' + '\n';
                         else
-                            this.topScores.text += (i)+': ' + arr[i-1].score + ' (' + arr[i-1].result + ')' + '       ';
+                            this.topScoresL.text += (i)+': ' + arr[i-1].score + ' (' + arr[i-1].result + ')' + '\n';
                     }
                 }
             }
@@ -88,8 +89,12 @@ class Options extends Phaser.Scene {
 		this.bg.y = game.canvas.height / 2;
 		this.bg.setScale(Math.max(this.sX, this.sY));
 
-		this.topScores.x = (this.tablaPuntuaciones.x-(this.tablaPuntuaciones.width*this.tablaPuntuaciones.scaleX)/2) +  (this.tablaPuntuaciones.width*this.tablaPuntuaciones.scaleX/20)*5;
-		this.topScores.y = (this.tablaPuntuaciones.y-(this.tablaPuntuaciones.height*this.tablaPuntuaciones.scaleY)*13/32) + (this.tablaPuntuaciones.height*this.tablaPuntuaciones.scaleY/20)*4;
-		this.topScores.setScale(Math.min(this.sX, this.sY)*1.2);
+		this.topScoresL.x = (this.tablaPuntuaciones.x-(this.tablaPuntuaciones.width*this.tablaPuntuaciones.scaleX)/2) +  (this.tablaPuntuaciones.width*this.tablaPuntuaciones.scaleX/22)*5;
+		this.topScoresL.y = (this.tablaPuntuaciones.y-(this.tablaPuntuaciones.height*this.tablaPuntuaciones.scaleY)*13/32) + (this.tablaPuntuaciones.height*this.tablaPuntuaciones.scaleY/20)*4;
+        this.topScoresL.setScale(Math.min(this.sX, this.sY)*1.2);
+        
+		this.topScoresR.x = (this.tablaPuntuaciones.x-(this.tablaPuntuaciones.width*this.tablaPuntuaciones.scaleX)/2) +  (this.tablaPuntuaciones.width*this.tablaPuntuaciones.scaleX/10)*5;
+		this.topScoresR.y = (this.tablaPuntuaciones.y-(this.tablaPuntuaciones.height*this.tablaPuntuaciones.scaleY)*13/32) + (this.tablaPuntuaciones.height*this.tablaPuntuaciones.scaleY/20)*4;
+		this.topScoresR.setScale(Math.min(this.sX, this.sY)*1.2);
     }
 }

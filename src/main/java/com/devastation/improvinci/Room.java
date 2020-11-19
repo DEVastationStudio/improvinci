@@ -445,6 +445,7 @@ public class Room {
 	}
 
 	public void startGame() {
+		random.setSeed(LocalDateTime.now().hashCode());
 		gameStarted = true;
 		synchronized(this) {
 			for (Player p : players) {
