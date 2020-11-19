@@ -52,12 +52,95 @@ class Menu extends Phaser.Scene {
 			this.spanishBtn = this.add.image(0,0,'spainFlag');
 			this.englishBtn = this.add.image(0,0,'ukFlag').setInteractive({cursor: 'pointer'}).setAlpha(0.4);
 		}
-
+		
 		this.invisible(0);
 		this.scaler();
 
+		//Tweens
+		this.englishBtnTween = this.tweens.add({
+			targets:[this.englishBtn],
+			scale: {from: this.englishBtn.scale , to: this.englishBtn.scale*0.9 },
+			duration: 100,
+			ease: 'Quad.easeout',
+			paused: true,
+			yoyo: true
+		});
+
+		this.spanishBtnTween = this.tweens.add({
+			targets:[this.spanishBtn],
+			scale: {from: this.spanishBtn.scale , to: this.spanishBtn.scale*0.9 },
+			duration: 100,
+			ease: 'Quad.easeout',
+			paused: true,
+			yoyo: true
+		});
+
+		this.puntuaciones_btTween = this.tweens.add({
+			targets:[this.puntuaciones_bt],
+			scale: {from: this.puntuaciones_bt.scale , to: this.puntuaciones_bt.scale*0.9 },
+			duration: 100,
+			ease: 'Quad.easeout',
+			paused: true,
+			yoyo: true
+		});
+
+		this.tutorial_btTween = this.tweens.add({
+			targets:[this.tutorial_bt],
+			scale: {from: this.tutorial_bt.scale , to: this.tutorial_bt.scale*0.9 },
+			duration: 100,
+			ease: 'Quad.easeout',
+			paused: true,
+			yoyo: true
+		});
+
+		this.jugar_btTween = this.tweens.add({
+			targets:[this.jugar_bt],
+			scale: {from: this.jugar_bt.scale , to: this.jugar_bt.scale*0.9 },
+			duration: 100,
+			ease: 'Quad.easeout',
+			paused: true,
+			yoyo: true
+		});
+		
+		this.credits_btTween = this.tweens.add({
+			targets:[this.credits_bt],
+			scale: {from: this.credits_bt.scale , to: this.credits_bt.scale*0.9 },
+			duration: 100,
+			ease: 'Quad.easeout',
+			paused: true,
+			yoyo: true
+		});
+
+		this.flechaDTween = this.tweens.add({
+			targets:[this.tDerecha],
+			scale: {from: this.tDerecha.scale , to: this.tDerecha.scale*0.9 },
+			duration: 100,
+			ease: 'Quad.easeout',
+			paused: true,
+			yoyo: true
+		});
+		
+		this.flechaITween = this.tweens.add({
+			targets:[this.tIzquierda],
+			scale: {from: this.tIzquierda.scale , to: this.tIzquierda.scale*0.9 },
+			duration: 100,
+			ease: 'Quad.easeout',
+			paused: true,
+			yoyo: true
+		});
+
+		this.salirTutoTween = this.tweens.add({
+			targets:[this.salirTuto],
+			scale: {from: this.salirTuto.scale , to: this.salirTuto.scale*0.9 },
+			duration: 100,
+			ease: 'Quad.easeout',
+			paused: true,
+			yoyo: true
+		});
+
 		//Tutorial
 		this.tDerecha.on('pointerdown', function (pointer){
+			this.flechaDTween.play();
 			if(this.tutorialPage+1<=11) 
 			{
 				this.tutorialPage++;
@@ -74,6 +157,7 @@ class Menu extends Phaser.Scene {
 		}, this);
 
 		this.tIzquierda.on('pointerdown', function (pointer){
+			this.flechaITween.play();
 			if(this.tutorialPage-1>=1) 
 			{
 				this.tutorialPage--;
@@ -90,11 +174,13 @@ class Menu extends Phaser.Scene {
 		}, this);
 
 		this.salirTuto.on('pointerdown', function (pointer){
+			this.salirTutoTween.play()
 			this.invisible(0);
 			this.tutorialPage = 1;
 		}, this);
 
 		this.tutorial_bt.on('pointerdown', function (pointer){
+			this.tutorial_btTween.play();
 			this.invisible(1);
 			this.tIzquierda.setAlpha(0.4)
 		}, this);
@@ -106,6 +192,7 @@ class Menu extends Phaser.Scene {
 
     	//Button actions
 		this.jugar_bt.on('pointerdown', function (pointer){
+			this.jugar_btTween.play()
 			this.cameras.main.fadeOut(200);
             this.cameras.main.once('camerafadeoutcomplete', function(camera) {
                 this.scene.start('DrawAvatar');
@@ -113,6 +200,7 @@ class Menu extends Phaser.Scene {
 		}, this);
 		
 		this.puntuaciones_bt.on('pointerdown', function (pointer){
+			this.puntuaciones_btTween.play()
 			this.cameras.main.fadeOut(200);
             this.cameras.main.once('camerafadeoutcomplete', function(camera) {
                 this.scene.start('Options');
@@ -120,6 +208,7 @@ class Menu extends Phaser.Scene {
 		}, this);
 		
 		this.credits_bt.on('pointerdown', function (pointer){
+			this.credits_btTween.play();
 			this.cameras.main.fadeOut(200);
             this.cameras.main.once('camerafadeoutcomplete', function(camera) {
                 this.scene.start('Credits');
@@ -127,6 +216,7 @@ class Menu extends Phaser.Scene {
 		}, this);
 
 		this.englishBtn.on('pointerdown', function (pointer){
+			this.englishBtnTween.play();
 			this.invisible(0);
 			this.tutorialPage = 1;
 			this.englishBtn.removeInteractive();
@@ -141,6 +231,7 @@ class Menu extends Phaser.Scene {
 		}, this);
 
 		this.spanishBtn.on('pointerdown', function (pointer){
+			this.spanishBtnTween.play();
 			this.invisible(0);
 			this.tutorialPage = 1;
 			this.spanishBtn.removeInteractive();

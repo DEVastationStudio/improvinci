@@ -24,15 +24,26 @@ class Credits extends Phaser.Scene {
         this.RetratoMariaImg = this.add.image(0, 0,'RetratoMaria'+game.global.languageSuffix);
         this.RetratoPabloImg = this.add.image(0, 0,'RetratoPablo'+game.global.languageSuffix);
         this.RetratoTomasImg = this.add.image(0, 0,'RetratoTomas'+game.global.languageSuffix);
-    	
+        
+        this.scaler();
+        //Tweens
+		this.return_creditsTween = this.tweens.add({
+			targets:[this.return_credits_bt],
+			scale: {from: this.return_credits_bt.scale , to: this.return_credits_bt.scale*0.9 },
+			duration: 100,
+			ease: 'Quad.easeout',
+			paused: true,
+			yoyo: true
+		});
+
     	this.return_credits_bt.on('pointerdown', function (pointer){
+            this.return_creditsTween.play();
             this.cameras.main.fadeOut(200);
             this.cameras.main.once('camerafadeoutcomplete', function(camera) {
                 this.scene.start('Menu');
             }, this);
         }, this);
         
-        this.scaler();
 		this.cameras.main.fadeIn(200);
     }
     

@@ -20,9 +20,61 @@ class DrawAvatar extends Phaser.Scene {
         this.button_confirm = this.add.image(0,0, 'Ready'+game.global.languageSuffix).setInteractive({cursor: 'pointer'});
         this.button_clear = this.add.image(0,0, 'BorrarDibujo').setInteractive({cursor: 'pointer'});
     	this.return_bt = this.add.image(game.canvas.width*4/5 ,game.canvas.height*1/5,'salirBoton'+game.global.languageSuffix).setInteractive({cursor: 'pointer'});
-    	        
+        this.canvas = new improCanvas(this, 128);
+
+        if (typeof(Storage) !== 'undefined') {
+            this.usesLocalStorage = true;
+            } else {
+            this.usesLocalStorage = false;
+            }
+    
+            this.frame = this.add.image(0, 0,'Marco1'); 
+    
+            if (this.usesLocalStorage) {
+                if (localStorage.getItem('lastAvatar') !== null) {
+                    this.canvas.loadDrawing(localStorage.getItem('lastAvatar'));
+                }
+            }
+            let language = 'Draw yourself!';
+            if(game.global.languageSuffix === '_es')
+                language = '¡Dibújate!'
+    
+            this.drawYourself = this.add.text( 0, 0, language, {fontSize: '100px', fontFamily: 'comic sans ms', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff', align: 'center'}).setOrigin(0.5, 0.5);
+            this.cameras.main.fadeIn(200);
+        
+            this.scaler();
+        
+        //Tweens
+		this.return_btTween = this.tweens.add({
+			targets:[this.return_bt],
+			scale: {from: this.return_bt.scale , to: this.return_bt.scale*0.9 },
+			duration: 100,
+			ease: 'Quad.easeout',
+			paused: true,
+			yoyo: true
+        });
+        
+        this.button_confirmTween = this.tweens.add({
+			targets:[this.button_confirm],
+			scale: {from: this.button_confirm.scale , to: this.button_confirm.scale*0.9 },
+			duration: 100,
+			ease: 'Quad.easeout',
+			paused: true,
+			yoyo: true
+        });
+        
+        this.button_clearTween = this.tweens.add({
+			targets:[this.button_clear],
+			scale: {from: this.button_clear.scale , to: this.button_clear.scale*0.9 },
+			duration: 100,
+			ease: 'Quad.easeout',
+			paused: true,
+			yoyo: true
+        });
+        
         //Button actions
         this.button_confirm.on('pointerdown', function (pointer){
+            this.button_confirmTween.play();
 			localStorage.setItem('lastAvatar',this.canvas.toString());
             this.cameras.main.fadeOut(200);
             this.cameras.main.once('camerafadeoutcomplete', function(camera) {
@@ -31,38 +83,19 @@ class DrawAvatar extends Phaser.Scene {
 		}, this);
 		
 		this.button_clear.on('pointerdown', function (pointer){
+            this.button_clearTween.play()
             this.canvas.clear();
 		}, this);
 
     	this.return_bt.on('pointerdown', function (pointer){
+            this.return_btTween.play();
 			this.cameras.main.fadeOut(200);
             this.cameras.main.once('camerafadeoutcomplete', function(camera) {
                 this.scene.start('Menu');
             }, this);
 		}, this);
 
-        if (typeof(Storage) !== 'undefined') {
-        this.usesLocalStorage = true;
-        } else {
-        this.usesLocalStorage = false;
-        }
-
-        this.canvas = new improCanvas(this, 128);
-        this.frame = this.add.image(0, 0,'Marco1'); 
-
-        if (this.usesLocalStorage) {
-            if (localStorage.getItem('lastAvatar') !== null) {
-                this.canvas.loadDrawing(localStorage.getItem('lastAvatar'));
-            }
-        }
-        let language = 'Draw yourself!';
-        if(game.global.languageSuffix === '_es')
-            language = '¡Dibújate!'
-
-        this.drawYourself = this.add.text( 0, 0, language, {fontSize: '100px', fontFamily: 'comic sans ms', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff', align: 'center'}).setOrigin(0.5, 0.5);
-        this.cameras.main.fadeIn(200);
         
-        this.scaler();
     }
     
     update(time, delta) { 
