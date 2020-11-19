@@ -240,7 +240,7 @@ class Lobby extends Phaser.Scene {
             game.global.socketDir = undefined;
             this.cameras.main.fadeOut(200);
             this.cameras.main.once('camerafadeoutcomplete', function(camera) {
-                this.scene.start('DisconnectOverlay', {message: 'You left the lobby.', toPrelobby: true});
+                this.scene.start('DisconnectOverlay', {message: (game.global.languageSuffix === '_en')?'You left the lobby.':'Has abandonado la sala.', toPrelobby: true});
             }, this);
         }, this);
         

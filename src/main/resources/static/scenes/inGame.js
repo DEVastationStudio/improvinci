@@ -222,7 +222,7 @@ class InGame extends Phaser.Scene {
             game.global.socketDir = undefined;
             this.cameras.main.fadeOut(200);
             this.cameras.main.once('camerafadeoutcomplete', function(camera) {
-                this.scene.start('DisconnectOverlay', {message: 'You left the game.', toPrelobby: false});
+                this.scene.start('DisconnectOverlay', {message: (game.global.languageSuffix === '_en')?'You left the game.':'Has abandonado la partida.', toPrelobby: false});
             }, this);
         }, this);
 
@@ -586,7 +586,7 @@ class InGame extends Phaser.Scene {
         this.timerText.text = time;
         if(time/this.maxTime < 0.5 && this.canvas.fadeStatus === -1) this.canvas.fadeStatus = 0;
         this.updateWord(time);
-        if (time === Math.floor(this.maxTime/2) && this.roundFaker && !this.canvas.hidden) {
+        if (time === Math.floor(this.maxTime*4/5) && this.roundFaker && !this.canvas.hidden) {
             this.fakerPeekButton.setAlpha(1);
             this.fakerPeekButton.setInteractive({cursor: 'pointer'});
         }

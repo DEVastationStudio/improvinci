@@ -137,6 +137,12 @@ class PreLobby extends Phaser.Scene {
                         this.scene.get('InGame').cameras.main.once('camerafadeoutcomplete', function(camera) {
                             this.scene.get('InGame').scene.start('GameOver', {code: msg.roomCode, players: msg.playerArray, leader: msg.leader, yourScore: msg.yourScore});
                         }, this);
+                    } else if (this.scene.get('Lobby').scene.isActive()) {
+                        console.log(msg);
+                        this.scene.get('Lobby').cameras.main.fadeOut(200);
+                        this.scene.get('Lobby').cameras.main.once('camerafadeoutcomplete', function(camera) {
+                            this.scene.get('Lobby').scene.start('GameOver', {code: msg.roomCode, players: msg.playerArray, leader: msg.leader, yourScore: msg.yourScore});
+                        }, this);
                     }
                     break;
                 case 'ALL_READY_RETURN':
@@ -218,22 +224,22 @@ class PreLobby extends Phaser.Scene {
                     if (game.scene.keys.PreLobby.scene.isActive()) {
                         game.scene.keys.PreLobby.cameras.main.fadeOut(200);
                         game.scene.keys.PreLobby.cameras.main.once('camerafadeoutcomplete', function(camera) {
-                            game.scene.keys.PreLobby.scene.start('DisconnectOverlay', {message: 'Connection lost.', toPrelobby: false});
+                            game.scene.keys.PreLobby.scene.start('DisconnectOverlay', {message: (game.global.languageSuffix === '_en')?'Connection lost.':'Has perdido la conexión.', toPrelobby: false});
                         }, this);
                     } else if (game.scene.keys.Lobby.scene.isActive()) {
                         game.scene.keys.Lobby.cameras.main.fadeOut(200);
                         game.scene.keys.Lobby.cameras.main.once('camerafadeoutcomplete', function(camera) {
-                            game.scene.keys.Lobby.scene.start('DisconnectOverlay', {message: 'Connection lost.', toPrelobby: false});
+                            game.scene.keys.Lobby.scene.start('DisconnectOverlay', {message: (game.global.languageSuffix === '_en')?'Connection lost.':'Has perdido la conexión.', toPrelobby: false});
                         }, this);
                     } else if (game.scene.keys.InGame.scene.isActive()) {
                         game.scene.keys.InGame.cameras.main.fadeOut(200);
                         game.scene.keys.InGame.cameras.main.once('camerafadeoutcomplete', function(camera) {
-                            game.scene.keys.InGame.scene.start('DisconnectOverlay', {message: 'Connection lost.', toPrelobby: false});
+                            game.scene.keys.InGame.scene.start('DisconnectOverlay', {message: (game.global.languageSuffix === '_en')?'Connection lost.':'Has perdido la conexión.', toPrelobby: false});
                         }, this);
                     } else if (game.scene.keys.GameOver.scene.isActive()) {
                         game.scene.keys.GameOver.cameras.main.fadeOut(200);
                         game.scene.keys.GameOver.cameras.main.once('camerafadeoutcomplete', function(camera) {
-                            game.scene.keys.GameOver.scene.start('DisconnectOverlay', {message: 'Connection lost.', toPrelobby: false});
+                            game.scene.keys.GameOver.scene.start('DisconnectOverlay', {message: (game.global.languageSuffix === '_en')?'Connection lost.':'Has perdido la conexión.', toPrelobby: false});
                         }, this);
                     }
                 }

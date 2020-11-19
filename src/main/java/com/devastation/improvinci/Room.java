@@ -379,11 +379,16 @@ public class Room {
 			System.out.println(fakerId);
 			if (player.getPlayerId().equals(fakerId)) {
 
-				gameState = State.VOTING;
-				gameTimer = 2;
+				ObjectNode msg = null;
+				if (gameState == State.DRAWING || gameState == State.WORD) {
+					msg = mapper.createObjectNode();
+					msg.put("event", "ROUND_OVER");
+					gameState = State.VOTING;
+					gameTimer = 2;
+				} else if (gameState == State.VOTING) {
+					if (gameTimer > 2) gameTimer = 2;
+				}
 
-				ObjectNode msg = mapper.createObjectNode();
-				msg.put("event", "ROUND_OVER");
 
 				//Clearing all votes before sending the messages just in case they vote someone before their votes are cleared
 				synchronized(this) {
@@ -393,12 +398,14 @@ public class Room {
 					} 
 					wrongVotes = 0;
 
-					for (Player p : players) {
-						synchronized(p.WSSession()) {
-							if (p.WSSession().isOpen())
-								try { p.WSSession().sendMessage(new TextMessage(msg.toString())); } catch (Exception e){ e.printStackTrace(); }
-						}
-					} 
+					if (msg != null) {
+						for (Player p : players) {
+							synchronized(p.WSSession()) {
+								if (p.WSSession().isOpen())
+									try { p.WSSession().sendMessage(new TextMessage(msg.toString())); } catch (Exception e){ e.printStackTrace(); }
+							}
+						} 
+					}
 				}
 			}
 
