@@ -41,7 +41,7 @@ class InGame extends Phaser.Scene {
 			frameRate: 12,
 			repeat: -1
         });
-        this.timerText = this.add.text(0 ,0, '', {fontSize: '50px', fontFamily: 'comic sans ms', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff' });
+        this.timerText = this.add.text(0 ,0, '', {fontSize: '50px', fontFamily: 'Comic Sans MS', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff' });
         
         //Data
         this.maxRounds = data.maxRounds;
@@ -80,7 +80,7 @@ class InGame extends Phaser.Scene {
                 this.pictures[i+j*3] = this.add.image(this.drawings[i+j*3].x, this.drawings[i+j*3].y, 'empty');
                 this.pictures[i+j*3].setScale(this.drawings[i+j*3].scaleX*2, this.drawings[i+j*3].scaleY*2);
                 this.pictures[i+j*3].setAlpha(0);
-                this.votes[i+j*3] = this.add.text(game.canvas.width/2 + ((0.3*game.canvas.height)*(i-1)), game.canvas.height/2 + ((0.3*game.canvas.height)*(j-1)) + (0.15*game.canvas.height), '', { fontSize: '30px', fontFamily: 'comic sans ms', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff', align: 'center'}).setOrigin(0.5, 0.5);
+                this.votes[i+j*3] = this.add.text(game.canvas.width/2 + ((0.3*game.canvas.height)*(i-1)), game.canvas.height/2 + ((0.3*game.canvas.height)*(j-1)) + (0.15*game.canvas.height), '', { fontSize: '30px', fontFamily: 'Comic Sans MS', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff', align: 'center'}).setOrigin(0.5, 0.5);
                 this.votedIndicators[i+j*3] = this.add.image(this.drawings[i+j*3].x + this.drawings[i+j*3].displayWidth/2, this.drawings[i+j*3].y - this.drawings[i+j*3].displayHeight/2,'critico_cerca'); 
                 this.votedIndicators[i+j*3].setScale(this.sY/6);
                 this.votedIndicators[i+j*3].setAlpha(0);
@@ -111,7 +111,7 @@ class InGame extends Phaser.Scene {
         this.dcFrame = this.add.image(game.canvas.width/4, game.canvas.height*7/8,this.frameImages[Math.floor(Math.random()*this.frameImages.length)]); 
         this.dcFrame.setScale(game.canvas.height/1843.2,game.canvas.height/1843.2);
         this.dcFrame.setAlpha(0);
-        this.dcText = this.add.text(this.dcFrame.x + this.dcFrame.displayWidth/2, game.canvas.height*7/8, 'A player left the game.', { fontSize: '40px', fontFamily: 'comic sans ms', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff'});
+        this.dcText = this.add.text(this.dcFrame.x + this.dcFrame.displayWidth/2, game.canvas.height*7/8, 'A player left the game.', { fontSize: '40px', fontFamily: 'Comic Sans MS', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff'});
         this.dcText.setAlpha(0);
         this.dcFadeTween = this.tweens.add({
             targets: [this.dcImage, this.dcFrame, this.dcText],
@@ -166,11 +166,11 @@ class InGame extends Phaser.Scene {
         this.frame.setAlpha(0);
         this.button_clear.setAlpha(0);
 
-        this.word = this.add.text(game.canvas.width/2 ,game.canvas.height/2, 'Waiting for other players...', {fontSize: '40px', fontFamily: 'comic sans ms', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff', align: 'center'}).setOrigin(0.5,0.5);
-        this.gameMode = this.add.text(game.canvas.width/4 ,game.canvas.height/8, '', { fontSize: '40px', fontFamily: 'comic sans ms', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff'});
-        this.inGameWord = this.add.text(game.canvas.width/2 ,game.canvas.height/12, '', {align: 'center', fontSize: '40px', fontFamily: 'comic sans ms', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff'}).setOrigin(0.5,0.5);
-        this.roundText = this.add.text(game.canvas.width*6/8 ,game.canvas.height/12, '0/'+this.maxRounds, { fontSize: '40px', fontFamily: 'comic sans ms', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff'});
-        this.strokesLeft = this.add.text(0 ,0, '', {align: 'center', fontSize: '30px', fontFamily: 'comic sans ms', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff' }).setOrigin(0.5,0.5);
+        this.word = this.add.text(game.canvas.width/2 ,game.canvas.height/2, 'Waiting for other players...', {fontSize: '40px', fontFamily: 'Comic Sans MS', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff', align: 'center'}).setOrigin(0.5,0.5);
+        this.gameMode = this.add.text(game.canvas.width/4 ,game.canvas.height/8, '', { fontSize: '40px', fontFamily: 'Comic Sans MS', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff'});
+        this.inGameWord = this.add.text(game.canvas.width/2 ,game.canvas.height/12, '', {align: 'center', fontSize: '40px', fontFamily: 'Comic Sans MS', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff'}).setOrigin(0.5,0.5);
+        this.roundText = this.add.text(game.canvas.width*6/8 ,game.canvas.height/12, '0/'+this.maxRounds, { fontSize: '40px', fontFamily: 'Comic Sans MS', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff'});
+        this.strokesLeft = this.add.text(0 ,0, '', {align: 'center', fontSize: '30px', fontFamily: 'Comic Sans MS', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff' }).setOrigin(0.5,0.5);
         
         //Doble confirmacion
         this.DobleConfirmImg = this.add.image(0,0,'DobleConfirm'+game.global.languageSuffix).setInteractive();
@@ -767,6 +767,7 @@ class InGame extends Phaser.Scene {
         this.TimeAnim.anims.stopOnRepeat();
         this.denhanceImage();
         this.disableDrawings();
+        this.inGameWord.text = '';
         let playerVotes = new Array(msg.players);
         for (let i = 0; i < playerVotes.length; i++) {
             eval('playerVotes[msg.id_'+i+'] = msg.votes_'+i); //eval shouldn't be a problem here, hopefully
@@ -831,7 +832,7 @@ class InGame extends Phaser.Scene {
 
     writeRoomCode(roomCode)
     {
-        this.add.text(10, 10, roomCode, { fontSize: '40px', fontFamily: 'comic sans ms', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff'});
+        this.add.text(10, 10, roomCode, { fontSize: '40px', fontFamily: 'Comic Sans MS', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff'});
     }
 }
 var joinRoomOnce = false;

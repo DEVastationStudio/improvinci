@@ -39,7 +39,7 @@ class DrawAvatar extends Phaser.Scene {
             if(game.global.languageSuffix === '_es')
                 language = '¡Dibújate!'
     
-            this.drawYourself = this.add.text( 0, 0, language, {fontSize: '100px', fontFamily: 'comic sans ms', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff', align: 'center'}).setOrigin(0.5, 0.5);
+            this.drawYourself = this.add.text( 0, 0, language, {fontSize: '100px', fontFamily: 'Comic Sans MS', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff', align: 'center'}).setOrigin(0.5, 0.5);
             this.cameras.main.fadeIn(200);
         
             this.scaler();

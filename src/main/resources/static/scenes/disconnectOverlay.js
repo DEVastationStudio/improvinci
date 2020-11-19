@@ -14,7 +14,7 @@ class DisconnectOverlay extends Phaser.Scene {
         this.bbg = this.add.image(0,0,'Menu');
         this.bg = this.add.image(0,0,'Desco').setInteractive();
 
-        this.textInfo = this.add.text(game.canvas.width / 2, game.canvas.height * 3 / 8, data.message, {fontSize: '80px', fontFamily: 'comic sans ms', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff', align: 'center'}).setOrigin(0.5, 0.5);
+        this.textInfo = this.add.text(game.canvas.width / 2, game.canvas.height * 3 / 8, data.message, {fontSize: '80px', fontFamily: 'Comic Sans MS', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff', align: 'center'}).setOrigin(0.5, 0.5);
         this.disconnectButton = this.add.sprite(0,0,'salirBoton'+game.global.languageSuffix);
 
         this.disconnectButton.setInteractive({cursor: 'pointer'});

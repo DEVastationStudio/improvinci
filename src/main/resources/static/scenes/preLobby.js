@@ -292,12 +292,12 @@ class PreLobby extends Phaser.Scene {
         this.Letra_O = this.add.image(0,0,'Letra_O').setInteractive({cursor: 'pointer'});
         this.Letra_P = this.add.image(0,0,'Letra_P').setInteractive({cursor: 'pointer'});
 
-        this.codeText = this.add.text(0, 0, '', { fontSize: '50px', fontFamily: 'comic sans ms', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff' });
+        this.codeText = this.add.text(0, 0, '', { fontSize: '50px', fontFamily: 'Comic Sans MS', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff' });
 
         //Connection popup
         this.popupBg = this.add.image(0,0,'ConfigBg');
         this.popupBg.setAlpha(0);
-        this.popupText = this.add.text(0, 0, '', { fontSize: '80px', fontFamily: 'comic sans ms', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff'}).setOrigin(0.5, 0.5);
+        this.popupText = this.add.text(0, 0, '', { fontSize: '80px', fontFamily: 'Comic Sans MS', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff'}).setOrigin(0.5, 0.5);
         this.popupText.setAlpha(0);
         this.popupCancel = this.add.image(0,0,'SalirCod');
         this.popupCancel.setAlpha(0);

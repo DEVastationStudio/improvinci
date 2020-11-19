@@ -30,7 +30,7 @@ class Lobby extends Phaser.Scene {
         game.global.socketDir.send(JSON.stringify(msg));
         //}
         
-        this.codeText = this.add.text(game.canvas.width/2, game.canvas.height/22, data.code, { fontSize: '40px', fontFamily: 'comic sans ms', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff', align: 'center'}).setOrigin(0.5, 0.5);
+        this.codeText = this.add.text(game.canvas.width/2, game.canvas.height/22, data.code, { fontSize: '40px', fontFamily: 'Comic Sans MS', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff', align: 'center'}).setOrigin(0.5, 0.5);
         
         this.avatars = [];
         this.frames = [];
@@ -53,7 +53,7 @@ class Lobby extends Phaser.Scene {
         }
 
          //Lobby info
-         this.roomInfo = this.add.text(0, 0, '', {fontSize: '40px', fontFamily: 'comic sans ms', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff'});
+         this.roomInfo = this.add.text(0, 0, '', {fontSize: '40px', fontFamily: 'Comic Sans MS', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff'});
 
          //Options
          this.keyBoardBg = this.add.image(0,0,'ConfigBg').setInteractive();
@@ -95,13 +95,13 @@ class Lobby extends Phaser.Scene {
          //MasMenos Configuracion Ronda
          this.NumRondasMas = this.add.image(0,0,'Mas').setInteractive({cursor: 'pointer'});
          this.NumRondasMenos = this.add.image(0,0,'Menos').setInteractive({cursor: 'pointer'});
-         this.NumRondasText = this.add.text(0, 0, '--', {align:'center', fontSize: '35px', fontFamily: 'comic sans ms', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff'}).setOrigin(0.5, 0);
+         this.NumRondasText = this.add.text(0, 0, '--', {align:'center', fontSize: '35px', fontFamily: 'Comic Sans MS', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff'}).setOrigin(0.5, 0);
          this.TiempoRondasMas = this.add.image(0,0,'Mas').setInteractive({cursor: 'pointer'});
          this.TiempoRondasMenos = this.add.image(0,0,'Menos').setInteractive({cursor: 'pointer'});
-         this.TiempoRondasText = this.add.text(0, 0, '--', {align:'center', fontSize: '35px', fontFamily: 'comic sans ms', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff'}).setOrigin(0.5, 0);
+         this.TiempoRondasText = this.add.text(0, 0, '--', {align:'center', fontSize: '35px', fontFamily: 'Comic Sans MS', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff'}).setOrigin(0.5, 0);
          this.TiempoVotacionMas = this.add.image(0,0,'Mas').setInteractive({cursor: 'pointer'});
          this.TiempoVotacionMenos = this.add.image(0,0,'Menos').setInteractive({cursor: 'pointer'});
-         this.TiempoVotacionText = this.add.text(0, 0, '--', {align:'center', fontSize: '35px', fontFamily: 'comic sans ms', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff'}).setOrigin(0.5, 0);
+         this.TiempoVotacionText = this.add.text(0, 0, '--', {align:'center', fontSize: '35px', fontFamily: 'Comic Sans MS', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff'}).setOrigin(0.5, 0);
          //this.Mas = this.add.image(0,0,'Mas').setInteractive();
          //this.Menos = this.add.image(0,0,'Menos').setInteractive();
 
