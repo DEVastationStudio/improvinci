@@ -5,31 +5,32 @@
 ![Logo](/src/main/resources/static/readMeImg/LogoImprovinci.png)
 # 1. Introducción
 ## 1.1. Descripción breve del concepto
-Videojuego multijugador basado en una competición. La base del juego será una palabra que conocerán la mayoría de los jugadores. Los jugadores podrán contar con roles como Infiltrado que no conocerá esa palabra y tendrá que adivinar o espiar al resto para pasar inadvertido. Al final de cada ronda se votará el dibujo que tiene menos sentido para intentar encontrar al infiltrado. Los puntos se repartirán según se libre de votos el infiltrado o acierten el resto de los jugadores.
+Videojuego multijugador basado en una competición. La base del juego será dibujar una palabra que conocerán la mayoría de los jugadores. Los jugadores podrán contar con roles como Improvisador, el Improvisador no conocerá esa palabra y tendrá que adivinar o espiar al resto para pasar inadvertido. Al final de cada ronda se votará el dibujo que tiene menos sentido para intentar encontrar al infiltrado. Los puntos se repartirán según se libre de votos el infiltrado o acierten el resto de los jugadores.
 ## 1.2. Descripción breve de la historia y personajes
 El Museo de Arte Contemporáneo de la Ciudad ha organizado un concurso de dibujo. Las reglas son claras, se expone una palabra y los participantes tienen que dibujar algo relacionado con ella. Sin embargo, hay algo más y es que este concurso está planteado para encontrar a buenos artistas que sean capaces de improvisar. Es por esto que uno de los participantes por ronda no sabrá cuál es la palabra y tendrá que hacer uso de alguna herramienta especial para pasar desapercibido. Ganará el participante que actúe no sólo el mejor improvisando sino también encontrando al improvisador.
 ## 1.3. Propósito, público objetivo y plataformas
 Juego casual con el objetivo de entretener y ayudar a familia o amigos a conectarse y pasar el tiempo juntos, especialmente teniendo en cuenta la situación actual surgida por la pandemia Covid-19. 
-Accesible para un gran abanico de tipos de jugador ya que las reglas son sencillas al igual que los controles y los jugadores pueden estar en una misma sala o conectarse online a distancia.
-Improvinci estará disponible para PC, tablet y móvil. Está planteado como jugo de navegador y se podrá acceder desde los navegadores Chrome y Firefox. El acceso al juego se hará vía Itch.io.
+Accesible para un gran abanico de tipos de jugador ya que las reglas son sencillas al igual que los controles. Los jugadores pueden estar en una misma sala o conectarse online a distancia.
+Improvinci estará disponible para PC, tablet y móvil. Está planteado como juego de navegador y se podrá acceder desde los navegadores Chrome y Firefox. El acceso al juego se establece vía Itch.io.
 # 2. Monetización y modelo de negocio
-Uno de los objetivos del proyecto es obtener beneficios durante al menos dos años, por tanto, se han empleado estrategias de monetización y negocio tanto para lanzar el videojuego como para mantenerlo a flote durante ese tiempo, sobre todo teniendo en cuenta que el videojuego se ofrece de manera gratuita al público.
+Uno de los objetivos del proyecto es obtener beneficios durante al menos dos años, por tanto, se han empleado estrategias de monetización y negocio tanto para lanzar el videojuego como para mantenerlo a flote durante ese tiempo, teniendo en cuenta que el videojuego se ofrece de manera gratuita al público.
 ## 2.1. Mapa de empatía
-Improvinci es un juego apropiado para gente de todas las edades, pero sí contamos con un cliente ideal al que sobre todo dirigir los contenidos adicionales. Nuestro cliente ideal es una persona joven con ingresos propios, interesado en el mundo de los videojuegos.    
+Improvinci es un juego apropiado para gente de todas las edades, pero sí que contamos con un cliente ideal al que dirigir los contenidos adicionales. Nuestro cliente ideal es una persona joven con ingresos propios, interesado en el mundo de los videojuegos.    
 
 ![Mapa](/src/main/resources/static/readMeImg/Mapa_Empatia_v1.png)
 ## 2.2. Tipo de modelo de monetización
 En primer lugar, se debe conseguir sacar adelante el proyecto, para ello se ha decidido emprender la vía del mecenazgo o crowfunding. El portal elegido es Ulule pues la idea de que la financiación debe ser completa para poder recibirla hace que sea más sencillo establecer objetivos y metas claros y facilita la organización de los gastos y costes.
-Para conseguir financiación de esta manera no basta con una idea original, sino que se deben establecer recompensas para los mecenas (personas que aportan dinero voluntariamente). Las recompensas elegidas se establecen en la siguiente tabla, a cada nivel de recompensas se añaden los anteriores:
+Para conseguir financiación de esta manera no basta con una idea original, sino que se deben establecer recompensas para los mecenas (personas que aportan dinero voluntariamente). Una vez lanzado el proyecto la siguiente estrategia para recaudar beneficios es la oferta de contenido adicional. A lo largo de estos dos años en cada estación se ofrecerán de manera gratuita packs nuevos de palabras, así como de cosmética y nuevos modos de juego, que inciten al jugador a seguir jugando. Sin embargo, adicionalmente se ofrecerán packs tematizados con palabras completamente nuevas, gráficos distintos y acceso adelantado a modos de juego. De esta manera no se obliga al jugador a pagar para jugar, sino que se ofrece contenido extra que enriquece la experiencia de juego a bajo precio. Todos los jugadores de una partida no tendrán por qué haber comprado un pack de palabras para jugarlo, basta con que lo tenga el host. Al contrario, los paquetes de gráficos y el acceso a modos anticipados sí serán propios de cada jugador.
+El objetivo es sacar un pack de palabras y un pack de cosméticos gratuitos por temporada y uno extra al mes de cada uno, además de un modo de juego nuevo por temporada gratuito con acceso anticipado de un mes para aquellos que lo compren.  
+
+Las recompensas elegidas para los mecenas en Ulule se establecen en la siguiente tabla, a cada nivel de recompensas se añaden los anteriores:
 | Donación           | Recompensa  |
 | ------------------- | -----|
 | Por 5 euros o más   | Packs extra de palabras gratuitos en los primeros tres meses |
 | Por 15 euros o más  | Packs extra de palabras gratuitos en los primeros tres meses y acceso anticipado a modos de juego exclusivos durante el mismo tiempo|
-| Por 50 euros o más  | Nombre en los créditos y se añaden otros seis meses a los packs extra gratuitos y el acceso anticipado a nuevos modos de juego |
-| Por 100 euros o más | Retrato personalizado aparece en los créditos, el acceso anticipado y los packs extra gratuitos durarán dos años |
+| Por 50 euros o más  | Nombre en los créditos y se añaden otros nueve meses a los packs extra gratuitos y el acceso anticipado a nuevos modos de juego y packs de pins personalizados|
+| Por 100 euros o más | Retrato personalizado aparece en los créditos, el acceso anticipado y los packs extra gratuitos durarán dos años y camiseta personaliza|
 
-Una vez lanzado el proyecto la siguiente estrategia para recaudar beneficios es la oferta de contenido adicional. A lo largo de estos dos años en cada estación se ofrecerán de manera gratuita packs nuevos de palabras, así como de cosmética y nuevos modos de juego, que inciten al jugador a seguir jugando. Sin embargo, adicionalmente se ofrecerán packs tematizados con palabras completamente nuevas, gráficos distintos y acceso adelantado a modos de juego. De esta manera no se obliga al jugador a pagar para jugar, sino que se ofrece contenido extra que enriquece la experiencia de juego a bajo precio. Todos los jugadores de una partida no tendrán por qué haber comprado un pack de palabras para jugarlo, basta con que lo tenga el host. Al contrario, os paquetes de gráficos y el acceso a modos anticipados sí serán exclusivos de cada jugador.
-El objetivo es sacar un pack de palabras y un pack de cosméticos gratuitos por temporada y uno extra al mes de cada uno, además de un modo de juego nuevo por temporada gratuito con acceso anticipado de un mes para aquellos que lo compren.
 
 ## 2.3. Tablas de productos y precios
 | Producto           | Precio  |
@@ -41,28 +42,35 @@ El objetivo es sacar un pack de palabras y un pack de cosméticos gratuitos por 
 |Acceso anticipado a nuevo modo de juego | 1,99 euros |
 ## 2.4. Modelo de lienzo o canvas	  
 
-![Lienza](/src/main/resources/static/readMeImg/LienzoCanvasImprovinci.png)
+![Lienzo](/src/main/resources/static/readMeImg/LienzoCanvasImprovinci.png)
 # 3. Planificación y Costes
 Los costes se concentran mayoritariamente en el equipo humano, sin embargo, también hay gastos adicionales a tener en cuenta.
 ## 3.1. El equipo humano
-El equipo humano se conforma de cinco miembros, tres programadores y dos artistas. El sueldo de estos trabajadores es de 2200 euros brutos al mes. Por tanto, los costes asociados alcanzan los 22.000 euros.
+El equipo humano se conforma de cinco miembros, tres programadores y dos artistas. El sueldo de estos trabajadores es de 2200 euros brutos al mes. Por tanto, los costes humanos alcanzan los 22.000 euros.
 ## 3.2. Estimación temporal del desarrollo
 El desarrollo del juego hasta ponerlo de cara al público se realizará en dos meses. Posteriormente se deberán seguir desarrollando material gráfico y modos de juego nuevos pero la carga de trabajo en un principio debe disminuir.
 ## 3.3. Costes asociados
-Los costes asociados se centran mayormente en licencias. Por un lado, el mantenimiento del servidor cuesta 21,33 euros al mes y la licencia de Photoshop 290,17 euros al año. Como se debe seguir desarrollando contenido durante dos años y se necesitan dos licencias de Photoshop, los costes asociados alcanzan los 1.715,26 (teniendo en cuenta los dos meses de desarrollo para el servidor y tener todo el contenido adicional de gráficos desarrollado antes de los dos últimos meses con el objetivo de no tener que pagar dos meses más de licencias).
-Sin tener en cuenta el sueldo de los trabajadores durante los dos años posteriores a ser lanzado el juego el coste total del proyecto alcanza los 23.715,26 euros.
+Los costes asociados se centran mayormente en licencias. Por un lado, el mantenimiento del servidor cuesta 21,33 euros al mes y la licencia de Photoshop 290,17 euros al año. Como se debe seguir desarrollando contenido durante dos años y se necesitan dos licencias de Photoshop, los costes asociados alcanzan los 1.715,26 (teniendo en cuenta los dos meses de desarrollo para el servidor y tener todo el contenido adicional de gráficos desarrollado antes de los dos últimos meses con el objetivo de no tener que pagar dos meses más de licencias).  
+
+Sin tener en cuenta el sueldo de los trabajadores durante los dos años posteriores a ser lanzado el juego, el coste total del proyecto alcanza los 23.715,26 euros.
 # 4. Mecánicas de Juego y Elementos de Juego
 ## 4.1. Descripción detallada del concepto de juego
 El juego consiste en una sucesión de rondas en las que los jugadores tendrán que hacer dibujos relacionados con una palabra a contrarreloj. En cada ronda habrá un jugador con el rol de improvisador, este desconocerá el tema del dibujo, pero tendrá acceso a pistas que le darán algo de idea de qué dibujar. El rol de improvisador será asignado a un jugador aleatoriamente en cada ronda. 
 Al final de cada ronda los jugadores votarán cuál es el dibujo que menos se acerca al tema. El improvisador ganará puntos por cada jugador que no le vote, el resto ganará puntos por acertar qué dibujo es el improvisado. 
-El modo de juego cambiará con cada ronda y variarán según el modo de dificultad elegido o directamente según quiera el creador de la partida, igual que el número de rondas.
+El modo de juego cambiará con cada ronda y variarán según el modo de dificultad elegido o directamente según decida el creador de la partida, igual que el número de rondas.
 ## 4.2. Descripción detallada de las mecánicas de juego
 ### 4.2.1. Herramientas del improvisador
-Si no se diese ninguna pista al improvisador le sería difícil pasar desapercibido, por tanto, el jugador con este rol contará con dos pistas. La primera es el número de letras de la palabra que, además, irán apareciendo conforme avance el tiempo de dibujar. Otra de las herramientas es "copiar”, esta herramienta consiste en dar a un botón que te muestra durante unos segundos el dibujo que de momento lleva realizado uno de los jugadores aleatoriamente. Esta herramienta sólo podrá ser activada una vez por ronda en la mitad del tiempo y solo estará disponible a a partir de la mitad del tiempo.
+Si no se diese ninguna pista al improvisador le sería difícil pasar desapercibido, por tanto, el jugador con este rol contará con dos pistas. La primera es el número de letras de la palabra que, además, irán apareciendo conforme avance el tiempo de dibujar. Otra de las herramientas es "copiar”, esta herramienta consiste en dar a un botón que te muestra durante unos segundos el dibujo que de momento lleva realizado uno de los jugadores aleatoriamente. Esta herramienta sólo podrá ser activada una vez por ronda y sólo estará disponible a partir de la mitad del tiempo.
 
 ### 4.2.2. Votación
 Al final de cada ronda todos los participantes tendrán que votar el dibujo que crean que ha sido realizado por el improvisador. No será conocido el dueño de cada dibujo con el objetivo de que la votación sea imparcial. 
 Una vez realizadas las votaciones se sumarán los puntos obtenidos a cada jugador. En caso de no ser improvisador un jugador obtendrá dos puntos por acertar el dibujo improvisado y se restará un punto por cada jugador que le haya votado. En caso de sí ser improvisador se obtendrá un punto por cada jugador que no haya votado tu dibujo. Si todos los jugadores aciertan se restará un punto al improvisador.
+| Acción           | Puntuación  |
+| ------------------- | -----|
+| Improvisador: por cada jugador que no vota tu dibujo   | +1 punto |
+| Improvisador: todos los jugadores aciertan tu dibujo  | -1 punto |
+| Jugador normal: acertar el dibujo improvisado  | +2 puntos |
+| Jugador normal: otro jugador vota tu dibujo | -1 punto |
 
 ### 4.2.3. Modos
 * Normal: el jugador cuenta con todos los trazos que quiera, no existen impedimentos a la hora de pintar.
@@ -75,12 +83,12 @@ Una vez realizadas las votaciones se sumarán los puntos obtenidos a cada jugado
 Dependiendo de la plataforma se usarán distintos controles. En caso de jugarse en PC sólo será necesario un ratón para hacer click en los botones y pintar, mientras que en el móvil y la tablet bastará con el dedo. A la hora de pintar los controles varían según el modo de juego. En esencia, cuando se mantiene pulsado el trazo seguirá el movimiento del ratón. 
 
 ## 4.4. Niveles de dificultad
-El juego cuenta con dos niveles de dificultad predeterminados que se diferencian en los modos que aparecerán en las rondas. El modo normal pertenece al nivel fácil mientras que Límite de trazos, Un solo trazo, ¡A ciegas! Y Brocha incremental al nivel difícil. Sin embargo, el creador de la partida también puede elegir los modos que quiere que aparezcan en la partida manualmente según sus preferencias, así como el tiempo de las rondas, votaciones y las pistas que se le dan al improvisador, en vez de elegir los predeterminados. Así se pueden crear configuraciones de dificultad muy distintas, adaptadas a cada jugador.
+El juego cuenta con dos niveles de dificultad predeterminados que se diferencian en los modos que aparecerán en las rondas. El modo normal pertenece al nivel fácil mientras que Límite de trazos, Un solo trazo, A ciegas Y Brocha incremental al nivel difícil. Sin embargo, el creador de la partida también puede elegir los modos que quiere que aparezcan en la partida manualmente según sus preferencias, así como el tiempo de las rondas, votaciones y las pistas que se le dan al improvisador, en vez de elegir los predeterminados. Así se pueden crear configuraciones de dificultad muy distintas, adaptadas a cada jugador.
 Como nivel extra existe el modo diario. Este modo plantea partidas con modos de juego diferentes cada día. De esta manera planteamos eventos especiales para incitar a los jugadores a probar diferentes combinaciones.
 
 # 5. Trasfondo
 ## 5.1. Descripción detallada de la historia y la trama
-El Museo de Arte Contemporáneo de la Ciudad organiza su conocido concurso anual de improvisación, en el que participan hasta 9 artistas. El concurso recibe el nombre de “Improvinci” y se desarrolla a lo largo de varias rondas temáticas. En cada ronda se les revela el tema a pintar a todos los participantes menos a uno, que deberá emplear sus dotes de improvisación para realizar el dibujo, hecho que da nombre al concurso. Los concursantes son los que deben elegir después el dibujo improvisado para demostrar que también se defiendes como críticos de arte, y ganará el que consiga mayor puntuación en base a si aciertan o fallan.
+El Museo de Arte Contemporáneo de la Ciudad organiza su conocido concurso anual de improvisación, en el que participan hasta 9 artistas. El concurso recibe el nombre de “Improvinci” y se desarrolla a lo largo de varias rondas temáticas. En cada ronda se les revela el tema a pintar a todos los participantes menos a uno, que deberá emplear sus dotes de improvisación para realizar el dibujo, hecho que da nombre al concurso. Los concursantes son los que deben elegir después el dibujo improvisado para demostrar que también se defienden como críticos de arte, y ganará el que consiga mayor puntuación en base a si aciertan o fallan.
 
 ## 5.2. Personajes	
 Vincent es el único personaje del juego. Se trata de un crítico de arte bastante hiriente, que rara vez está contento con el resultado presentado por los concursantes.
@@ -100,7 +108,7 @@ Como inspiración principal para el apartado visual podríamos considerar el rem
 
 ## 6.2. Apartado visual
 ### 6.2.1. Descripción del Arte 2D
-El arte del juego está constituido principalmente por los fondos (representativos de las obras en exposición en el museo), el personaje que actúa de presentador y los elementos de la interfaz interactuables (botones) o no (adornos, indicadores).
+El arte del juego está constituido principalmente por los fondos (representativos de las obras en exposición en el museo), el personaje que actúa de presentador y los elementos de la interfaz interactuables (botones) o no (adornos, indicadores). Todos los assets gráficos que aparecen en el juego están realizados por las artistas del equipo*. 
 
 ### 6.2.2. Concept art
 ![Concept Menu](/src/main/resources/static/readMeImg/BocetoMenu.PNG)
@@ -158,3 +166,6 @@ Por último, en la pantalla final se mostrarán los retratos de los ganadores a 
 * Hito 6: Entrega del proyecto: 19 de noviembre
 * Hito 7: Presentación del proyecto: 23/24 de noviembre
 * Fecha de lanzamiento: 19 de noviembre
+
+### ANEXO
+* En caso de necesitarse se pueden aportar todos los psd demostrando la autoría de los assets.
