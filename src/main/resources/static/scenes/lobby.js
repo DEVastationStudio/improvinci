@@ -29,33 +29,6 @@ class Lobby extends Phaser.Scene {
         msg.event = 'ALL_READY';
         game.global.socketDir.send(JSON.stringify(msg));
         //}
-
-        this.button_back.on('pointerdown', function (pointer){
-            this.button_start.removeInteractive();
-            this.button_Options.removeInteractive();
-            game.global.socketDir.close();
-            game.global.socketDir = undefined;
-            this.cameras.main.fadeOut(200);
-            this.cameras.main.once('camerafadeoutcomplete', function(camera) {
-                this.scene.start('DisconnectOverlay', {message: 'You left the lobby.', toPrelobby: true});
-            }, this);
-        }, this);
-        
-		this.button_start.on('pointerdown', function (pointer){
-            let msg2 = new Object();
-            msg2.event = 'START_GAME';
-            game.global.socketDir.send(JSON.stringify(msg2));
-            this.button_start.removeInteractive();
-        }, this);
-
-        this.button_Options.on('pointerdown', function (pointer){
-            this.scene.get('Lobby').invisible(true);
-            let msg = new Object();
-            msg.event = 'GET_CONFIG_ROOM';
-            game.global.socketDir.send(JSON.stringify(msg)); 
-            this.button_Options.visible = false;
-            this.button_start.visible = false;
-        }, this);
         
         this.codeText = this.add.text(game.canvas.width/2, game.canvas.height/22, data.code, { fontSize: '40px', fontFamily: 'comic sans ms', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff', align: 'center'}).setOrigin(0.5, 0.5);
         
@@ -122,13 +95,13 @@ class Lobby extends Phaser.Scene {
          //MasMenos Configuracion Ronda
          this.NumRondasMas = this.add.image(0,0,'Mas').setInteractive({cursor: 'pointer'});
          this.NumRondasMenos = this.add.image(0,0,'Menos').setInteractive({cursor: 'pointer'});
-         this.NumRondasText = this.add.text(0, 0, '--', { fontSize: '30px', fontFamily: 'comic sans ms', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff'});
+         this.NumRondasText = this.add.text(0, 0, '--', {align:'center', fontSize: '35px', fontFamily: 'comic sans ms', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff'}).setOrigin(0.5, 0);
          this.TiempoRondasMas = this.add.image(0,0,'Mas').setInteractive({cursor: 'pointer'});
          this.TiempoRondasMenos = this.add.image(0,0,'Menos').setInteractive({cursor: 'pointer'});
-         this.TiempoRondasText = this.add.text(0, 0, '--', { fontSize: '30px', fontFamily: 'comic sans ms', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff'});
+         this.TiempoRondasText = this.add.text(0, 0, '--', {align:'center', fontSize: '35px', fontFamily: 'comic sans ms', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff'}).setOrigin(0.5, 0);
          this.TiempoVotacionMas = this.add.image(0,0,'Mas').setInteractive({cursor: 'pointer'});
          this.TiempoVotacionMenos = this.add.image(0,0,'Menos').setInteractive({cursor: 'pointer'});
-         this.TiempoVotacionText = this.add.text(0, 0, '--', { fontSize: '30px', fontFamily: 'comic sans ms', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff'});
+         this.TiempoVotacionText = this.add.text(0, 0, '--', {align:'center', fontSize: '35px', fontFamily: 'comic sans ms', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff'}).setOrigin(0.5, 0);
          //this.Mas = this.add.image(0,0,'Mas').setInteractive();
          //this.Menos = this.add.image(0,0,'Menos').setInteractive();
 
@@ -138,7 +111,156 @@ class Lobby extends Phaser.Scene {
 
          this.activeGamemodes = 0;   
 
+         //Tweens
+		this.button_backTweens = this.tweens.add({
+			targets:[this.button_back],
+			scale: {from: this.button_back.scale , to: this.button_back.scale*0.9 },
+			duration: 100,
+			ease: 'Quad.easeout',
+			paused: true,
+			yoyo: true
+        });
+
+        this.button_startTween = this.tweens.add({
+			targets:[this.button_start],
+			scale: {from: this.button_start.scale , to: this.button_start.scale*0.9 },
+			duration: 100,
+			ease: 'Quad.easeout',
+			paused: true,
+			yoyo: true
+        });
+        
+        this.spainFlagTween = this.tweens.add({
+			targets:[this.spainFlag],
+			scale: {from: this.spainFlag.scale , to: this.spainFlag.scale*0.9 },
+			duration: 100,
+			ease: 'Quad.easeout',
+			paused: true,
+			yoyo: true
+        });
+        
+        this.ukFlagTween = this.tweens.add({
+			targets:[this.ukFlag],
+			scale: {from: this.ukFlag.scale , to: this.ukFlag.scale*0.9 },
+			duration: 100,
+			ease: 'Quad.easeout',
+			paused: true,
+			yoyo: true
+        });
+        
+        this.FacilImgTween = this.tweens.add({
+			targets:[this.FacilImg],
+			scale: {from: this.FacilImg.scale , to: this.FacilImg.scale*0.9 },
+			duration: 100,
+			ease: 'Quad.easeout',
+			paused: true,
+			yoyo: true
+        });
+        
+        this.DificilImgTween = this.tweens.add({
+			targets:[this.DificilImg],
+			scale: {from: this.DificilImg.scale , to: this.DificilImg.scale*0.9 },
+			duration: 100,
+			ease: 'Quad.easeout',
+			paused: true,
+			yoyo: true
+        });
+        
+        this.DailyImgTween = this.tweens.add({
+			targets:[this.DailyImg],
+			scale: {from: this.DailyImg.scale , to: this.DailyImg.scale*0.9 },
+			duration: 100,
+			ease: 'Quad.easeout',
+			paused: true,
+			yoyo: true
+        });
+        
+        //--------
+        this.NumRondasMasTween = this.tweens.add({
+			targets:[this.NumRondasMas],
+			scale: {from: this.NumRondasMas.scale , to: this.NumRondasMas.scale*0.9 },
+			duration: 100,
+			ease: 'Quad.easeout',
+			paused: true,
+			yoyo: true
+        });
+        
+        this.TiempoRondasMasTween = this.tweens.add({
+			targets:[this.TiempoRondasMas],
+			scale: {from: this.TiempoRondasMas.scale , to: this.TiempoRondasMas.scale*0.9 },
+			duration: 100,
+			ease: 'Quad.easeout',
+			paused: true,
+			yoyo: true
+        });
+        
+        this.TiempoVotacionMasTween = this.tweens.add({
+			targets:[this.TiempoVotacionMas],
+			scale: {from: this.TiempoVotacionMas.scale , to: this.TiempoVotacionMas.scale*0.9 },
+			duration: 100,
+			ease: 'Quad.easeout',
+			paused: true,
+			yoyo: true
+        });
+        
+        this.NumRondasMenosTween = this.tweens.add({
+			targets:[this.NumRondasMenos],
+			scale: {from: this.NumRondasMenos.scale , to: this.NumRondasMenos.scale*0.9 },
+			duration: 100,
+			ease: 'Quad.easeout',
+			paused: true,
+			yoyo: true
+        });
+        
+        this.TiempoRondasMenosTween = this.tweens.add({
+			targets:[this.TiempoRondasMenos],
+			scale: {from: this.TiempoRondasMenos.scale , to: this.TiempoRondasMenos.scale*0.9 },
+			duration: 100,
+			ease: 'Quad.easeout',
+			paused: true,
+			yoyo: true
+        });
+        
+        this.TiempoVotacionMenosTween = this.tweens.add({
+			targets:[this.TiempoVotacionMenos],
+			scale: {from: this.TiempoVotacionMenos.scale , to: this.TiempoVotacionMenos.scale*0.9 },
+			duration: 100,
+			ease: 'Quad.easeout',
+			paused: true,
+			yoyo: true
+        });
+         
+
          //Config Actions
+         this.button_back.on('pointerdown', function (pointer){
+            this.button_backTweens.play();
+            this.button_start.removeInteractive();
+            this.button_Options.removeInteractive();
+            game.global.socketDir.close();
+            game.global.socketDir = undefined;
+            this.cameras.main.fadeOut(200);
+            this.cameras.main.once('camerafadeoutcomplete', function(camera) {
+                this.scene.start('DisconnectOverlay', {message: 'You left the lobby.', toPrelobby: true});
+            }, this);
+        }, this);
+        
+		this.button_start.on('pointerdown', function (pointer){
+            this.button_startTween.play();
+            let msg2 = new Object();
+            msg2.event = 'START_GAME';
+            game.global.socketDir.send(JSON.stringify(msg2));
+            this.button_start.removeInteractive();
+        }, this);
+
+        this.button_Options.on('pointerdown', function (pointer){
+            this.scene.get('Lobby').invisible(true);
+            let msg = new Object();
+            msg.event = 'GET_CONFIG_ROOM';
+            game.global.socketDir.send(JSON.stringify(msg)); 
+            this.button_Options.visible = false;
+            this.button_start.visible = false;
+        }, this);
+
          this.bg.on('pointerdown', function (pointer){
             this.scene.get('Lobby').invisible(false);
             this.button_Options.visible = true;
@@ -146,18 +268,21 @@ class Lobby extends Phaser.Scene {
         }, this);
 
          this.FacilImg.on('pointerdown', function (pointer){
+            this.FacilImgTween.play();
             let msg = new Object();
             msg.event = 'EASYMODE';
             game.global.socketDir.send(JSON.stringify(msg));
         }, this);
 
         this.DificilImg.on('pointerdown', function (pointer){
+            this.DificilImgTween.play();
             let msg = new Object();
             msg.event = 'DIFFICULTMODE';
             game.global.socketDir.send(JSON.stringify(msg));
         }, this);
 
         this.DailyImg.on('pointerdown', function (pointer){
+            this.DailyImgTween.play();
             let msg = new Object();
             msg.event = 'DAILYMODE';
             game.global.socketDir.send(JSON.stringify(msg));
@@ -171,6 +296,7 @@ class Lobby extends Phaser.Scene {
 
         //Language
         this.ukFlag.on('pointerdown', function (pointer){
+            this.ukFlagTween.play();
             let msg = new Object();
             msg.event = 'LANGUAGE_CHANGE';
             msg.type = true;
@@ -179,6 +305,7 @@ class Lobby extends Phaser.Scene {
         }, this);
 
         this.spainFlag.on('pointerdown', function (pointer){
+            this.spainFlagTween.play();
             let msg = new Object();
             msg.event = 'LANGUAGE_CHANGE';
             msg.type = false;
@@ -272,12 +399,14 @@ class Lobby extends Phaser.Scene {
         //MasMenosOptions
         //---NumRondas
         this.NumRondasMenos.on('pointerdown', function (pointer){
+            this.NumRondasMenosTween.play();
             let msg = new Object();
             msg.event = 'NUMRONDAS';
             msg.type = false;
             game.global.socketDir.send(JSON.stringify(msg));
         }, this);
         this.NumRondasMas.on('pointerdown', function (pointer){
+            this.NumRondasMasTween.play();
             let msg = new Object();
             msg.event = 'NUMRONDAS';
             msg.type = true;
@@ -286,12 +415,14 @@ class Lobby extends Phaser.Scene {
 
         //---TiempoRonda
         this.TiempoRondasMenos.on('pointerdown', function (pointer){
+            this.TiempoRondasMenosTween.play();
             let msg = new Object();
             msg.event = 'ROUNDTIME';
             msg.type = false;
             game.global.socketDir.send(JSON.stringify(msg));
         }, this);
         this.TiempoRondasMas.on('pointerdown', function (pointer){
+            this.TiempoRondasMasTween.play();
             let msg = new Object();
             msg.event = 'ROUNDTIME';
             msg.type = true;
@@ -300,12 +431,14 @@ class Lobby extends Phaser.Scene {
 
         //---TiempoVotacion
         this.TiempoVotacionMenos.on('pointerdown', function (pointer){
+            this.TiempoVotacionMenosTween.play();
             let msg = new Object();
             msg.event = 'VOTETIME';
             msg.type = false;
             game.global.socketDir.send(JSON.stringify(msg));
         }, this);
         this.TiempoVotacionMas.on('pointerdown', function (pointer){
+            this.TiempoVotacionMasTween.play();
             let msg = new Object();
             msg.event = 'VOTETIME';
             msg.type = true;
@@ -620,11 +753,11 @@ class Lobby extends Phaser.Scene {
     scaler()
     {
         //Buttons
-        this.button_start.x = game.canvas.width * 3 / 4;
+        this.button_start.x = game.canvas.width * 3.5 / 4;
         this.button_start.y = game.canvas.height / 4;
         this.button_start.setScale(this.sY);
         
-        this.button_Options.x = game.canvas.width * 3 / 4;
+        this.button_Options.x = game.canvas.width * 3.5 / 4;
         this.button_Options.y = game.canvas.height* 3 / 4;
         this.button_Options.setScale(this.sY);
 
@@ -740,9 +873,9 @@ class Lobby extends Phaser.Scene {
         this.NumRondasMenos.y = kbLTCornerY+rowPos*4;
         this.NumRondasMenos.setScale(this.keyBoardBg.scale*0.8);
         
-        this.NumRondasText.x = kbLTCornerX+columnPos*15.5;
+        this.NumRondasText.x = kbLTCornerX+columnPos*15.7;
         this.NumRondasText.y = kbLTCornerY+rowPos*3.4;
-        this.NumRondasText.setScale(this.keyBoardBg.scale*1.2);
+        this.NumRondasText.setScale(this.keyBoardBg.scale*1.7);
         
         this.NumRondasMas.x = kbLTCornerX+columnPos*17;
         this.NumRondasMas.y = kbLTCornerY+rowPos*4;
@@ -757,9 +890,9 @@ class Lobby extends Phaser.Scene {
         this.TiempoRondasMenos.y = kbLTCornerY+rowPos*6;
         this.TiempoRondasMenos.setScale(this.keyBoardBg.scale*0.8);
 
-        this.TiempoRondasText.x = kbLTCornerX+columnPos*15.5;
+        this.TiempoRondasText.x = kbLTCornerX+columnPos*15.7;
         this.TiempoRondasText.y = kbLTCornerY+rowPos*5.4;
-        this.TiempoRondasText.setScale(this.keyBoardBg.scale*1.2);
+        this.TiempoRondasText.setScale(this.keyBoardBg.scale*1.7);
 
         this.TiempoRondasMas.x = kbLTCornerX+columnPos*17;
         this.TiempoRondasMas.y = kbLTCornerY+rowPos*6;
@@ -774,9 +907,9 @@ class Lobby extends Phaser.Scene {
         this.TiempoVotacionMenos.y = kbLTCornerY+rowPos*8;
         this.TiempoVotacionMenos.setScale(this.keyBoardBg.scale*0.8);
         
-        this.TiempoVotacionText.x = kbLTCornerX+columnPos*15.5;
+        this.TiempoVotacionText.x = kbLTCornerX+columnPos*15.7;
         this.TiempoVotacionText.y = kbLTCornerY+rowPos*7.4;
-        this.TiempoVotacionText.setScale(this.keyBoardBg.scale*1.2);
+        this.TiempoVotacionText.setScale(this.keyBoardBg.scale*1.7);
         
         this.TiempoVotacionMas.x = kbLTCornerX+columnPos*17;
         this.TiempoVotacionMas.y = kbLTCornerY+rowPos*8;

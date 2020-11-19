@@ -17,8 +17,8 @@ class GameOver extends Phaser.Scene {
         this.bg = this.add.image(0,0,'finFondoO');
 
         //Buttons
-    	this.playAgain_bt = this.add.image(0,0,'Ready_es').setInteractive({cursor: 'pointer'});
-    	this.quit_bt = this.add.image(0,0,'Ready_host_es').setInteractive({cursor: 'pointer'});
+    	this.playAgain_bt = this.add.image(0,0,'otra'+game.global.languageSuffix).setInteractive({cursor: 'pointer'});
+    	this.quit_bt = this.add.image(0,0,'salirMainMenu'+game.global.languageSuffix).setInteractive({cursor: 'pointer'});
 
         if (this.textures.exists(data.players[0].playerId+'s')) {
             this.textures.get(data.players[0].playerId+'s').destroy();
@@ -64,7 +64,29 @@ class GameOver extends Phaser.Scene {
             }
         }
         
+        this.scaler();
+
+        //Tweens
+		this.playAgain_btTween = this.tweens.add({
+			targets:[this.playAgain_bt],
+			scale: {from: this.playAgain_bt.scale , to: this.playAgain_bt.scale*0.9 },
+			duration: 100,
+			ease: 'Quad.easeout',
+			paused: true,
+			yoyo: true
+        });
+        
+		this.quit_btTween = this.tweens.add({
+			targets:[this.quit_bt],
+			scale: {from: this.quit_bt.scale , to: this.quit_bt.scale*0.9 },
+			duration: 100,
+			ease: 'Quad.easeout',
+			paused: true,
+			yoyo: true
+        });
+
         this.playAgain_bt.on('pointerdown', function (pointer){
+            this.playAgain_btTween.play();
             if (data.leader) {
                 this.cameras.main.fadeOut(200);
                 this.cameras.main.once('camerafadeoutcomplete', function(camera) {
@@ -84,6 +106,7 @@ class GameOver extends Phaser.Scene {
         }, this);
         
         this.quit_bt.on('pointerdown', function (pointer){
+            this.quit_btTween.play();
             this.cameras.main.fadeOut(200);
             this.cameras.main.once('camerafadeoutcomplete', function(camera) {
                 this.scene.start('Menu');
@@ -94,7 +117,6 @@ class GameOver extends Phaser.Scene {
             game.global.socketDir = undefined;
         }, this);
         
-        this.scaler();
         if (typeof(Storage) !== 'undefined') {
             this.usesLocalStorage = true;
         } else {
@@ -128,11 +150,11 @@ class GameOver extends Phaser.Scene {
     scaler()
 	{
 		//Buttons
-		this.quit_bt.x = game.canvas.width * 9 / 10;
+		this.quit_bt.x = game.canvas.width * 6 / 10;
 		this.quit_bt.y = game.canvas.height * 4/ 5;
 		this.quit_bt.setScale(this.sY);
 
-    	this.playAgain_bt.x = game.canvas.width * 7 / 10;
+    	this.playAgain_bt.x = game.canvas.width * 8 / 10;
 		this.playAgain_bt.y = game.canvas.height * 4/ 5;
         this.playAgain_bt.setScale(this.sY);
         		

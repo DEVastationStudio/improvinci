@@ -18,7 +18,21 @@ class DisconnectOverlay extends Phaser.Scene {
         this.disconnectButton = this.add.sprite(0,0,'salirBoton'+game.global.languageSuffix);
 
         this.disconnectButton.setInteractive({cursor: 'pointer'});
+
+        this.scaler();
+
+        //Tweens
+		this.disconnectButtonTween = this.tweens.add({
+			targets:[this.disconnectButton],
+			scale: {from: this.disconnectButton.scale , to: this.disconnectButton.scale*0.9 },
+			duration: 100,
+			ease: 'Quad.easeout',
+			paused: true,
+			yoyo: true
+		});
+
         this.disconnectButton.on('pointerdown', function (event) {
+            this.disconnectButtonTween.play();
             console.log(data);
             this.cameras.main.fadeOut(200);
             this.cameras.main.once('camerafadeoutcomplete', function(camera) {
@@ -26,7 +40,6 @@ class DisconnectOverlay extends Phaser.Scene {
             }, this);
         }, this);
 
-        this.scaler();
         this.cameras.main.fadeIn(200);
     }
     

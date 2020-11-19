@@ -308,10 +308,201 @@ class PreLobby extends Phaser.Scene {
         this.invisible(false);
         this.scaler();
 
+        //Tweens
+		this.button_backTween = this.tweens.add({
+			targets:[this.button_back],
+			scale: {from: this.button_back.scale , to: this.button_back.scale*0.9 },
+			duration: 100,
+			ease: 'Quad.easeout',
+			paused: true,
+			yoyo: true
+        });
+        
+		this.button_createTween = this.tweens.add({
+			targets:[this.button_create],
+			scale: {from: this.button_create.scale , to: this.button_create.scale*0.9 },
+			duration: 100,
+			ease: 'Quad.easeout',
+			paused: true,
+			yoyo: true
+        });
+
+        this.ConfirmarCodTween = this.tweens.add({
+			targets:[this.ConfirmarCod],
+			scale: {from: this.ConfirmarCod.scale , to: this.ConfirmarCod.scale*0.9 },
+			duration: 100,
+			ease: 'Quad.easeout',
+			paused: true,
+			yoyo: true
+        });
+
+        this.BorrarCodTween = this.tweens.add({
+			targets:[this.BorrarCod],
+			scale: {from: this.BorrarCod.scale , to: this.BorrarCod.scale*0.9 },
+			duration: 100,
+			ease: 'Quad.easeout',
+			paused: true,
+			yoyo: true
+        });
+
+        this.button_backTween = this.tweens.add({
+			targets:[this.button_back],
+			scale: {from: this.button_back.scale , to: this.button_back.scale*0.9 },
+			duration: 100,
+			ease: 'Quad.easeout',
+			paused: true,
+			yoyo: true
+        });
+
+        this.Letra_ATween = this.tweens.add({
+			targets:[this.Letra_A],
+			scale: {from: this.Letra_A.scale , to: this.Letra_A.scale*0.9 },
+			duration: 100,
+			ease: 'Quad.easeout',
+			paused: true,
+			yoyo: true
+        });
+
+        this.Letra_BTween = this.tweens.add({
+			targets:[this.Letra_B],
+			scale: {from: this.Letra_B.scale , to: this.Letra_B.scale*0.9 },
+			duration: 100,
+			ease: 'Quad.easeout',
+			paused: true,
+			yoyo: true
+        });
+
+        this.Letra_CTween = this.tweens.add({
+			targets:[this.Letra_C],
+			scale: {from: this.Letra_C.scale , to: this.Letra_C.scale*0.9 },
+			duration: 100,
+			ease: 'Quad.easeout',
+			paused: true,
+			yoyo: true
+        });
+
+        this.Letra_DTween = this.tweens.add({
+			targets:[this.Letra_D],
+			scale: {from: this.Letra_D.scale , to: this.Letra_D.scale*0.9 },
+			duration: 100,
+			ease: 'Quad.easeout',
+			paused: true,
+			yoyo: true
+        });
+
+        this.Letra_ETween = this.tweens.add({
+			targets:[this.Letra_E],
+			scale: {from: this.Letra_E.scale , to: this.Letra_E.scale*0.9 },
+			duration: 100,
+			ease: 'Quad.easeout',
+			paused: true,
+			yoyo: true
+        });
+
+        this.Letra_FTween = this.tweens.add({
+			targets:[this.Letra_F],
+			scale: {from: this.Letra_F.scale , to: this.Letra_F.scale*0.9 },
+			duration: 100,
+			ease: 'Quad.easeout',
+			paused: true,
+			yoyo: true
+        });
+
+        this.Letra_GTween = this.tweens.add({
+			targets:[this.Letra_G],
+			scale: {from: this.Letra_G.scale , to: this.Letra_G.scale*0.9 },
+			duration: 100,
+			ease: 'Quad.easeout',
+			paused: true,
+			yoyo: true
+        });
+
+        this.Letra_HTween = this.tweens.add({
+			targets:[this.Letra_H],
+			scale: {from: this.Letra_H.scale , to: this.Letra_H.scale*0.9 },
+			duration: 100,
+			ease: 'Quad.easeout',
+			paused: true,
+			yoyo: true
+        });
+
+        this.Letra_ITween = this.tweens.add({
+			targets:[this.Letra_I],
+			scale: {from: this.Letra_I.scale , to: this.Letra_I.scale*0.9 },
+			duration: 100,
+			ease: 'Quad.easeout',
+			paused: true,
+			yoyo: true
+        });
+
+        this.Letra_JTween = this.tweens.add({
+			targets:[this.Letra_J],
+			scale: {from: this.Letra_J.scale , to: this.Letra_J.scale*0.9 },
+			duration: 100,
+			ease: 'Quad.easeout',
+			paused: true,
+			yoyo: true
+        });
+
+        this.Letra_KTween = this.tweens.add({
+			targets:[this.Letra_K],
+			scale: {from: this.Letra_K.scale , to: this.Letra_K.scale*0.9 },
+			duration: 100,
+			ease: 'Quad.easeout',
+			paused: true,
+			yoyo: true
+        });
+
+        this.Letra_LTween = this.tweens.add({
+			targets:[this.Letra_L],
+			scale: {from: this.Letra_L.scale , to: this.Letra_L.scale*0.9 },
+			duration: 100,
+			ease: 'Quad.easeout',
+			paused: true,
+			yoyo: true
+        });
+
+        this.Letra_MTween = this.tweens.add({
+			targets:[this.Letra_M],
+			scale: {from: this.Letra_M.scale , to: this.Letra_M.scale*0.9 },
+			duration: 100,
+			ease: 'Quad.easeout',
+			paused: true,
+			yoyo: true
+        });
+
+        this.Letra_NTween = this.tweens.add({
+			targets:[this.Letra_N],
+			scale: {from: this.Letra_N.scale , to: this.Letra_N.scale*0.9 },
+			duration: 100,
+			ease: 'Quad.easeout',
+			paused: true,
+			yoyo: true
+        });
+
+        this.Letra_OTween = this.tweens.add({
+			targets:[this.Letra_O],
+			scale: {from: this.Letra_O.scale , to: this.Letra_O.scale*0.9 },
+			duration: 100,
+			ease: 'Quad.easeout',
+			paused: true,
+			yoyo: true
+        });
+
+        this.Letra_PTween = this.tweens.add({
+			targets:[this.Letra_P],
+			scale: {from: this.Letra_P.scale , to: this.Letra_P.scale*0.9 },
+			duration: 100,
+			ease: 'Quad.easeout',
+			paused: true,
+			yoyo: true
+        });
+
         this.input.keyboard.addKey(8);
         this.codeFocus = false;
         
         this.button_back.on('pointerdown', function (pointer){
+            this.button_backTween.play();
             this.button_create.removeInteractive();
             this.button_back.removeInteractive();
             game.global.socketDir.close();
@@ -323,6 +514,7 @@ class PreLobby extends Phaser.Scene {
         }, this);
 
 		this.button_create.on('pointerdown', function (pointer){
+            this.button_createTween.play();
             let msg = new Object();
             msg.event = 'CREATE_ROOM';
             msg.players = 9;
@@ -363,60 +555,78 @@ class PreLobby extends Phaser.Scene {
             this.button_back.setInteractive({cursor: 'pointer'});
 		}, this);
 		this.ConfirmarCod.on('pointerdown', function (pointer){
+            this.ConfirmarCodTween.play()
             this.scene.get('PreLobby').tryJoin();
             this.showConnectingInterface();
         }, this);
         this.BorrarCod.on('pointerdown', function (pointer){
+            this.BorrarCodTween.play();
             if (!this.scene.get('PreLobby').scene.codeFocus) return;
             this.scene.get('PreLobby').trimText();
         }, this);
 
         this.Letra_A.on('pointerdown', function (pointer){
+            this.Letra_ATween.play();
             this.scene.get('PreLobby').updateText('A');
         }, this);
         this.Letra_B.on('pointerdown', function (pointer){
+            this.Letra_BTween.play();
             this.scene.get('PreLobby').updateText('B');
         }, this);
         this.Letra_C.on('pointerdown', function (pointer){
+            this.Letra_CTween.play();
             this.scene.get('PreLobby').updateText('C');
         }, this);
         this.Letra_D.on('pointerdown', function (pointer){
+            this.Letra_DTween.play();
             this.scene.get('PreLobby').updateText('D');
         }, this);
         this.Letra_E.on('pointerdown', function (pointer){
+            this.Letra_ETween.play();
             this.scene.get('PreLobby').updateText('E');
         }, this);
         this.Letra_F.on('pointerdown', function (pointer){
+            this.Letra_FTween.play();
             this.scene.get('PreLobby').updateText('F');
         }, this);
         this.Letra_G.on('pointerdown', function (pointer){
+            this.Letra_GTween.play();
             this.scene.get('PreLobby').updateText('G');
         }, this);
         this.Letra_H.on('pointerdown', function (pointer){
+            this.Letra_HTween.play();
             this.scene.get('PreLobby').updateText('H');
         }, this);
         this.Letra_I.on('pointerdown', function (pointer){
+            this.Letra_ITween.play();
             this.scene.get('PreLobby').updateText('I');
         }, this);
         this.Letra_J.on('pointerdown', function (pointer){
+            this.Letra_JTween.play();
             this.scene.get('PreLobby').updateText('J');
         }, this);
         this.Letra_K.on('pointerdown', function (pointer){
+            this.Letra_KTween.play();
             this.scene.get('PreLobby').updateText('K');
         }, this);
         this.Letra_L.on('pointerdown', function (pointer){
+            this.Letra_LTween.play();
             this.scene.get('PreLobby').updateText('L');
         }, this);
         this.Letra_M.on('pointerdown', function (pointer){
+            this.Letra_MTween.play();
             this.scene.get('PreLobby').updateText('M');
         }, this);
         this.Letra_N.on('pointerdown', function (pointer){
+            this.Letra_NTween.play();
             this.scene.get('PreLobby').updateText('N');
         }, this);
         this.Letra_O.on('pointerdown', function (pointer){
+            this.Letra_OTween.play();
             this.scene.get('PreLobby').updateText('O');
         }, this);
         this.Letra_P.on('pointerdown', function (pointer){
+            this.Letra_PTween.play();
             this.scene.get('PreLobby').updateText('P');
         }, this);
 

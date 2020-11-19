@@ -19,35 +19,47 @@ class Options extends Phaser.Scene {
         this.tablaPuntuaciones = this.add.image( 0, 0,'TopScores'+game.global.languageSuffix);
     	this.return_options_bt = this.add.image( 0, 0,'salirBoton'+game.global.languageSuffix).setInteractive({cursor: 'pointer'});
         
+        if (typeof(Storage) !== 'undefined') {
+            this.usesLocalStorage = true;
+            } else {
+            this.usesLocalStorage = false;
+            }
+    
+            this.canvas = new improCanvas(this, 128);
+    
+            this.topScores = this.add.text(0, 0, '', { fontSize: '50px', fontFamily: 'comic sans ms', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff'});
+        
+            if (this.usesLocalStorage) {
+                if (localStorage.getItem('score') !== null) {
+                    let arr = JSON.parse(localStorage.getItem('score'));
+                    for (let i = 1; i <= arr.length; i++) {
+                        if(i%2 == 0)
+                            this.topScores.text += (i)+': ' + arr[i-1].score + ' (' + arr[i-1].result + ')' + '\n';
+                        else
+                            this.topScores.text += (i)+': ' + arr[i-1].score + ' (' + arr[i-1].result + ')' + '       ';
+                    }
+                }
+            }
+
+        this.scaler();
+
+        //Tweens
+		this.return_options_btTween = this.tweens.add({
+			targets:[this.return_options_bt],
+			scale: {from: this.return_options_bt.scale , to: this.return_options_bt.scale*0.9 },
+			duration: 100,
+			ease: 'Quad.easeout',
+			paused: true,
+			yoyo: true
+		});
+
     	this.return_options_bt.on('pointerdown', function (pointer){
+            this.return_options_btTween.play()
 			this.cameras.main.fadeOut(200);
             this.cameras.main.once('camerafadeoutcomplete', function(camera) {
                 this.scene.start('Menu');
             }, this);
         }, this);
-        
-    	if (typeof(Storage) !== 'undefined') {
-        this.usesLocalStorage = true;
-        } else {
-        this.usesLocalStorage = false;
-        }
-
-        this.canvas = new improCanvas(this, 128);
-
-        this.topScores = this.add.text(0, 0, '', { fontSize: '50px', fontFamily: 'comic sans ms', fontStyle: 'bold', strokeThickness: 12, color: '#000000', stroke: '#ffffff'});
-    
-        if (this.usesLocalStorage) {
-            if (localStorage.getItem('score') !== null) {
-                let arr = JSON.parse(localStorage.getItem('score'));
-                for (let i = 1; i <= arr.length; i++) {
-                    if(i%2 == 0)
-                        this.topScores.text += (i)+': ' + arr[i-1].score + ' (' + arr[i-1].result + ')' + '\n';
-                    else
-                        this.topScores.text += (i)+': ' + arr[i-1].score + ' (' + arr[i-1].result + ')' + '       ';
-                }
-            }
-        }
-        this.scaler();
 
         this.cameras.main.fadeIn(200);
 
