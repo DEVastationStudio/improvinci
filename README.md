@@ -1,4 +1,8 @@
-# IMPROVINCI
+         
+![Logo](/src/main/resources/static/readMeImg/logo.png)  
+    
+                 
+![Logo](/src/main/resources/static/readMeImg/LogoImprovinci.png)
 # 1. Introducción
 ## 1.1. Descripción breve del concepto
 Videojuego multijugador basado en una competición. La base del juego será una palabra que conocerán la mayoría de los jugadores. Los jugadores podrán contar con roles como Infiltrado que no conocerá esa palabra y tendrá que adivinar o espiar al resto para pasar inadvertido. Al final de cada ronda se votará el dibujo que tiene menos sentido para intentar encontrar al infiltrado. Los puntos se repartirán según se libre de votos el infiltrado o acierten el resto de los jugadores.
@@ -11,7 +15,9 @@ Improvinci estará disponible para PC, tablet y móvil. Está planteado como jug
 # 2. Monetización y modelo de negocio
 Uno de los objetivos del proyecto es obtener beneficios durante al menos dos años, por tanto, se han empleado estrategias de monetización y negocio tanto para lanzar el videojuego como para mantenerlo a flote durante ese tiempo, sobre todo teniendo en cuenta que el videojuego se ofrece de manera gratuita al público.
 ## 2.1. Mapa de empatía
-Improvinci es un juego apropiado para gente de todas las edades, pero sí contamos con un cliente ideal al que sobre todo dirigir los contenidos adicionales. Nuestro cliente ideal es una persona joven con ingresos propios, interesado en el mundo de los videojuegos.
+Improvinci es un juego apropiado para gente de todas las edades, pero sí contamos con un cliente ideal al que sobre todo dirigir los contenidos adicionales. Nuestro cliente ideal es una persona joven con ingresos propios, interesado en el mundo de los videojuegos.    
+
+![Mapa](/src/main/resources/static/readMeImg/Mapa_Empatia_v1.png)
 ## 2.2. Tipo de modelo de monetización
 En primer lugar, se debe conseguir sacar adelante el proyecto, para ello se ha decidido emprender la vía del mecenazgo o crowfunding. El portal elegido es Ulule pues la idea de que la financiación debe ser completa para poder recibirla hace que sea más sencillo establecer objetivos y metas claros y facilita la organización de los gastos y costes.
 Para conseguir financiación de esta manera no basta con una idea original, sino que se deben establecer recompensas para los mecenas (personas que aportan dinero voluntariamente). Las recompensas elegidas se establecen en la siguiente tabla, a cada nivel de recompensas se añaden los anteriores:
@@ -33,7 +39,9 @@ El objetivo es sacar un pack de palabras y un pack de cosméticos gratuitos por 
 | 1 x Pack de cosméticos  | 0,99 euros |
 | Packs de cosméticos/gráficos de una temporada | 2,50 euros |
 |Acceso anticipado a nuevo modo de juego | 1,99 euros |
-## 2.4. Modelo de lienzo o canvas	
+## 2.4. Modelo de lienzo o canvas	  
+
+![Lienza](/src/main/resources/static/readMeImg/LienzoCanvasImprovinci.png)
 # 3. Planificación y Costes
 Los costes se concentran mayoritariamente en el equipo humano, sin embargo, también hay gastos adicionales a tener en cuenta.
 ## 3.1. El equipo humano
@@ -82,18 +90,27 @@ Físicamente cumple con todas las claves del imaginario clásico de un crítico 
 El Museo de Arte Contemporáneo de la Ciudad es el único espacio en el que se desarrolla el juego. Es un museo moderno lleno de obras de arte contemporáneo de todo tipo: cuadros, esculturas y performances. Engloba numerosas corrientes artísticas desde el cubismo hasta el dadaísmo, pero también cuenta con obras más clásicas y piezas históricas.
 # 6. Arte
 ## 6.1. Estética general del juego
-Hemos optado por una estética 2D en la que abundan los contornos deformados y afilados. Las proporciones de los objetos y el personaje se han alterado de tal manera que recuerde a un estilo cartoon. La paleta de color está limitada a 19 colores poco saturados. 
+Hemos optado por una estética 2D en la que abundan los contornos deformados y afilados. Las proporciones de los objetos y el personaje se han alterado de tal manera que recuerde a un estilo cartoon. La paleta de color está limitada a 19 colores poco saturados.   
 
-Como inspiración principal para el apartado visual podríamos considerar el remake de la aventura gráfica “Maniac Mansion: El Día del Tentáculo”. De este juego tomamos la idea de no contar con ninguna línea recta, dando un aspecto dinámico y desordenado a todos los elementos.
+![Paleta](/src/main/resources/static/readMeImg/paleta.png)  
+
+Como inspiración principal para el apartado visual podríamos considerar el remake de la aventura gráfica “Maniac Mansion: El Día del Tentáculo”. De este juego tomamos la idea de no contar con ninguna línea recta, dando un aspecto dinámico y desordenado a todos los elementos.  
+
+![ManiacMansion](/src/main/resources/static/readMeImg/ManiacMansion1.PNG)
 
 ## 6.2. Apartado visual
 ### 6.2.1. Descripción del Arte 2D
 El arte del juego está constituido principalmente por los fondos (representativos de las obras en exposición en el museo), el personaje que actúa de presentador y los elementos de la interfaz interactuables (botones) o no (adornos, indicadores).
 
 ### 6.2.2. Concept art
-### 6.2.3. Resultado final
-Todos los elementos de la interfaz están tematizados para representar distintos materiales propios de bellas artes como pinceles, gomas o lienzos. Los fondos son paredes llenas de cuadros con un tono más oscuro para que se distingan de los elementos de la interfaz.
+![Concept Menu](/src/main/resources/static/readMeImg/BocetoMenu.PNG)
+![Concept Vincent](/src/main/resources/static/readMeImg/BocetoVincent.PNG)  
 
+### 6.2.3. Resultado final
+Todos los elementos de la interfaz están tematizados para representar distintos materiales propios de bellas artes como pinceles, gomas o lienzos. Los fondos son paredes llenas de cuadros con un tono más oscuro para que se distingan de los elementos de la interfaz.  
+
+![Gameplay sin oscurecer](/src/main/resources/static/readMeImg/FondoGameplay.png)
+![fondo menu](/src/main/resources/static/readMeImg/PersonajeYEjemplo.PNG)
 # 7. Sonido
 ## 7.1. Sonido ambiente y música
 El sonido de ambiente tiene como objetivo poner en contexto al jugador, como el juego está basado en un museo el sonido de ambiente corresponderá con lo que se suele escuchar en las salas de los museos, es decir, murmullos, conversaciones suaves, pasos. Este sonido se podrá escuchar en todo momento, pero especialmente durante el tiempo de dibujo.
@@ -130,6 +147,7 @@ Durante las votaciones se verán los cuadros de todos los jugadores, se tendrá 
 Por último, en la pantalla final se mostrarán los retratos de los ganadores a modo de pódium, desde aquí los jugadores podrán volver al lobby o al menú.
 
 ## 8.2. Diagrama de flujo	
+![Logo](/src/main/resources/static/readMeImg/DiagramaFlujo.PNG)
 
 # 9. Hoja de ruta del desarrollo
 * Hito 1: Primer prototipo: 25 de octubre
