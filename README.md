@@ -173,7 +173,7 @@ Por último, en la pantalla final se muestran los retratos de todos con una coro
 ![Logo](/src/main/resources/static/readMeImg/Final.png)  
 
 ## 8.2. Diagrama de flujo	
-![Logo](/src/main/resources/static/readMeImg/DiagramaFlujo.png)
+![Logo](/src/main/resources/static/readMeImg/DiagramaFlujo.PNG)
 
 # 9. Hoja de ruta del desarrollo
 * **Hito 1**: Primer prototipo: 25 de octubre
